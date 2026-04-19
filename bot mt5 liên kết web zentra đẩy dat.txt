@@ -1,0 +1,7 @@
+bot mt5 liên kết web zentra đẩy data lên web
+phân tích tâm lý giao dịch theo hướng đánh của các nhà giao dịch
+đăng nhập-> tự lấy API qua mt5 -> có thông tin cơ bản, các lệnh , winrate, lossrate.... (lấy thông tin khách hàng)
+giai đoạn 1 kết nối mt5 với web hellozentra -> sẽ đưa ra lời khuyên về tâm lý 
+muốn web hellozentra y hệt web tradezella 
+làm local trước trên máy mình
+data dùng trên neon 

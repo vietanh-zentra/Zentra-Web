@@ -1,0 +1,480 @@
+Đúng, chỗ “bắt buộc Neon” trong bản trước là quá cứng nếu bạn đã có source code của web khách hàng. Tài liệu gốc ghi Dũng phải “Setup Neon”, nhưng đồng thời cũng ghi rõ Hoà phải khảo sát hạ tầng AWS hiện tại của khách trước khi deploy, xem họ đang dùng gì rồi mới ghép và triển khai. Vì vậy, với thông tin mới bạn vừa nói, cách đúng hơn là: database phải bám theo kiến trúc có sẵn của source code khách hàng, không mặc định ép sang Neon; Neon chỉ nên là phương án tạm nếu trong codebase chưa có DB dùng được.
+
+Tôi làm lại chi tiết theo hướng đó cho bạn.
+
+PHÂN TÁCH NHIỆM VỤ HOÀ – DŨNG VÀ KẾ HOẠCH PHASE SONG SONG
+Dự án Zentra – MT5 Connectivity & Data Pipeline
+Nguyên tắc mới: bám theo source code khách hàng, không khóa cứng DB là Neon
+I. Mục tiêu chung của giai đoạn này
+
+Mục tiêu của cả Hoà và Dũng là hoàn thiện phần “engine” còn thiếu của Zentra:
+
+kết nối tài khoản MT5 một cách bảo mật
+lấy lịch sử giao dịch và vị thế mở
+chuẩn hóa dữ liệu
+lưu dữ liệu vào hệ thống backend/database hiện có
+expose dữ liệu cho dashboard/frontend hiện tại sử dụng.
+
+Điểm cần sửa so với bản cũ:
+
+không mặc định chọn PostgreSQL/Neon ngay từ đầu
+ưu tiên đọc source code web khách hàng trước
+xác định DB, ORM, framework, auth flow, deployment flow thực tế trong codebase
+chỉ sau đó mới chốt cách tích hợp.
+Điều này phù hợp với yêu cầu tài liệu rằng Hoà phải khảo sát hạ tầng hiện tại trước khi deploy, và cả hai phải làm song song, review liên tục, không chờ đến cuối.
+II. Phân công riêng biệt
+1) Phần việc riêng của Dũng
+
+Dũng vẫn là người phụ trách data/backend layer, nhưng theo hướng mềm hơn:
+
+Trách nhiệm chính
+đọc source code hiện có để xác định:
+web đang dùng DB gì
+ORM/query builder gì
+backend framework gì
+đang có API structure sẵn hay chưa
+có migration system hay không
+thiết kế hoặc mở rộng schema cho:
+accounts
+trades
+open_positions
+daily_summaries
+sync_logs
+viết service layer và API layer
+chuẩn hóa error handling + logging dùng chung
+viết tests
+đóng gói Docker
+tài liệu API.
+Điều Dũng không làm
+không chịu trách nhiệm logic MT5
+không tự suy đoán dữ liệu trade nếu chưa có payload thật từ Hoà
+không tự đổi contract khi chưa thống nhất với Hoà
+Vai trò thực tế
+
+Dũng là người chịu trách nhiệm:
+“hệ thống sẽ lưu gì, đọc ra sao, expose ra sao, fail thì trả lỗi kiểu gì”.
+
+2) Phần việc riêng của Hoà
+
+Hoà vẫn là người phụ trách MT5 engine + integration owner:
+
+Trách nhiệm chính
+nghiên cứu MetaTrader5 Python API
+kiểm tra ràng buộc môi trường chạy MT5
+viết connector:
+connect
+disconnect
+get_account_info
+get_trade_history
+get_open_positions
+full_sync
+viết normalizer:
+map raw MT5 data → JSON chuẩn
+ghép deal IN / deal OUT theo position_id
+tính net_profit
+tính duration_seconds
+viết connection validator
+test với tài khoản demo
+review code Dũng trước khi ghép
+tích hợp cuối và deploy.
+Điều Hoà không làm
+không tự sửa code của Dũng nếu lỗi
+không tự ý đổi schema/API mà không chốt lại contract
+không deploy trước khi xác định môi trường hạ tầng thực tế
+Vai trò thực tế
+
+Hoà là người chịu trách nhiệm:
+“dữ liệu lấy từ MT5 có đúng không, có chuẩn không, có ghép đúng không, và khi đi vào backend có khớp contract hay không”.
+
+III. Nguyên tắc phối hợp để không lệch code
+
+Tài liệu gốc đã nhấn mạnh các điểm:
+
+Hoà và Dũng làm độc lập nhưng phải thống nhất format dữ liệu từ đầu
+Dũng phải push code hằng ngày
+Hoà phải review liên tục, tích hợp dần dần, không đợi đến cuối.
+
+Tôi chuyển 3 điểm đó thành bộ quy tắc vận hành rõ ràng hơn:
+
+Rule 1: Contract trước, code sau
+
+Trước khi ai code sâu, phải chốt:
+
+payload account_info
+payload trades
+payload open_positions
+payload summary
+error response format
+kiểu dữ liệu cho từng field
+field bắt buộc / nullable
+timezone = UTC.
+Rule 2: Source code khách là nguồn sự thật
+
+Dũng phải đọc source code hiện có rồi kết luận:
+
+DB hiện tại là gì
+bảng nào đã có sẵn
+service nào có thể tái sử dụng
+endpoint nào có thể mở rộng thay vì viết mới
+
+Không được ép DB mới chỉ vì tài liệu cũ đề xuất Neon.
+
+Rule 3: Hoà cung cấp payload thật càng sớm càng tốt
+
+Dũng không nên build backend dựa trên JSON ví dụ duy nhất trong spec.
+Hoà phải tạo payload mẫu thật từ MT5 sớm để:
+
+test insert
+test parsing
+test pagination/filter
+phát hiện field mismatch.
+Rule 4: Mỗi ngày đều có điểm ghép
+
+Không làm kiểu “chia đôi rồi cuối tuần mới ghép”.
+Mỗi ngày phải có ít nhất một bước:
+
+Dũng đẩy API/schema mới
+Hoà test bằng payload thật
+phát hiện lệch và sửa ngay.
+IV. Kế hoạch phase mới — làm song song và bám theo code khách hàng
+PHASE 1 — Audit source code và khóa kiến trúc thật
+Mục tiêu
+
+Xác định chính xác backend hiện tại của khách đang dùng gì, để khỏi làm lệch nền tảng.
+
+Dũng làm
+clone / đọc toàn bộ source backend hoặc fullstack source
+xác định:
+framework backend: FastAPI / Express / Nest / Django / Next API / gì khác
+database: PostgreSQL / MySQL / MongoDB / SQLite / Supabase / RDS / gì khác
+ORM: SQLAlchemy / Prisma / TypeORM / Sequelize / raw SQL
+migration tool: Alembic / Prisma Migrate / Knex / Flyway / none
+auth flow hiện tại
+config .env
+convention route / service / model
+lập 1 file ngắn: ARCHITECTURE_AUDIT.md
+Hoà làm
+kiểm tra AWS/hạ tầng hiện tại:
+EC2 / ECS / Lambda / Docker host / RDS
+OS là Windows hay Linux
+kiểm tra khả năng chạy MetaTrader5:
+nếu Linux thì xác định sớm phương án bridge/VPS
+đọc source để hiểu backend hiện tại sẽ gọi MT5 module theo kiểu gì.
+Kết quả phase này
+
+Phải chốt được:
+
+backend stack thật
+DB thật
+nơi phù hợp để nhét MT5 engine vào
+cách giao tiếp giữa MT5 module và API server
+có giữ chung repo hay tách module riêng.
+Deliverable chung
+ARCHITECTURE_AUDIT.md
+INTEGRATION_DECISION.md
+PHASE 2 — Khóa contract dữ liệu và interface chung
+Mục tiêu
+
+Biến JSON spec trong tài liệu thành contract kỹ thuật thật dùng cho code.
+
+Dũng làm
+draft schema mapping dựa trên DB hiện có
+nếu DB hiện tại đã có bảng tương đương, đề xuất:
+reuse
+extend
+add table mới
+draft migration plan
+Hoà làm
+xác nhận raw MT5 fields map được sang:
+account info
+closed trades
+open positions
+summaries
+chỉ ra field nào:
+có thể thiếu
+cần derive
+cần nullable
+cần ghép từ nhiều deals.
+Kết quả phase này
+
+Ra 1 file CONTRACT.md gồm:
+
+request/response mẫu
+bảng field mapping
+trade lifecycle mapping
+error codes
+timestamp standard
+numeric precision policy.
+Ghi chú quan trọng
+
+Ở phase này mới quyết định:
+
+DB hiện có dùng luôn được không
+có cần thêm migration mới không
+có cần cache layer không
+có cần queue không
+Chứ chưa kết luận Neon hay DB khác.
+PHASE 3 — Dũng dựng data layer, Hoà dựng MT5 core
+Mục tiêu
+
+Hai bên code độc lập nhưng bám đúng contract đã khóa.
+
+3A. Phần Dũng
+tạo/mở rộng schema thực tế theo codebase
+viết repository/service layer:
+create_account
+update_account_info
+bulk_insert_trades
+upsert_open_positions
+calculate_daily_summary
+create_sync_log
+update_sync_status
+thêm index cho:
+account_id
+ticket
+symbol
+open_time
+close_time
+nếu dùng DB quan hệ.
+Các bảng và field này bám theo spec gốc.
+3B. Phần Hoà
+viết mt5_connector.py
+viết data_normalizer.py
+xử lý:
+login
+timeout
+reconnect
+account info
+closed trade history
+open positions
+full sync
+logic khó nhất là ghép deal IN và deal OUT thành 1 trade record dựa trên position_id, đúng như spec yêu cầu.
+Checkpoint cuối phase
+Hoà xuất 10–20 trade payload thật
+Dũng insert vào DB thật
+kiểm tra:
+duplicate
+precision
+nullable
+query speed
+field mismatch.
+PHASE 4 — Dũng làm API thật, Hoà làm validator và test dữ liệu thật
+Mục tiêu
+
+Backend đọc ra được dữ liệu đúng format mà frontend cần.
+
+Dũng làm
+
+Triển khai hoặc mở rộng các endpoint cần thiết theo spec:
+
+POST /accounts
+GET /accounts
+GET /accounts/:account_id
+DELETE /accounts/:account_id
+POST /accounts/:account_id/sync
+GET /accounts/:account_id/trades
+GET /accounts/:account_id/positions
+GET /accounts/:account_id/summary
+GET /accounts/:account_id/sync-logs
+GET /health.
+
+Nhưng lưu ý:
+
+nếu source code đã có route structure sẵn, Dũng phải bám route style hiện tại
+nếu frontend hiện tại dùng endpoint name khác, ưu tiên adapt vào codebase hiện có, không ép frontend đổi nhiều.
+Hoà làm
+viết connection_validator.py
+test với demo account:
+reachable
+login successful
+data accessible
+total historical trades
+oldest/newest trade
+open positions count
+so sánh output API với dữ liệu MT5 thực.
+Checkpoint cuối phase
+gọi API trades/positions/summary được
+Hoà xác nhận dữ liệu API khớp MT5 terminal
+PHASE 5 — Chuẩn hóa lỗi, log, test, Docker
+Mục tiêu
+
+Không chỉ chạy được mà còn dễ debug và dễ bàn giao.
+
+Dũng làm
+viết error_handler dùng chung
+viết logger
+test error cases
+test filter/pagination
+test bulk insert volume lớn
+Dockerize theo structure hiện có của project.
+Các yêu cầu này đều có trong spec gốc.
+Hoà làm
+dùng đúng bộ error code chung trong MT5 module:
+invalid credentials
+server unreachable
+connection timeout
+no trade history
+MT5 not initialized
+permission denied.
+log đầy đủ các bước connect / sync / normalize / fail reason
+Checkpoint cuối phase
+1 lần sync fail phải trả lỗi chuẩn
+log đọc được nguyên nhân
+Docker chạy lên được trên local/staging
+PHASE 6 — Ghép thật với source code khách hàng
+Mục tiêu
+
+Không chỉ dựng module riêng, mà nhét vào dự án khách theo đúng flow thật.
+
+Dũng làm
+merge DB/API changes vào structure source code gốc
+fix import, env, route registration, auth/context
+đảm bảo frontend gọi được data mới
+Hoà làm
+nối luồng sync:
+account registration
+connect MT5
+fetch data
+normalize
+call data layer
+update sync logs
+test end-to-end:
+thêm account
+sync
+đọc trades
+đọc positions
+đọc summary.
+Checkpoint cuối phase
+dự án khách chạy lên với module mới
+dữ liệu hiện ra đúng flow mong muốn
+chưa cần production nếu còn hạ tầng mơ hồ, nhưng tối thiểu phải có staging/local integrated run
+PHASE 7 — Review cuối, deploy, bàn giao
+Mục tiêu
+
+Hoà làm integration owner, Dũng hỗ trợ fix nhanh.
+
+Hoà làm
+
+Review checklist cuối theo đúng vai trò spec giao:
+
+schema có đúng contract không
+API trả đúng format không
+bulk insert hoạt động đúng không
+filter/pagination đúng không
+error handling đúng không
+Docker chạy được không
+README rõ ràng không.
+Dũng làm
+sửa ngay các issue Hoà trả về
+hoàn thiện docs
+chốt migration docs / rollback docs
+Kết quả cuối
+project chạy được
+sync được tài khoản demo
+dữ liệu vào DB đúng
+API trả đúng
+có docs, tests, logs, Docker
+sẵn sàng cho phase tâm lý giao dịch sau.
+V. Bảng nhiệm vụ theo người — bản rõ ràng nhất
+DŨNG
+Phase D1 — Audit backend + DB hiện có
+đọc source code
+xác định DB/framework/ORM/migrations
+đề xuất cách mở rộng thay vì thay DB
+Phase D2 — Thiết kế persistence layer
+mapping schema thực tế
+migration plan
+index plan
+precision policy
+Phase D3 — Service layer
+account service
+trade service
+summary service
+sync log service
+Phase D4 — API layer
+accounts
+trades
+positions
+summary
+sync logs
+health
+Phase D5 — Error/logging shared layer
+error codes
+middleware/handler
+logger config
+Phase D6 — Tests + Docker
+API tests
+performance tests
+container setup
+Phase D7 — Merge vào source khách + docs
+integrate code vào repo thật
+API docs
+README
+env example
+HOÀ
+Phase H1 — Audit hạ tầng + MT5 feasibility
+kiểm tra AWS/OS
+xác định khả năng chạy MT5
+đề xuất phương án nếu Linux
+Phase H2 — MT5 connection core
+initialize
+login
+disconnect
+account info
+timeout/reconnect
+Phase H3 — Trade extraction
+history deals
+history orders
+positions_get
+open positions
+Phase H4 — Data normalizer
+timestamp
+BUY/SELL mapping
+net_profit
+duration_seconds
+ghép deals
+Phase H5 — Validation + tests
+validate connection
+test account/trades/positions
+benchmark sync speed
+Phase H6 — Review Dũng
+review schema
+review API output
+review tests
+review Docker
+Phase H7 — Integration + deploy
+hook sync flow
+end-to-end testing
+deploy/staging/production handoff
+VI. Cách để 2 người luôn song song và không lệch code
+Mốc ghép 1
+
+Sau khi Dũng audit source xong và Hoà audit AWS xong:
+
+chốt kiến trúc thật
+chốt DB thật
+chốt nơi đặt MT5 engine
+Mốc ghép 2
+
+Sau khi Hoà có payload MT5 thật đầu tiên:
+
+Dũng phải insert thử ngay
+chưa insert được thì dừng lại sửa contract, không code tiếp phần sâu
+Mốc ghép 3
+
+Sau khi Dũng có API trades đầu tiên:
+
+Hoà phải test bằng data thật
+sai format là sửa ngay trong ngày
+Mốc ghép 4
+
+Sau khi Dũng xong error/logging:
+
+Hoà phải dùng đúng error codes đó trong MT5 module
+Mốc ghép 5
+
+Trước deploy:
+
+Hoà review toàn bộ
+Dũng sửa toàn bộ issue
+mới cho ghép production/staging.

@@ -1,0 +1,201 @@
+Dưới đây là toàn bộ nhiệm vụ của bạn nếu bạn là Hoà, gom đầy đủ từ file phân công, không lược bớt.
+
+1. Vai trò tổng thể của bạn
+
+Bạn có 2 vai trò chính:
+
+Code phần lõi MT5 engine: kết nối, trích xuất dữ liệu, chuẩn hoá dữ liệu
+Soát/review toàn bộ code của Dũng trước khi ghép hệ thống
+Ngoài ra bạn còn là người ghép 2 module lại và deploy lên AWS.
+2. Nhiệm vụ bắt buộc phải làm ngay từ đầu
+2.1. Nghiên cứu kỹ TradeZella
+
+Phải vào TradeZella, đăng ký tài khoản free, xem demo, xem các tính năng để hiểu mô hình khách hàng muốn Zentra xây gần giống, đặc biệt ở phần data / metrics / dashboard.
+
+2.2. Đăng nhập AWS ngay để kiểm tra hạ tầng
+
+Bạn phải vào AWS ngay từ ngày đầu để kiểm tra:
+
+đang dùng EC2 / Lambda / RDS / ...
+hệ điều hành server là Windows hay Linux
+Vì thư viện Python của MT5 chỉ chạy trên Windows; nếu AWS đang là Linux thì phải báo ngay cho quản lý dự án để đổi kiến trúc.
+3. Nhiệm vụ kỹ thuật chính của bạn: MT5 Engine
+H1. Nghiên cứu MT5 API
+
+Bạn phải:
+
+cài thư viện MetaTrader5
+đọc tài liệu MQL5 Python API
+hiểu các hàm:
+mt5.initialize()
+mt5.login()
+mt5.account_info()
+mt5.history_deals_get()
+mt5.history_orders_get()
+mt5.positions_get()
+mt5.shutdown()
+Đồng thời phải nhận diện sớm rủi ro triển khai nếu server là Linux.
+H2. Xây dựng mt5_connector.py
+
+Bạn phải viết class MT5Connector với các chức năng:
+
+__init__(login, password, server)
+connect()
+kết nối MT5
+đo connection_time_ms
+trả về trạng thái kết nối + account info
+disconnect()
+get_account_info()
+lấy thông tin tài khoản theo đúng format chuẩn
+get_trade_history(from_date, to_date)
+lấy lịch sử giao dịch đã đóng
+tính net_profit = profit + commission + swap
+tính duration_seconds
+get_open_positions()
+lấy các vị thế đang mở
+full_sync(from_date=None)
+đồng bộ toàn bộ account info + trade history + open positions + daily summary
+đo sync_time_ms
+trả total_trades_fetched
+Ngoài ra còn phải:
+dùng Investor password, không dùng master password
+xử lý timeout 30 giây
+xử lý reconnect nếu mất kết nối
+dùng chung error codes và logging module của Dũng.
+H3. Viết data_normalizer.py
+
+Bạn phải chuyển dữ liệu MT5 thô sang JSON chuẩn, gồm:
+
+convert timestamp unix → ISO 8601 UTC
+map type của MT5 → "BUY" / "SELL"
+tính net_profit
+tính duration_seconds
+xử lý None cho SL/TP
+ghép deal IN và deal OUT thành 1 trade hoàn chỉnh theo position_id
+Đây được ghi rõ là phần khó nhất, cần test rất kỹ.
+H4. Viết connection_validator.py
+
+Bạn phải làm module kiểm tra chất lượng kết nối, trả về báo cáo gồm:
+
+server có reachable không
+login có thành công không
+connection time
+có truy cập được data không
+tổng số historical trades
+ngày trade cũ nhất / mới nhất
+số open positions
+validation passed hay chưa
+danh sách errors.
+H5. Viết test cho MT5 module
+
+Bạn phải test:
+
+kết nối với tài khoản demo
+lấy account info
+lấy trade history
+kiểm tra format output
+lấy open positions
+các case lỗi: sai password, sai server, timeout
+data normalizer, nhất là ghép deals thành trades
+đo và ghi lại tốc độ kết nối.
+4. Nhiệm vụ review code của Dũng
+H6. Soát toàn bộ code của Dũng
+
+Khi Dũng giao code, bạn phải review kỹ theo checklist:
+
+database schema có đúng format data chuẩn không
+API endpoints có trả đúng JSON format không
+bulk_insert_trades chạy đúng không, đặc biệt với data thật từ MT5
+filter / pagination chạy đúng không
+error handling có dùng đúng error codes không
+unit tests có đầy đủ không
+Docker có chạy được không bằng docker-compose up
+README có rõ ràng không
+Nếu có lỗi thì yêu cầu Dũng sửa ngay, không tự sửa giúp. Nếu đạt thì approve để tích hợp.
+5. Nhiệm vụ tích hợp hệ thống
+H7. Tích hợp MT5 engine với backend/API
+
+Sau khi Dũng xong và đã được bạn approve, bạn phải:
+
+Ghép MT5 engine với database/API thành 1 project
+Kết nối MT5 Connector với bulk_insert_trades của Dũng
+Làm cho endpoint POST /api/v1/accounts/:id/sync chạy đúng flow:
+gọi MT5Connector.connect()
+gọi MT5Connector.full_sync()
+gọi trade_service.bulk_insert_trades()
+cập nhật sync_log
+Test end-to-end:
+đăng ký account qua API
+trigger sync
+kiểm tra trades đã vào database chưa
+gọi GET /trades để verify dữ liệu.
+6. Nhiệm vụ deploy
+
+Sau khi tích hợp xong, bạn phải:
+
+đăng nhập AWS
+khảo sát hạ tầng hiện tại của khách
+dùng Docker để deploy
+test lại trên production
+báo kết quả cho quản lý dự án
+Tài liệu cũng ghi rõ: phải khảo sát AWS trước, xem khách dùng gì rồi mới deploy.
+7. Nhiệm vụ phối hợp hằng ngày
+
+Theo lịch làm việc, bạn còn phải:
+
+Ngày 1: đọc tài liệu, trải nghiệm TradeZella, kiểm tra AWS và báo lại ngay nếu có vấn đề Linux/Windows
+Ngày 2: cài MT5, test kết nối cơ bản, review schema của Dũng
+Ngày 3–4: code MT5 Connector + Data Normalizer, đồng thời review liên tục code Dũng đẩy lên, bắt đầu tích hợp sớm
+Ngày 5: hoàn thành MT5 engine + tests, review cuối code Dũng, bắt đầu tích hợp hoàn chỉnh
+Ngày 6: nếu còn lỗi thì yêu cầu Dũng sửa ngay, sau đó ghép hoàn chỉnh + test end-to-end + deploy AWS
+Ngày 7: sửa bug, test thêm, chuẩn bị demo
+8. Quy tắc làm việc bạn phải tuân thủ
+
+Bạn phải bám các quy tắc sau:
+
+dùng Python 3.10+
+đặt tên biến/hàm bằng tiếng Anh, snake_case
+comment bằng tiếng Anh
+mỗi file có docstring
+báo cáo tiến độ mỗi ngày
+nếu bị kẹt hơn 2 tiếng thì hỏi ngay
+không commit credentials vào git
+dùng .env cho secrets
+làm việc theo branch phù hợp
+review liên tục, không để dồn cuối.
+9. Output cuối cùng bạn phải giao
+
+Bạn phải giao một project hoàn chỉnh gồm:
+
+/mt5_engine/
+mt5_connector.py
+data_normalizer.py
+connection_validator.py
+/database/ từ Dũng nhưng đã review
+/api/ từ Dũng nhưng đã review
+/tests/
+Dockerfile
+docker-compose.yml
+API_DOCS.md
+README.md
+.env.example
+10. Tóm gọn nhất: tất cả nhiệm vụ của bạn là gì
+
+Nếu gom lại thành câu ngắn nhất, thì bạn phải làm đủ các việc sau:
+
+Bạn là người chịu trách nhiệm cho toàn bộ phần MT5 và phần ghép hệ thống, cụ thể là:
+
+nghiên cứu TradeZella để hiểu sản phẩm cần xây
+kiểm tra AWS và phát hiện rủi ro Windows/Linux
+nghiên cứu MT5 Python API
+viết MT5 Connector
+viết Data Normalizer
+viết Connection Validator
+test toàn bộ MT5 engine
+review toàn bộ code backend của Dũng
+tích hợp MT5 engine với backend/API
+test end-to-end
+deploy lên AWS
+báo cáo kết quả cuối cùng.
+
+Tôi có thể làm tiếp cho bạn một bản checklist theo đúng từng ngày cho riêng Hoà, kiểu rất dễ theo dõi và chỉ việc tick.

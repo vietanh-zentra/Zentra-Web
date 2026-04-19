@@ -1,0 +1,40 @@
+EMAIL DÙNG CHUNG CHO DỰ ÁN:
+  Email:    vietanh.zentra@gmail.com
+  Password: Vietanh789
+  (Dùng email này để đăng nhập tất cả: Vercel, GitHub, AWS)
+
+
+MT5 DEMO ACCOUNT:
+  Company:  MetaQuotes Ltd.
+  Server:   MetaQuotes-Demo
+  Login:    5049421223
+  Password: W@JpEl7n
+  Investor: 1l!zBdGv  (read-only, dùng cái này để kết nối)
+
+AWS:
+  Console:  https://415066135731.signin.aws.amazon.com/console
+  User:     vietanh.zentra@gmail.com
+  Password: Teamzentra456!
+
+
+
+VERCEL:
+  Đã được invite bởi: leoparacha7-9577 (leoparacha7@gmail.com)
+  Team name: Leo's projects
+  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+  Link invite: https://vercel.com/invites/AKD8gGH1HgJ4hnQo9uHx59hOEndMP0CzmmWOmBmulVRJ07UB?flow=signup
+  ⚠️ Invite hết hạn sau 7 ngày (từ 17/04/2026) → ACCEPT NGAY!
+
+GITHUB:
+  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+
+Khách hàng chính của dự án
+Tên khách hàng: Hamail Paracha.
+
+
+⚠️⚠️⚠️ GITHUB REPO CỦA KHÁCH: CHƯA ĐƯỢC MỜI ⚠️⚠️⚠️
+  Khách (Hamail) chưa gửi invite vào repo GitHub của dự án Zentra.
+  Người quản lý dự án đã nhắc nhưng khách chưa phản hồi.
+  → Các bạn CÓ THỂ bắt đầu code trên local/repo riêng trước.
+  → Khi nào có invite GitHub, anh sẽ forward ngay.
+  → KHÔNG CẦN CHỜ, cứ code đi, sau push lên repo khách sau.

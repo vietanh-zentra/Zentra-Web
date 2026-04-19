@@ -1,0 +1,11 @@
+Flask==2.3.3
+flask-cors==4.0.0
+MetaTrader5==5.0.5388
+numpy<2
+python-dotenv==1.0.0
+pyautogui==0.9.54
+psutil==5.9.6
+pytest==7.4.3
+pytest-mock==3.12.0
+waitress==2.1.2
+

@@ -1,0 +1,834 @@
+================================================================================
+          DỰ ÁN ZENTRA — PHÂN CÔNG CÔNG VIỆC GIAI ĐOẠN 1
+          MT5 Connectivity & Data Pipeline
+================================================================================
+
+Ngày tạo: 17/04/2026
+Nhân viên: Đàm Văn Hoà, Nguyễn Mạnh Dũng
+Deadline: 1 tuần (giao trước 25/04/2026)
+
+================================================================================
+I. TỔNG QUAN DỰ ÁN
+================================================================================
+
+Zentra là một dashboard phân tích TÂM LÝ giao dịch cho trader Forex.
+Khách hàng: Hamail Paracha.
+
+HIỆN TRẠNG:
+- Frontend đã có sẵn, deploy trên Vercel (hellozentra.com)
+- Backend trên AWS
+- Code trên GitHub (đang chờ access)
+- THIẾU: Phần "engine" kết nối MT5 → lấy dữ liệu → phân tích
+
+GIAI ĐOẠN 1 CẦN LÀM:
+- Kết nối tài khoản MT5 (prop firm + broker cá nhân) một cách bảo mật
+- Trích xuất lịch sử giao dịch (trade history) ra dạng có cấu trúc
+- Xác nhận tốc độ kết nối và độ chính xác dữ liệu
+- Lưu vào database có cấu trúc tốt để phục vụ Giai đoạn 2 (phân tích tâm lý)
+
+GIAI ĐOẠN 2 (TƯƠNG LAI - chưa làm, nhưng cần hiểu để thiết kế đúng):
+- Phát hiện "revenge trading" (giao dịch trả thù sau khi thua)
+- Phát hiện thoát lệnh sớm (early exit)
+- Phát hiện giao dịch dồn dập (trade clustering)
+- Đánh giá trạng thái tâm lý: overconfident, hesitant, stable
+
+THAM KHẢO:
+- Dashboard hiện tại: https://hellozentra.com
+- Mô hình mẫu: https://tradezella.com
+
+⚠️ BẮT BUỘC: Trước khi bắt đầu code, cả 2 bạn PHẢI vào https://www.tradezella.com/
+trải nghiệm KỸ trang web này (đăng ký tài khoản free, xem demo, xem tất cả
+các tính năng). Khách muốn Zentra có chức năng GẦN Y HỆT TradeZella,
+đặc biệt là phần data/metrics/dashboard. Hiểu rõ TradeZella = hiểu rõ
+cái mình cần xây dựng.
+
+================================================================================
+II. THÔNG TIN KẾT NỐI (BẢO MẬT - KHÔNG CHIA SẺ)
+================================================================================
+
+EMAIL DÙNG CHUNG CHO DỰ ÁN:
+  Email:    vietanh.zentra@gmail.com
+  Password: Vietanh789
+  (Dùng email này để đăng nhập tất cả: Vercel, GitHub, AWS)
+
+MT5 DEMO ACCOUNT:
+  Company:  MetaQuotes Ltd.
+  Server:   MetaQuotes-Demo
+  Login:    5049421223
+  Password: W@JpEl7n
+  Investor: 1l!zBdGv  (read-only, dùng cái này để kết nối)
+
+AWS:
+  Console:  https://415066135731.signin.aws.amazon.com/console
+  User:     vietanh.zentra@gmail.com
+  Password: Teamzentra456!
+
+VERCEL:
+  Đã được invite bởi: leoparacha7-9577 (leoparacha7@gmail.com)
+  Team name: Leo's projects
+  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+  Link invite: https://vercel.com/invites/AKD8gGH1HgJ4hnQo9uHx59hOEndMP0CzmmWOmBmulVRJ07UB?flow=signup
+  ⚠️ Invite hết hạn sau 7 ngày (từ 17/04/2026) → ACCEPT NGAY!
+
+GITHUB:
+  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+
+⚠️⚠️⚠️ GITHUB REPO CỦA KHÁCH: CHƯA ĐƯỢC MỜI ⚠️⚠️⚠️
+  Khách (Hamail) chưa gửi invite vào repo GitHub của dự án Zentra.
+  Người quản lý dự án đã nhắc nhưng khách chưa phản hồi.
+  → Các bạn CÓ THỂ bắt đầu code trên local/repo riêng trước.
+  → Khi nào có invite GitHub, anh sẽ forward ngay.
+  → KHÔNG CẦN CHỜ, cứ code đi, sau push lên repo khách sau.
+
+================================================================================
+III. KIẾN TRÚC TỔNG THỂ
+================================================================================
+
+  Trader nhập Account ID + Password + Server
+                    │
+                    ▼
+  ┌──────────────────────────────────┐
+  │  MODULE A: MT5 Connection Engine │  ← HOÀ làm
+  │  (Kết nối + Trích xuất dữ liệu) │
+  └──────────────┬───────────────────┘
+                 │
+                 │  Dữ liệu đã chuẩn hoá (JSON)
+                 │
+                 ▼
+  ┌──────────────────────────────────┐
+  │  MODULE B: Database + REST API   │  ← DŨNG làm
+  │  (Lưu trữ + Cung cấp dữ liệu)  │
+  └──────────────┬───────────────────┘
+                 │
+                 ▼
+        Zentra Dashboard (đã có sẵn)
+
+>>> HOÀ sẽ ghép 2 module lại và deploy lên AWS <<<
+
+================================================================================
+IV. GIAO DIỆN CHUNG (INTERFACE CONTRACT)
+================================================================================
+
+Hai bạn làm độc lập, nhưng PHẢI THỐNG NHẤT format dữ liệu này từ đầu.
+Hoà output dữ liệu theo format này, Dũng nhận dữ liệu theo format này.
+
+--- TRADE DATA FORMAT (JSON) ---
+
+{
+  "account_id": "5049421223",
+  "broker_server": "MetaQuotes-Demo",
+  "account_name": "Demo Account",
+  "account_balance": 10000.00,
+  "account_currency": "USD",
+  "account_leverage": 100,
+  "extraction_timestamp": "2026-04-17T23:00:00Z",
+  "trades": [
+    {
+      "ticket": 123456789,
+      "order_id": 987654321,
+      "symbol": "EURUSD",
+      "trade_type": "BUY",           // BUY hoặc SELL
+      "volume": 0.10,                // lot size
+      "open_price": 1.08500,
+      "close_price": 1.08750,
+      "stop_loss": 1.08200,
+      "take_profit": 1.09000,
+      "open_time": "2026-04-15T10:30:00Z",
+      "close_time": "2026-04-15T14:45:00Z",
+      "profit": 25.00,
+      "commission": -0.70,
+      "swap": -0.15,
+      "net_profit": 24.15,
+      "magic_number": 0,
+      "comment": "",
+      "duration_seconds": 15300
+    }
+  ],
+  "open_positions": [
+    {
+      "ticket": 123456790,
+      "symbol": "GBPUSD",
+      "trade_type": "SELL",
+      "volume": 0.05,
+      "open_price": 1.32100,
+      "current_price": 1.32050,
+      "stop_loss": 1.32500,
+      "take_profit": 1.31500,
+      "open_time": "2026-04-17T08:00:00Z",
+      "floating_profit": 2.50,
+      "commission": -0.35,
+      "swap": 0.00
+    }
+  ],
+  "daily_summary": {
+    "total_trades": 15,
+    "winning_trades": 9,
+    "losing_trades": 6,
+    "total_profit": 150.00,
+    "total_commission": -10.50,
+    "total_swap": -2.30,
+    "net_profit": 137.20
+  }
+}
+
+--- ACCOUNT INFO FORMAT (JSON) ---
+
+{
+  "account_id": "5049421223",
+  "broker_server": "MetaQuotes-Demo",
+  "company": "MetaQuotes Ltd.",
+  "name": "Demo Account",
+  "balance": 10000.00,
+  "equity": 10025.50,
+  "margin": 120.00,
+  "free_margin": 9905.50,
+  "margin_level": 8354.58,
+  "currency": "USD",
+  "leverage": 100,
+  "connected": true,
+  "connection_time_ms": 450,
+  "last_sync": "2026-04-17T23:00:00Z"
+}
+
+================================================================================
+V. PHÂN CÔNG CHI TIẾT — NGUYỄN MẠNH DŨNG (7 TASKS)
+================================================================================
+
+PHẦN CỦA DŨNG: DATABASE + REST API + ERROR HANDLING + DOCKER
+Deadline: 5 ngày (giao trước 22/04/2026)
+
+Dũng KHÔNG cần quan tâm MT5 là gì. Dũng chỉ cần:
+- Nhận dữ liệu JSON (theo format ở Phần IV) từ module của Hoà
+- Lưu vào database
+- Cung cấp API để frontend gọi lấy dữ liệu
+- Chuẩn bị hệ thống error handling + logging dùng chung
+- Đóng gói project bằng Docker
+
+-------------------------
+TASK D1: Thiết kế Database Schema + Setup Neon
+-------------------------
+Công nghệ: PostgreSQL trên Neon (BẮT BUỘC dùng Neon)
+
+⚠️ QUAN TRỌNG — TẠI SAO DÙNG NEON:
+  Neon (https://neon.tech) là dịch vụ PostgreSQL ONLINE MIỄN PHÍ.
+  Nếu các bạn dùng database local trên máy mình thì:
+    - Hoà không truy cập được database của Dũng
+    - Dũng không test được dữ liệu MT5 mà Hoà đẩy vào
+    - Khi ghép 2 module sẽ rất khó khăn
+
+  Dùng Neon thì:
+    - Cả 2 bạn dùng CHUNG 1 database online
+    - Hoà đẩy dữ liệu MT5 vào → Dũng thấy ngay trên API
+    - Test tích hợp dễ dàng, không cần ngồi cạnh nhau
+    - Khi deploy lên AWS sau này, chỉ cần đổi connection string
+
+  CÁCH LÀM:
+  1. Dũng tạo tài khoản Neon tại https://neon.tech (dùng email dự án)
+  2. Tạo 1 project tên "zentra"
+  3. Copy connection string (dạng: postgresql://user:pass@ep-xxx.neon.tech/zentra)
+  4. Gửi connection string cho Hoà qua chat
+  5. Cả 2 dùng chung connection string này trong file .env
+
+Tạo các bảng sau:
+
+Bảng 1: accounts
+  - id (PK, auto)
+  - account_id (string, MT5 account number)
+  - broker_server (string)
+  - company (string)
+  - account_name (string)
+  - balance (decimal)
+  - equity (decimal)
+  - currency (string, default "USD")
+  - leverage (integer)
+  - last_sync (timestamp)
+  - created_at (timestamp)
+  - updated_at (timestamp)
+
+Bảng 2: trades
+  - id (PK, auto)
+  - account_id (FK → accounts)
+  - ticket (bigint, unique)
+  - order_id (bigint)
+  - deal_in_id (bigint)        ← ID deal MỞ lệnh từ MT5
+  - deal_out_id (bigint)       ← ID deal ĐÓNG lệnh từ MT5
+  - position_id (bigint)       ← ID liên kết deal IN + OUT
+  - symbol (string)
+  - trade_type (string, "BUY"/"SELL")
+  - volume (decimal)
+  - open_price (decimal)
+  - close_price (decimal)
+  - stop_loss (decimal, nullable)
+  - take_profit (decimal, nullable)
+  - open_time (timestamp)
+  - close_time (timestamp)
+  - profit (decimal)
+  - commission (decimal)
+  - swap (decimal)
+  - net_profit (decimal)
+  - magic_number (integer)
+  - comment (string)
+  - duration_seconds (integer)
+  - created_at (timestamp)
+
+  ⚠️ TẠI SAO CẦN deal_in_id, deal_out_id, position_id?
+  MT5 lưu mỗi lệnh thành 2 deals riêng (deal IN + deal OUT).
+  Hoà sẽ ghép 2 deals thành 1 trade dựa trên position_id.
+  Lưu lại cả 3 ID này để sau này ĐỐI SOÁT dữ liệu với MT5 terminal
+  khi cần debug hoặc tìm lỗi ghép sai.
+
+Bảng 3: open_positions
+  - id (PK, auto)
+  - account_id (FK → accounts)
+  - ticket (bigint)
+  - symbol (string)
+  - trade_type (string)
+  - volume (decimal)
+  - open_price (decimal)
+  - current_price (decimal)
+  - stop_loss (decimal, nullable)
+  - take_profit (decimal, nullable)
+  - open_time (timestamp)
+  - floating_profit (decimal)
+  - commission (decimal)
+  - swap (decimal)
+  - updated_at (timestamp)
+
+Bảng 4: daily_summaries
+  - id (PK, auto)
+  - account_id (FK → accounts)
+  - date (date)
+  - total_trades (integer)
+  - winning_trades (integer)
+  - losing_trades (integer)
+  - total_profit (decimal)
+  - total_commission (decimal)
+  - total_swap (decimal)
+  - net_profit (decimal)
+  - created_at (timestamp)
+
+Bảng 5: sync_logs (theo dõi lịch sử đồng bộ)
+  - id (PK, auto)
+  - account_id (FK → accounts)
+  - sync_type (string: "full" / "incremental")
+  - status (string: "success" / "failed" / "in_progress")
+  - trades_synced (integer)
+  - connection_time_ms (integer)
+  - error_message (string, nullable)
+  - started_at (timestamp)
+  - completed_at (timestamp)
+
+LƯU Ý QUAN TRỌNG:
+  - Thêm INDEX cho: account_id, ticket, symbol, open_time, close_time
+  - Dùng DECIMAL cho giá + profit, KHÔNG dùng FLOAT (sai số)
+  - Tất cả timestamp phải lưu dạng UTC
+
+-------------------------
+TASK D2: Xây dựng REST API
+-------------------------
+Công nghệ: Python FastAPI (khuyến khích) hoặc Node.js Express
+Base URL: /api/v1
+
+Danh sách endpoints:
+
+1. POST /api/v1/accounts
+   Body: { account_id, broker_server, investor_password }
+   Mô tả: Đăng ký tài khoản MT5 mới vào hệ thống
+   Response: { success: true, account: {...} }
+
+2. GET /api/v1/accounts
+   Mô tả: Lấy danh sách tất cả accounts
+   Response: { accounts: [...] }
+
+3. GET /api/v1/accounts/:account_id
+   Mô tả: Lấy thông tin 1 account cụ thể
+   Response: { account: {...}, last_sync: "..." }
+
+4. DELETE /api/v1/accounts/:account_id
+   Mô tả: Xoá account khỏi hệ thống
+
+5. POST /api/v1/accounts/:account_id/sync
+   Mô tả: Trigger đồng bộ dữ liệu (sẽ gọi module của Hoà)
+   Response: { sync_id: "...", status: "in_progress" }
+
+6. GET /api/v1/accounts/:account_id/trades
+   Query params: ?from=2026-04-01&to=2026-04-17&symbol=EURUSD&page=1&limit=50
+   Mô tả: Lấy lịch sử giao dịch, có filter và phân trang
+   Response: { trades: [...], total: 150, page: 1, limit: 50 }
+
+7. GET /api/v1/accounts/:account_id/positions
+   Mô tả: Lấy các lệnh đang mở
+   Response: { positions: [...] }
+
+8. GET /api/v1/accounts/:account_id/summary
+   Query params: ?from=2026-04-01&to=2026-04-17
+   Mô tả: Lấy tổng kết giao dịch theo khoảng thời gian
+   Response: { summary: {...} }
+
+9. GET /api/v1/accounts/:account_id/sync-logs
+   Mô tả: Lấy lịch sử đồng bộ
+   Response: { logs: [...] }
+
+10. GET /api/v1/health
+    Mô tả: Health check
+    Response: { status: "ok", database: "connected", uptime: "..." }
+
+-------------------------
+TASK D3: Viết Service Layer
+-------------------------
+Tạo các service functions:
+
+- trade_service.py (hoặc .js):
+  + bulk_insert_trades(account_id, trades_list) → Lưu hàng loạt trades
+  + get_trades(account_id, filters) → Lấy trades có filter
+  + get_trade_by_ticket(ticket) → Lấy 1 trade cụ thể
+  + calculate_daily_summary(account_id, date) → Tính tổng kết ngày
+
+- account_service.py:
+  + create_account(data) → Tạo account mới
+  + update_account_info(account_id, data) → Cập nhật balance/equity
+  + get_account(account_id) → Lấy thông tin account
+  + delete_account(account_id) → Xoá account + tất cả trades liên quan
+
+- sync_service.py:
+  + create_sync_log(account_id, sync_type) → Tạo log đồng bộ
+  + update_sync_status(sync_id, status, details) → Cập nhật trạng thái
+  + get_sync_history(account_id) → Lấy lịch sử đồng bộ
+
+-------------------------
+TASK D4: Validation & Error Handling (DÙNG CHUNG CHO CẢ DỰ ÁN)
+-------------------------
+Dũng viết module error handling DÙNG CHUNG cho cả Dũng lẫn Hoà.
+
+File: error_handler.py (hoặc .js)
+
+Định nghĩa tất cả error codes của dự án:
+
+  API ERRORS:
+  - VALIDATION_ERROR — Input không hợp lệ
+  - ACCOUNT_NOT_FOUND — Không tìm thấy account
+  - DUPLICATE_ACCOUNT — Account đã tồn tại
+  - DATABASE_ERROR — Lỗi kết nối database
+
+  MT5 ERRORS (Hoà sẽ dùng các code này):
+  - INVALID_CREDENTIALS — Sai login/password/server
+  - SERVER_UNREACHABLE — Không kết nối được broker server
+  - CONNECTION_TIMEOUT — Kết nối quá 30 giây
+  - NO_TRADE_HISTORY — Account không có lịch sử giao dịch
+  - MT5_NOT_INITIALIZED — Thư viện MT5 chưa khởi tạo
+  - PERMISSION_DENIED — Tài khoản không có quyền đọc dữ liệu
+
+Format error response chuẩn:
+  { "error": true, "code": "ACCOUNT_NOT_FOUND", "message": "..." }
+
+HTTP status codes: 200, 201, 400, 404, 500
+
+Viết thêm logging module:
+  - Setup Python logging (hoặc Winston cho Node.js)
+  - Log format: [TIMESTAMP] [LEVEL] [MODULE] message
+  - Log ra file: logs/zentra.log
+  - Levels: DEBUG, INFO, WARNING, ERROR
+  - Gửi file config cho Hoà để Hoà dùng trong MT5 module
+
+-------------------------
+TASK D5: Viết Unit Tests
+-------------------------
+- Test tất cả endpoints với mock data
+- Test bulk insert 1000 trades (performance)
+- Test filter/pagination
+- Test error cases (account not found, invalid data, ...)
+- Test error handler module (đúng error code, đúng format)
+
+-------------------------
+TASK D6: Docker Setup
+-------------------------
+Đóng gói toàn bộ project bằng Docker để dễ deploy.
+
+Tạo các file:
+  - Dockerfile — Build image cho API server
+  - docker-compose.yml — Chạy API + (optional) local database
+  - .dockerignore — Bỏ qua node_modules, .env, logs, ...
+
+docker-compose.yml cần có:
+  - service "api": chạy FastAPI/Express server
+  - environment variables từ .env
+  - port mapping (ví dụ: 8000:8000)
+  - health check
+
+Mục tiêu: Hoà (hoặc bất kỳ ai) chỉ cần chạy:
+  docker-compose up
+là toàn bộ project chạy được.
+
+-------------------------
+TASK D7: Viết API Documentation
+-------------------------
+Viết file API_DOCS.md mô tả chi tiết:
+  - Tất cả 10 endpoints
+  - Request/Response format kèm ví dụ
+  - Error codes và ý nghĩa
+  - Hướng dẫn authentication (nếu có)
+
+Nếu dùng FastAPI → tận dụng Swagger UI tự động (/docs)
+Nếu dùng Express → viết manual hoặc dùng swagger-jsdoc
+
+-------------------------
+OUTPUT CỦA DŨNG:
+-------------------------
+Gửi cho Hoà 1 folder chứa:
+  /database/
+    schema.sql (hoặc migration files)
+    seed_data.sql (data mẫu để test)
+  /api/
+    main.py (hoặc app.js)
+    /routes/
+    /services/
+    /models/
+    error_handler.py
+    logger.py
+  /tests/
+  Dockerfile
+  docker-compose.yml
+  .dockerignore
+  API_DOCS.md
+  requirements.txt (hoặc package.json)
+  README.md (hướng dẫn chạy local + Docker)
+  .env.example
+
+================================================================================
+VI. PHÂN CÔNG CHI TIẾT — ĐÀM VĂN HOÀ (7 TASKS)
+================================================================================
+
+PHẦN CỦA HOÀ: MT5 ENGINE + SOÁT CODE DŨNG + TÍCH HỢP + DEPLOY
+Deadline: 6 ngày (giao trước 23/04/2026)
+
+Hoà có 2 VAI TRÒ:
+  1. CODE: Viết phần lõi MT5 engine (kết nối, trích xuất, chuẩn hoá dữ liệu)
+  2. SOÁT: Review toàn bộ code của Dũng trước khi ghép, đảm bảo chất lượng
+
+-------------------------
+TASK H1: Nghiên cứu MT5 API
+-------------------------
+- Cài đặt thư viện: pip install MetaTrader5
+- Tài liệu: https://www.mql5.com/en/docs/python_metatrader5
+- Hiểu các hàm chính:
+  + mt5.initialize() — khởi tạo kết nối
+  + mt5.login(login, password, server) — đăng nhập
+  + mt5.account_info() — thông tin tài khoản
+  + mt5.history_deals_get() — lấy lịch sử deals (quan trọng nhất)
+  + mt5.history_orders_get() — lấy lịch sử orders
+  + mt5.positions_get() — lấy vị thế đang mở
+  + mt5.shutdown() — đóng kết nối
+
+LƯU Ý: Thư viện MetaTrader5 chỉ chạy trên WINDOWS.
+  → Nếu server là Linux, cần dùng giải pháp thay thế:
+  - Chạy MT5 trên Windows VPS và expose API
+  - Hoặc dùng rpyc/socket để bridge
+  - Hoặc dùng Wine trên Linux (không khuyến khích)
+  → BÁO LẠI NGƯỜI QUẢN LÝ DỰ ÁN nếu gặp vấn đề này
+
+-------------------------
+TASK H2: Xây dựng MT5 Connector Module
+-------------------------
+File: mt5_connector.py
+
+class MT5Connector:
+    """
+    Module kết nối MT5 và trích xuất dữ liệu.
+    Hỗ trợ tất cả broker: prop firm (FTMO, The5ers) và retail (IC Markets, Exness).
+    """
+
+    def __init__(self, login, password, server):
+        """Khởi tạo với thông tin đăng nhập MT5"""
+        pass
+
+    def connect(self) -> dict:
+        """
+        Kết nối đến MT5 server.
+        Return: {"connected": True, "connection_time_ms": 450, "account_info": {...}}
+        Nếu lỗi: {"connected": False, "error": "Invalid credentials"}
+        PHẢI đo thời gian kết nối (connection_time_ms) để validate tốc độ.
+        """
+        pass
+
+    def disconnect(self):
+        """Đóng kết nối MT5 an toàn"""
+        pass
+
+    def get_account_info(self) -> dict:
+        """
+        Lấy thông tin tài khoản.
+        Return theo format account_info ở Phần IV.
+        """
+        pass
+
+    def get_trade_history(self, from_date, to_date) -> list:
+        """
+        Lấy lịch sử giao dịch ĐÃ ĐÓNG trong khoảng thời gian.
+        Return: list of trades theo format ở Phần IV.
+        PHẢI tính: net_profit = profit + commission + swap
+        PHẢI tính: duration_seconds = close_time - open_time
+        """
+        pass
+
+    def get_open_positions(self) -> list:
+        """
+        Lấy các vị thế ĐANG MỞ.
+        Return: list of positions theo format ở Phần IV.
+        """
+        pass
+
+    def full_sync(self, from_date=None) -> dict:
+        """
+        Đồng bộ toàn bộ dữ liệu: account info + trade history + open positions.
+        Nếu from_date = None, lấy toàn bộ lịch sử.
+        Return: {
+            "account": {...},
+            "trades": [...],
+            "open_positions": [...],
+            "daily_summary": {...},
+            "sync_time_ms": 1200,
+            "total_trades_fetched": 150
+        }
+        """
+        pass
+
+QUAN TRỌNG:
+  - Dùng Investor password (read-only) để kết nối, KHÔNG dùng Master password
+  - Xử lý timeout (nếu server MT5 không phản hồi sau 30 giây → báo lỗi)
+  - Xử lý reconnect (nếu mất kết nối giữa chừng)
+  - Dùng error codes và logging module mà Dũng đã viết (TASK D4)
+
+-------------------------
+TASK H3: Data Normalizer
+-------------------------
+File: data_normalizer.py
+
+Dữ liệu từ MT5 API trả về dạng thô (Named Tuple).
+Hoà cần chuyển đổi sang JSON format chuẩn (Phần IV).
+
+Các xử lý cần làm:
+  - Convert timestamp MT5 (unix) → ISO 8601 UTC string
+  - Map MT5 deal type (0,1) → "BUY"/"SELL"
+  - Tính net_profit = profit + commission + swap
+  - Tính duration_seconds
+  - Xử lý null/None cho SL, TP (nếu trader không đặt)
+  - Ghép deals thành trades hoàn chỉnh (MT5 lưu deal IN và deal OUT riêng,
+    cần ghép 2 deals thành 1 trade hoàn chỉnh dựa trên position_id)
+
+LƯU Ý GHÉP DEALS:
+  MT5 lưu mỗi lệnh thành 2 deals:
+  - Deal IN (mở lệnh): có open_price, volume, open_time
+  - Deal OUT (đóng lệnh): có close_price, profit, close_time
+  Cần ghép theo position_id để tạo 1 trade record hoàn chỉnh.
+  Đây là phần KHÓ NHẤT, cần test kỹ.
+
+-------------------------
+TASK H4: Connection Validator
+-------------------------
+File: connection_validator.py
+
+Viết module kiểm tra và báo cáo chất lượng kết nối:
+
+def validate_connection(login, password, server) -> dict:
+    """
+    Test kết nối và trả về báo cáo chi tiết.
+    Return: {
+        "server_reachable": True,
+        "login_successful": True,
+        "connection_time_ms": 450,
+        "data_accessible": True,
+        "total_historical_trades": 150,
+        "oldest_trade_date": "2026-01-15T...",
+        "newest_trade_date": "2026-04-17T...",
+        "open_positions_count": 3,
+        "validation_passed": True,
+        "errors": []
+    }
+    """
+    pass
+
+-------------------------
+TASK H5: Viết Tests cho MT5 Module
+-------------------------
+- Test kết nối với tài khoản demo (dùng credentials ở Phần II)
+- Test lấy account info
+- Test lấy trade history (kiểm tra format output đúng)
+- Test lấy open positions
+- Test các error cases (sai password, sai server, timeout)
+- Test data normalizer (ghép deals → trades)
+- ĐO tốc độ kết nối và ghi lại kết quả
+
+-------------------------
+TASK H6: ★ SOÁT CODE CỦA DŨNG ★
+-------------------------
+Đây là vai trò QUAN TRỌNG của Hoà. Khi Dũng giao code (ngày 22/04),
+Hoà PHẢI review kỹ trước khi ghép:
+
+Checklist review:
+  ☐ Database schema có đúng format data ở Phần IV không?
+  ☐ API endpoints trả đúng JSON format không?
+  ☐ bulk_insert_trades hoạt động đúng không? (test thử với data thật từ MT5)
+  ☐ Filter/pagination có chạy đúng không?
+  ☐ Error handling có dùng đúng error codes không?
+  ☐ Có unit tests đầy đủ không?
+  ☐ Docker chạy được không? (docker-compose up)
+  ☐ README rõ ràng không?
+
+Nếu có vấn đề → yêu cầu Dũng sửa NGAY, KHÔNG tự sửa giúp.
+Nếu code đạt → approve và tiến hành ghép (TASK H7).
+
+-------------------------
+TASK H7: TÍCH HỢP + DEPLOY
+-------------------------
+Khi code Dũng đã được approve:
+
+1. Ghép MT5 engine + database/API vào 1 project
+2. Kết nối MT5 Connector → gọi bulk_insert_trades của Dũng
+3. Endpoint POST /api/v1/accounts/:id/sync sẽ:
+   a. Gọi MT5Connector.connect()
+   b. Gọi MT5Connector.full_sync()
+   c. Gọi trade_service.bulk_insert_trades()
+   d. Cập nhật sync_log
+4. Test end-to-end:
+   - Đăng ký account qua API
+   - Trigger sync
+   - Kiểm tra trades xuất hiện trong database
+   - Gọi GET /trades để verify dữ liệu
+5. Deploy lên AWS:
+   - Đăng nhập AWS (credentials ở Phần II)
+   - Khảo sát infrastructure hiện tại của khách
+   - Deploy bằng Docker (dùng Dockerfile của Dũng)
+   - Test trên môi trường production
+   - Báo lại kết quả cho người quản lý dự án
+
+LƯU Ý: Khảo sát AWS trước, xem khách đang dùng gì (EC2, Lambda, RDS, ...)
+rồi báo lại người quản lý dự án trước khi deploy.
+
+-------------------------
+OUTPUT CỦA HOÀ:
+-------------------------
+Gửi cho người quản lý dự án 1 project hoàn chỉnh đã chạy được:
+  /mt5_engine/
+    mt5_connector.py
+    data_normalizer.py
+    connection_validator.py
+  /database/         (từ Dũng, đã review)
+  /api/              (từ Dũng, đã review)
+  /tests/
+  Dockerfile         (từ Dũng)
+  docker-compose.yml (từ Dũng)
+  API_DOCS.md        (từ Dũng)
+  README.md
+  .env.example
+
+================================================================================
+VII. LỊCH TRÌNH LÀM VIỆC
+================================================================================
+
+⚠️ NGUYÊN TẮC QUAN TRỌNG: KHÔNG ĐỢI ĐẾN CUỐI MỚI GIAO CODE!
+  Dũng phải PUSH CODE LÊN GITHUB MỖI NGÀY. Xong hàm nào, push hàm đó.
+  Hoà review LIÊN TỤC song song, KHÔNG đợi đến ngày cuối mới review.
+  Tích hợp phải diễn ra DẦN DẦN, không phải 1 lần vào ngày cuối.
+
+NGÀY 1 (18/04) — KHẢO SÁT + NGHIÊN CỨU:
+  - Hoà + Dũng: Đọc tài liệu, trải nghiệm TradeZella
+  - ★ Hoà: ĐĂNG NHẬP AWS NGAY → kiểm tra hạ tầng (EC2/Lambda/RDS/OS)
+    → BÁO LẠI NGƯỜI QUẢN LÝ DỰ ÁN ngay trong ngày!
+    → Nếu server là Linux → cần thay đổi kiến trúc NGAY, không chờ!
+  - Dũng: Setup Neon + bắt đầu thiết kế database schema
+  - Dũng: Bắt đầu viết error_handler.py + logger.py (dùng chung)
+
+NGÀY 2 (19/04) — SETUP + REVIEW SCHEMA:
+  - Dũng: Hoàn thành schema → PUSH + GỬI CHO HOÀ REVIEW
+  - Dũng: Gửi error_handler + logger cho Hoà dùng
+  - Hoà: Cài MT5, test kết nối cơ bản với tài khoản demo
+  - Hoà: Review + approve schema của Dũng
+
+NGÀY 3-4 (20-21/04) — CODE SONG SONG:
+  - Dũng: Code API endpoints + service layer + Docker setup
+  - Dũng: PUSH code mỗi ngày, xong hàm nào báo Hoà test luôn
+  - Hoà: Code MT5 Connector + Data Normalizer
+  - Hoà: Review từng phần code Dũng push lên (KHÔNG ĐỢI CUỐI)
+  - Hoà: Bắt đầu tích hợp thử với các API đã xong của Dũng
+
+NGÀY 5 (22/04) — HOÀN THIỆN:
+  - Dũng: Hoàn thành API + tests + Docker + API_DOCS.md
+  - Hoà: Hoàn thành MT5 engine + tests
+  - Hoà: Review cuối cùng toàn bộ code Dũng (checklist TASK H6)
+  - Hoà: Bắt đầu tích hợp hoàn chỉnh
+
+NGÀY 6 (23/04) — TÍCH HỢP + DEPLOY:
+  - Hoà: Nếu còn lỗi → yêu cầu Dũng sửa ngay
+  - Hoà: GHÉP hoàn chỉnh + test end-to-end
+  - Hoà: Deploy lên AWS
+  - Hoà: GỬI PROJECT HOÀN CHỈNH CHO NGƯỜI QUẢN LÝ DỰ ÁN
+
+NGÀY 7 (24/04) — BUFFER:
+  - Sửa bug, test thêm, chuẩn bị demo
+
+================================================================================
+VIII. QUY TẮC LÀM VIỆC
+================================================================================
+
+1. CODE CONVENTION:
+   - Dùng Python 3.10+
+   - Đặt tên biến/hàm tiếng Anh, snake_case
+   - Comment bằng tiếng Anh
+   - Mỗi file có docstring giải thích mục đích
+
+2. GIAO TIẾP:
+   - Báo cáo tiến độ cho người quản lý dự án MỖI NGÀY (tối)
+   - Nếu bị stuck > 2 tiếng → hỏi ngay, đừng tự mò
+   - Dũng có thắc mắc về schema → hỏi Hoà trước, Hoà không biết → hỏi anh
+
+3. BẢO MẬT:
+   - KHÔNG commit credentials vào git
+   - Dùng .env file cho tất cả secrets
+   - KHÔNG chia sẻ thông tin tài khoản MT5/AWS ra ngoài
+
+4. GIT:
+   - Dũng: branch "feature/database-api"
+   - Hoà: branch "feature/mt5-engine"
+   - Hoà merge vào "main" khi ghép xong
+   - ★ Dũng PHẢI push code MỖI NGÀY, không giữ code trên máy!
+   - Xong hàm/endpoint nào → commit + push + báo Hoà
+
+================================================================================
+IX. TIÊU CHÍ HOÀN THÀNH (DEFINITION OF DONE)
+================================================================================
+
+Giai đoạn 1 được coi là HOÀN THÀNH khi:
+
+☐ Kết nối được tài khoản MT5 demo thành công
+☐ Lấy được đầy đủ lịch sử giao dịch
+☐ Data lưu vào database chính xác (so sánh với MT5 terminal)
+☐ API trả dữ liệu đúng format
+☐ Thời gian kết nối < 5 giây
+☐ Hỗ trợ cả prop firm và retail broker (cùng protocol)
+☐ Có error handling cho các trường hợp lỗi
+☐ Có log đầy đủ
+☐ Code chạy được trên AWS
+☐ README hướng dẫn chạy rõ ràng
+
+================================================================================
+X. CÂU HỎI THƯỜNG GẶP
+================================================================================
+
+Q: MT5 API chỉ chạy trên Windows, server AWS là Linux thì sao?
+A: Đây là vấn đề lớn. Báo lại người quản lý dự án NGAY khi xác nhận OS trên AWS.
+   Có thể cần dùng Windows VPS hoặc giải pháp bridge.
+
+Q: Tài khoản demo không có trade history thì test thế nào?
+A: Mở MT5 terminal, thực hiện vài lệnh demo trước rồi test.
+   Hoặc dùng data mẫu để test API (Dũng tạo seed_data.sql).
+
+Q: Cần thêm endpoint nào không?
+A: Danh sách ở trên là TỐI THIỂU. Nếu thấy cần thêm, báo Hoà và anh.
+
+Q: Database dùng PostgreSQL hay MongoDB?
+A: Dùng PostgreSQL trên Neon (BẮT BUỘC). Xem hướng dẫn ở TASK D1.
+   Neon miễn phí, online, cả 2 bạn dùng chung được.
+
+================================================================================
+                           HẾT — CHÚC 2 BẠN LÀM VIỆC TỐT!
+================================================================================

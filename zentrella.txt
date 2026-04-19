@@ -1,0 +1,335 @@
+Tôi sẽ rà cả trang chính, phần tính năng, tích hợp, hỗ trợ và nếu có thì cả giá để tóm lại thành một bức tranh đầy đủ, dễ hiểu. Sau đó tôi sẽ giải thích theo kiểu: nó là gì, dùng để làm gì, ai nên dùng, các tính năng chính, điểm mạnh và các lưu ý.Tôi đã xác nhận được lõi của nó: đây không phải sàn giao dịch để vào lệnh trực tiếp, mà là một nền tảng trading journal + analytics + review giúp trader nhập lịch sử lệnh, phân tích hiệu suất, ghi chú và rút ra “edge” từ dữ liệu giao dịch của mình. Tôi đang kiểm tra thêm phần tích hợp broker, replay và backtesting để tách rõ cái gì là cốt lõi, cái gì là tính năng mở rộng.Đã suy nghĩ trong 35sDưới đây là bức tranh đầy đủ, dễ hiểu nhất về TradeZella.
+TradeZella là gì?
+TradeZella là một nền tảng trading journal và phân tích hiệu suất giao dịch. Nói đơn giản: nó không phải là sàn để bạn mua bán trực tiếp, mà là nơi bạn đưa lịch sử lệnh vào, rồi hệ thống giúp bạn xem mình đang giao dịch tốt ở đâu, tệ ở đâu, mắc lỗi gì, setup nào hiệu quả nhất, ngày nào thắng tốt nhất, ngày nào thua nặng nhất. Trang chủ của họ mô tả sản phẩm như công cụ dùng “journaling and analytics” để cho thấy các chỉ số và hành vi dẫn đến lợi nhuận. 
+Trang web này dùng để làm gì?
+Mục tiêu chính của TradeZella là giúp trader review lại quá trình giao dịch thay vì chỉ nhìn mỗi PnL. Nó được dùng để: nhập trade từ broker, phân tích theo nhiều chỉ số, ghi chú từng lệnh, gắn tag cho lỗi và setup, theo dõi thói quen, xây playbook, replay lại lệnh đã đánh, và backtest chiến lược trên dữ liệu quá khứ. Theo trang tính năng và trang hướng dẫn của chính họ, nền tảng này xoay quanh 4 việc lớn: trade tracking, journaling, analytics/reports, và review workflow. 
+Ai là người nên dùng?
+TradeZella phù hợp nhất với:
+
+
+day trader, scalper, swing trader muốn biết mình kiếm tiền từ setup nào
+
+
+trader đang thua nhưng chưa biết thua vì chiến lược hay vì kỷ luật
+
+
+người cần thay Excel thủ công bằng hệ thống tự động hơn
+
+
+người muốn review sau phiên và cải thiện tâm lý giao dịch
+Họ cũng có các trang riêng cho stocks, options, forex và nói rõ đây là công cụ journal để cải thiện hiệu suất giao dịch ở các thị trường đó. 
+
+
+1) Cốt lõi của TradeZella
+a) Trade import / đồng bộ lịch sử lệnh
+TradeZella cho phép import lịch sử giao dịch bằng nhiều cách: auto-sync, upload file, hoặc nhập tay. Trang pricing ghi rõ “Import your trading history from various brokers using auto-sync, file upload or manual input.” 
+b) Theo dõi lệnh chi tiết
+Nó không chỉ lưu lệnh thắng thua, mà còn giúp xem:
+
+
+điểm vào / ra
+
+
+risk management
+
+
+running P/L
+
+
+setup và mistake
+
+
+trade rating / scale
+Những mục này được liệt kê trên trang features và help center. 
+
+
+c) Journal / ghi chú giao dịch
+Bạn có thể ghi lại:
+
+
+vì sao vào lệnh
+
+
+tâm lý lúc vào lệnh
+
+
+lỗi kỷ luật
+
+
+bài học sau phiên
+
+
+nhận xét theo ngày
+Help Center mô tả đây là “Personalized Journal and Note-Taking” để take notes, tag trades, và hiểu hiệu suất tổng thể. 
+
+
+d) Dashboard và analytics
+TradeZella có dashboard tùy biến và phân tích theo hàng chục chỉ số. Trang trading journal nói rõ nó tự động phân tích hiệu suất “across dozens of metrics” và có customizable dashboard, trade log, daily journal, notebook, detailed reports. 
+2) Các tính năng chính
+1. Analytics dashboard
+Theo dõi KPI giao dịch, hiệu suất tổng quan, profitability charts, winning percentage, calendar view, advanced filtering. Đây là lớp tính năng giúp bạn xem hiệu suất theo thời gian và theo từng nhóm điều kiện. 
+2. Advanced filtering
+Một tính năng rất quan trọng là lọc trade theo tiêu chí cụ thể, ví dụ:
+
+
+chỉ xem lệnh theo 1 setup
+
+
+chỉ xem lệnh trong 1 khung giờ
+
+
+chỉ xem lệnh bị lỗi FOMO
+
+
+chỉ xem lệnh trên một tài khoản hay thị trường
+Trang pricing gọi đây là Advanced Global Filter, dùng để “filter and analyze specific subsets of your trades based on any criteria.” 
+
+
+3. Custom tags / tag lỗi và setup
+Bạn có thể gắn nhãn cho lệnh như:
+
+
+mistake
+
+
+setup
+
+
+execution error
+
+
+revenge trade
+
+
+A+ setup
+Ngoài tag có sẵn, họ còn cho tạo custom tag categories theo đúng phong cách giao dịch của bạn. 
+
+
+4. Reports / báo cáo đào sâu
+TradeZella có các report để tìm ra:
+
+
+ngày giao dịch tốt nhất / tệ nhất
+
+
+strengths và weaknesses
+
+
+top setups
+
+
+bad habits
+
+
+trade expectancy
+Đây là phần rất hữu ích nếu bạn muốn trả lời câu hỏi: “Rốt cuộc mình đang kiếm tiền nhờ cái gì?” 
+
+
+5. Notebook / playbook / trading plans
+Trang features cho biết bạn có thể:
+
+
+tạo custom templates
+
+
+xây trading plan
+
+
+recap losses
+
+
+đồng bộ với trading stats
+
+
+lưu và chia sẻ
+Điều này biến TradeZella thành nơi vừa lưu dữ liệu lệnh vừa lưu quy trình và kế hoạch giao dịch. 
+
+
+6. Trade Replay
+Đây là tính năng nổi bật. Trade Replay cho phép bạn replay lại lệnh đã đánh bằng dữ liệu tick-by-tick, xem lại lúc vào lệnh, thoát lệnh, sai ở đâu, bỏ lỡ gì. TradeZella nói rõ đây là replay của trade thực tế bạn đã vào, chứ không phải chỉ là test giả lập. 
+7. Day Replay
+Ngoài từng lệnh, họ còn nói có thể replay cả ngày giao dịch để xem việc một lệnh đầu ngày ảnh hưởng thế nào tới quyết định sau đó. Điều này có ích cho trader hay bị tâm lý sau chuỗi thắng/thua. 
+8. Backtesting
+TradeZella hiện còn đẩy mạnh phần backtesting, tức là quay về dữ liệu quá khứ để test chiến lược. Trang backtesting nói rằng live trades và backtested trades có thể nằm chung dashboard; trang event/guide mô tả dùng được cho forex, futures, stocks, crypto, indices. 
+9. AI insights
+TradeZella hiện quảng bá có AI insights trên các trang so sánh của họ. Phần này thiên về phân tích trade và phát hiện pattern hành vi của trader hơn là AI ra tín hiệu mua bán cho bạn. Tuy nhiên thông tin này mình thấy rõ nhất trên các trang so sánh/marketing phụ của TradeZella, nên nên xem nó là tính năng đang được họ đẩy mạnh về mặt sản phẩm. 
+10. Learning resources / Zella University
+TradeZella không chỉ là công cụ, mà còn có phần học tập như:
+
+
+bootcamps
+
+
+trader development webinars
+
+
+bài học về phục hồi sau thua lỗ
+
+
+nội dung hướng dẫn dùng journal và analytics
+Trang features và pricing đều nhắc đến phần education/content này. 
+
+
+11. Free trading calculators
+Ngoài app chính, website còn có các công cụ miễn phí như:
+
+
+position size calculator
+
+
+drawdown recovery calculator
+
+
+Monte Carlo simulation
+
+
+futures P&L / contract tools
+Trang free calculators nói rõ các tool này miễn phí 100% và không cần signup. 
+
+
+3) Nó có hỗ trợ broker / nền tảng nào?
+TradeZella có trang broker support riêng. Trang này nói họ kết nối với 500+ brokers và trading platforms, gồm ví dụ như NinjaTrader, MetaTrader, Interactive Brokers, Charles Schwab, Tradovate và nhiều nền tảng khác. Họ hỗ trợ các nhóm thị trường như stocks, options, futures, forex, crypto, và cho biết có thể import qua Auto Sync hoặc File Upload tùy tích hợp. 
+Có một chi tiết nhỏ: một trang backtesting của họ nói 400+ brokers & integrations, còn trang broker support ghi 500+. Điều này có thể là do nội dung marketing được cập nhật không đồng thời giữa các trang. Mốc mới hơn và trực tiếp hơn cho việc tra broker là trang broker support. 
+4) TradeZella KHÔNG phải là gì?
+Đây là phần rất quan trọng để tránh hiểu nhầm.
+TradeZella không phải:
+
+
+sàn giao dịch / broker
+
+
+nơi nạp tiền để mua bán tài sản
+
+
+bot tự động đánh lệnh thay bạn
+
+
+nền tảng charting chính như TradingView
+
+
+phần mềm copy trade
+Nó là lớp phân tích và review đặt phía sau hoạt động giao dịch của bạn. Bạn giao dịch ở broker/nền tảng khác, rồi dùng TradeZella để nhìn lại và tối ưu hóa cách mình trade. Điều này thể hiện rõ qua mô tả “import trades”, “journal”, “analytics”, “reports”, “replay”, “backtesting”. 
+
+
+5) Workflow dùng TradeZella thường sẽ như thế nào?
+Một quy trình điển hình sẽ là:
+
+
+Kết nối broker hoặc upload lịch sử lệnh. 
+
+
+Gắn tag cho từng trade: setup, lỗi, cảm xúc, bối cảnh. 
+
+
+Review dashboard: win rate, profitability, best/worst days, expectancy. 
+
+
+Mở report để xem setup nào đang có edge thật. 
+
+
+Replay lại lệnh hoặc cả phiên để soi execution. 
+
+
+Viết note và cập nhật playbook / trading plan. 
+
+
+Dùng backtesting để test thêm ý tưởng trước khi trade tiền thật. 
+
+
+6) Giá và gói hiện tại
+Theo trang pricing hiện tại của TradeZella:
+
+
+Basic: $29/tháng, phù hợp beginner, tối đa 1 account, 1GB storage, tối đa 3 playbooks, 5 mentor invites, unlimited backtesting, Trade Replay. 
+
+
+Premium: $49/tháng, unlimited accounts, 5GB storage, unlimited playbooks, unlimited mentor invites, unlimited backtesting, Sessions Trade Replay. 
+
+
+Essential: $24/tháng khi trả năm, billed $288/năm, 1 account, 1GB, 3 playbooks, 5 mentor invites, unlimited backtesting, Trade Replay. 
+
+
+Pro: $33/tháng khi trả năm, billed $399/năm, unlimited accounts, 5GB, unlimited playbooks, unlimited mentor invites, unlimited backtesting, Sessions Trade Replay. 
+
+
+Nói ngắn gọn, bản năm là:
+
+
+Essential ≈ bản yearly của Basic
+
+
+Pro ≈ bản yearly của Premium. 
+
+
+7) Điểm mạnh thực tế của TradeZella
+Điểm mạnh lớn nhất của TradeZella là nó cố gắng kết hợp nhiều thứ trong một nơi:
+
+
+import trade
+
+
+journal
+
+
+analytics
+
+
+replay
+
+
+backtesting
+
+
+playbook
+
+
+learning resources
+Tức là thay vì dùng Excel + Notion + app replay + file note rời rạc, bạn có thể gom phần lớn review workflow vào một hệ thống. 
+
+
+Một điểm mạnh khác là họ tập trung rất rõ vào câu chuyện behavioral improvement: tìm lỗi lặp đi lặp lại, xem bad habits, xem best setup, best/worst days, review execution. Điều này hợp với trader muốn lên trình thật, chứ không chỉ muốn xem lời lỗ đơn thuần. 
+8) Hạn chế / điều cần lưu ý
+Dù TradeZella mạnh ở review và analytics, bạn vẫn nên lưu ý:
+
+
+Nó không thay thế broker hay nền tảng vào lệnh. 
+
+
+Giá là mô hình thuê bao hàng tháng/năm, nên nếu bạn trade ít thì cần cân nhắc giá trị sử dụng. 
+
+
+Một số thông tin marketing trên các trang khác nhau có chỗ chưa đồng nhất hoàn toàn, ví dụ số lượng broker hỗ trợ 400+ so với 500+. 
+
+
+Các tính năng AI được họ quảng bá khá mạnh, nhưng giá trị thực tế sẽ phụ thuộc vào chất lượng dữ liệu trade bạn nhập và mức độ nghiêm túc của bạn khi tag/review lệnh. Đây là suy luận hợp lý từ cách sản phẩm hoạt động, không phải lời họ hứa rằng AI sẽ tự làm bạn có lãi. 
+
+
+9) Kết luận dễ hiểu nhất
+TradeZella là một “trung tâm review giao dịch” cho trader.
+Bạn dùng nó để:
+
+
+gom lịch sử lệnh từ broker
+
+
+thống kê hiệu suất
+
+
+ghi chép và gắn tag
+
+
+tìm setup hiệu quả
+
+
+nhận diện lỗi tâm lý và lỗi execution
+
+
+replay lại lệnh đã đánh
+
+
+backtest chiến lược trước khi dùng tiền thật. 
+
+
+Nếu nói thật ngắn gọn thì:
+TradeZella không giúp bạn “đặt lệnh”. Nó giúp bạn hiểu vì sao bạn thắng, vì sao bạn thua, và làm sao để trade tốt hơn theo thời gian. 
+Tôi có thể làm tiếp cho bạn một bản so sánh TradeZella với Excel, TraderSync, Tradervue và Edgewonk để bạn biết có nên dùng nó hay không.
