@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0] - 2026-04-20
+
+### 🚀 MT5 Data Pipeline (Branch: `feature/database-api`)
+
+#### New Features
+- **Account Management API** — Register, list, detail, and delete MT5 accounts with cascade cleanup
+- **Trade Sync Engine** — Trigger sync from MT5 Python service, skip duplicates by ticket, track sync history
+- **Trade Queries** — Paginated trade listing with date range, symbol, and direction filters
+- **Open Positions API** — Real-time open position tracking, refreshed on each sync
+- **Daily Summary** — Automated daily P/L aggregation with win rate, volume, and largest win/loss
+- **Sync Logs** — Full sync operation history with timing, error tracking, and concurrent sync prevention
+- **Standardized Error Codes** — 30 error codes shared between Node.js and Python MT5 service
+
+#### New Models
+- `Account` — MT5 account metadata, connection status, sync tracking
+- `OpenPosition` — Current open positions (ephemeral, refreshed on sync)
+- `DailySummary` — Per-account per-day trade aggregation
+- `SyncLog` — Sync operation tracking (type, status, timing, errors)
+
+#### Extended Models
+- `Trade` — Added 16 MT5 raw data fields (ticket, positionId, volume, openPrice, closePrice, SL, TP, commission, swap, netProfit, etc.)
+
+#### New API Endpoints (9 total)
+- `POST   /v1/accounts` — Register MT5 account
+- `GET    /v1/accounts` — List user accounts
+- `GET    /v1/accounts/:id` — Account detail
+- `DELETE /v1/accounts/:id` — Delete account (cascade)
+- `POST   /v1/accounts/:id/sync` — Trigger MT5 sync
+- `GET    /v1/accounts/:id/trades` — Paginated trade queries
+- `GET    /v1/accounts/:id/positions` — Open positions
+- `GET    /v1/accounts/:id/summary` — Daily summaries
+- `GET    /v1/accounts/:id/sync-logs` — Sync history
+
+#### Infrastructure
+- Extended `ApiError` with `code` field for programmatic error handling
+- Updated error middleware to include `errorCode` in JSON responses
+- Added Swagger/OpenAPI documentation for all new endpoints
+- Added unit tests (Account model, Error Codes) and integration tests (9 endpoints)
+
+
 ## [1.7.0](https://github.com/hagopj13/node-express-boilerplate/compare/v1.6.0...v1.7.0) (2021-03-30)
 
 ### Features
