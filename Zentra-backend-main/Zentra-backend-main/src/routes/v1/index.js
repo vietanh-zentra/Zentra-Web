@@ -8,6 +8,7 @@ const dashboardRoute = require('./dashboard.route');
 const healthRoute = require('./health.route');
 const docsRoute = require('./docs.route');
 const mt5Route = require('./mt5.route');
+const accountRoute = require('./account.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -45,6 +46,10 @@ const defaultRoutes = [
     path: '/health',
     route: healthRoute,
   },
+  {
+    path: '/accounts',
+    route: accountRoute,
+  },
 ];
 
 const devRoutes = [
@@ -67,3 +72,4 @@ if (config.env === 'development') {
 }
 
 module.exports = router;
+

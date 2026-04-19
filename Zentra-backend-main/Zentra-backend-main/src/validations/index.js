@@ -6,3 +6,5 @@ module.exports.analysisValidation = require('./analysis.validation');
 module.exports.dashboardValidation = require('./dashboard.validation');
 module.exports.mt5Validation = require('./mt5.validation');
 module.exports.zentraValidation = require('./zentra.validation');
+module.exports.accountValidation = require('./account.validation');
+
