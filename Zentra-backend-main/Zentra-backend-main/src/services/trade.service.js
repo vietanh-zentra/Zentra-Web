@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 
 const ApiError = require('../utils/ApiError');
+const { ErrorCodes } = require('../utils/errorCodes');
 const logger = require('../config/logger');
 const { Trade, TradingPlan, BehaviorHeatmapHistory, StabilityTrendHistory } = require('../models');
 const { behaviorHeatmap, consistencyTrend } = require('./zentra');
@@ -339,6 +340,111 @@ const deleteBulkTrades = async (userId, tradeIds) => {
   logger.info('Service: Deleted %d trades', result.deletedCount);
 };
 
+// ─── New functions for MT5 Data Pipeline ─────────────────────────────
+
+/**
+ * Get a trade by its MT5 ticket number
+ * @param {number} ticket - MT5 ticket number
+ * @param {ObjectId} accountId - Account MongoDB _id
+ * @returns {Promise<Trade|null>}
+ */
+const getTradeByTicket = async (ticket, accountId) => {
+  logger.info('[TradeService] Looking up trade by ticket: %d, account: %s', ticket, accountId);
+  return Trade.findOne({ ticket, accountId }).lean();
+};
+
+/**
+ * Get trades for a specific account with filters and pagination
+ * @param {ObjectId} accountId - Account MongoDB _id
+ * @param {Object} [filters] - { from, to, symbol }
+ * @param {Object} [options] - { page, limit, sortBy }
+ * @returns {Promise<QueryResult>}
+ */
+const getTradesByAccount = async (accountId, filters = {}, options = {}) => {
+  logger.info('[TradeService] Getting trades for account: %s, filters: %j', accountId, filters);
+
+  const filter = { accountId };
+
+  // Date range filter
+  if (filters.from || filters.to) {
+    filter.entryTime = {};
+    if (filters.from) filter.entryTime.$gte = new Date(filters.from);
+    if (filters.to) filter.entryTime.$lte = new Date(filters.to);
+  }
+
+  // Symbol filter
+  if (filters.symbol) {
+    filter.mt5Symbol = filters.symbol;
+  }
+
+  // Trade type filter
+  if (filters.tradeType) {
+    filter.tradeType = filters.tradeType;
+  }
+
+  const queryOptions = {
+    sortBy: options.sortBy || 'entryTime:desc',
+    limit: options.limit || 50,
+    page: options.page || 1,
+  };
+
+  return Trade.paginate(filter, queryOptions);
+};
+
+/**
+ * Bulk insert trades for an MT5 account, skipping duplicates by ticket number.
+ * This is smarter than createBulkTrades() — it checks for existing tickets first.
+ *
+ * @param {ObjectId} userId - User MongoDB _id
+ * @param {ObjectId} accountId - Account MongoDB _id
+ * @param {Array<Object>} tradesData - Array of trade data from MT5
+ * @returns {Promise<Object>} - { inserted: number, skipped: number, trades: Array }
+ */
+const createBulkTradesForAccount = async (userId, accountId, tradesData) => {
+  logger.info('[TradeService] Bulk inserting %d trades for account: %s', tradesData.length, accountId);
+
+  if (!tradesData || tradesData.length === 0) {
+    return { inserted: 0, skipped: 0, trades: [] };
+  }
+
+  // Get existing tickets for this account to avoid duplicates
+  const tickets = tradesData.map((t) => t.ticket).filter(Boolean);
+  const existingTrades = await Trade.find(
+    { accountId, ticket: { $in: tickets } },
+    { ticket: 1 }
+  ).lean();
+  const existingTickets = new Set(existingTrades.map((t) => t.ticket));
+
+  // Filter out duplicates
+  const newTrades = tradesData.filter((t) => !t.ticket || !existingTickets.has(t.ticket));
+  const skipped = tradesData.length - newTrades.length;
+
+  if (skipped > 0) {
+    logger.info('[TradeService] Skipping %d duplicate trades (by ticket)', skipped);
+  }
+
+  if (newTrades.length === 0) {
+    logger.info('[TradeService] All trades already exist, nothing to insert');
+    return { inserted: 0, skipped, trades: [] };
+  }
+
+  // Prepare trade documents
+  const tradeDocs = newTrades.map((tradeData) => ({
+    userId,
+    accountId,
+    ...tradeData,
+    source: { type: 'mt5', mt5AccountId: tradeData.mt5AccountId || String(accountId) },
+  }));
+
+  const result = await Trade.insertMany(tradeDocs, { ordered: false });
+  logger.info('[TradeService] Inserted %d new trades, skipped %d duplicates', result.length, skipped);
+
+  // Analyze imported trades for psychology features
+  await analyzeImportedTrades(userId, result);
+
+  return { inserted: result.length, skipped, trades: result };
+};
+
 module.exports = {
   createTrade,
   createBulkTrades,
@@ -347,4 +453,8 @@ module.exports = {
   updateTradeById,
   deleteTradeById,
   deleteBulkTrades,
+  // New MT5 pipeline functions
+  getTradeByTicket,
+  getTradesByAccount,
+  createBulkTradesForAccount,
 };

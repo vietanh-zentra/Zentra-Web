@@ -8,3 +8,9 @@ module.exports.analysisService = require('./analysis.service');
 module.exports.dashboardService = require('./dashboard.service');
 module.exports.mt5Service = require('./mt5.service');
 module.exports.zentraService = require('./zentra.service');
+// MT5 Data Pipeline services
+module.exports.accountService = require('./account.service');
+module.exports.syncService = require('./sync.service');
+module.exports.openPositionService = require('./openPosition.service');
+module.exports.dailySummaryService = require('./dailySummary.service');
+
