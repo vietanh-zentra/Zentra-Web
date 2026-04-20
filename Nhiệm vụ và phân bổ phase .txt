@@ -172,7 +172,9 @@ có giữ chung repo hay tách module riêng.
 Deliverable chung
 ARCHITECTURE_AUDIT.md
 INTEGRATION_DECISION.md
-PHASE 2 — Khóa contract dữ liệu và interface chung
+
+
+////////////////// PHASE 2 — Khóa contract dữ liệu và interface chung
 Mục tiêu
 
 Biến JSON spec trong tài liệu thành contract kỹ thuật thật dùng cho code.
@@ -214,7 +216,9 @@ có cần thêm migration mới không
 có cần cache layer không
 có cần queue không
 Chứ chưa kết luận Neon hay DB khác.
-PHASE 3 — Dũng dựng data layer, Hoà dựng MT5 core
+
+
+////////////PHASE 3 — Dũng dựng data layer, Hoà dựng MT5 core
 Mục tiêu
 
 Hai bên code độc lập nhưng bám đúng contract đã khóa.
@@ -237,6 +241,7 @@ open_time
 close_time
 nếu dùng DB quan hệ.
 Các bảng và field này bám theo spec gốc.
+
 3B. Phần Hoà
 viết mt5_connector.py
 viết data_normalizer.py
@@ -258,7 +263,9 @@ precision
 nullable
 query speed
 field mismatch.
-PHASE 4 — Dũng làm API thật, Hoà làm validator và test dữ liệu thật
+
+
+////////////PHASE 4 — Dũng làm API thật, Hoà làm validator và test dữ liệu thật
 Mục tiêu
 
 Backend đọc ra được dữ liệu đúng format mà frontend cần.
@@ -295,7 +302,10 @@ so sánh output API với dữ liệu MT5 thực.
 Checkpoint cuối phase
 gọi API trades/positions/summary được
 Hoà xác nhận dữ liệu API khớp MT5 terminal
-PHASE 5 — Chuẩn hóa lỗi, log, test, Docker
+
+
+
+/////////PHASE 5 — Chuẩn hóa lỗi, log, test, Docker
 Mục tiêu
 
 Không chỉ chạy được mà còn dễ debug và dễ bàn giao.
@@ -321,7 +331,9 @@ Checkpoint cuối phase
 1 lần sync fail phải trả lỗi chuẩn
 log đọc được nguyên nhân
 Docker chạy lên được trên local/staging
-PHASE 6 — Ghép thật với source code khách hàng
+
+
+//////////////PHASE 6 — Ghép thật với source code khách hàng
 Mục tiêu
 
 Không chỉ dựng module riêng, mà nhét vào dự án khách theo đúng flow thật.
@@ -348,7 +360,8 @@ Checkpoint cuối phase
 dự án khách chạy lên với module mới
 dữ liệu hiện ra đúng flow mong muốn
 chưa cần production nếu còn hạ tầng mơ hồ, nhưng tối thiểu phải có staging/local integrated run
-PHASE 7 — Review cuối, deploy, bàn giao
+
+///////////////PHASE 7 — Review cuối, deploy, bàn giao
 Mục tiêu
 
 Hoà làm integration owner, Dũng hỗ trợ fix nhanh.

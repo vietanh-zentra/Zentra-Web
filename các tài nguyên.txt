@@ -14,7 +14,7 @@ MT5 DEMO ACCOUNT:
 AWS:
   Console:  https://415066135731.signin.aws.amazon.com/console
   User:     vietanh.zentra@gmail.com
-  Password: Teamzentra456!
+  Password: Teamzentra789!   (ĐÃ ĐỔI ngày 20/04/2026, mật khẩu cũ hết hạn)
 
 
 

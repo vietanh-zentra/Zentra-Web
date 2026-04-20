@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  node-app:
+    build: .
+    image: zentra-node-app
+    container_name: zentra-backend
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/node-app
+      - /usr/src/node-app/node_modules
+    networks:
+      - zentra-network
+
+  mongodb:
+    image: mongo:4.4
+    container_name: zentra-mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - zentra-dbdata:/data/db
+    networks:
+      - zentra-network
+
+  # Note: mt5-engine is designed for Windows natively
+  # Un-comment below ONLY IF you use a mock MT5 service or the container is running on a Windows container engine
+  # mt5-engine:
+  #   build: ./mt5_engine
+  #   container_name: zentra-mt5-service
+  #   ports:
+  #     - '5000:5000'
+  #   environment:
+  #     - MT5_API_KEY=${MT5_API_KEY:-your-secret-api-key}
+  #   networks:
+  #     - zentra-network
+
+volumes:
+  zentra-dbdata:
+
+networks:
+  zentra-network:
+    driver: bridge
