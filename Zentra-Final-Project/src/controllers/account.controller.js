@@ -77,6 +77,16 @@ const triggerSync = catchAsync(async (req, res) => {
   // Verify account ownership
   const account = await accountService.getAccountById(accountId, req.user.id);
 
+  // Check for concurrent sync
+  const inProgress = await syncService.isSyncInProgress(account.id);
+  if (inProgress) {
+    throw new (require('../utils/ApiError'))(
+      409,
+      'Another sync is already in progress for this account',
+      { code: require('../utils/errorCodes').ErrorCodes.SYNC_IN_PROGRESS }
+    );
+  }
+
   // Create sync log
   const syncLog = await syncService.createSyncLog(account.id, syncType || 'full', { fromDate, toDate });
   const startTime = Date.now();
@@ -92,7 +102,7 @@ const triggerSync = catchAsync(async (req, res) => {
     const from = fromDate ? new Date(fromDate) : (account.lastSync || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
     const to = toDate ? new Date(toDate) : new Date();
 
-    // Fetch trades from MT5 Python service
+    // 1) Fetch trades from MT5 Python service (Hoà)
     const mt5Trades = await mt5Service.fetchMT5Trades(
       account.accountId,
       user.mt5Account.server,
@@ -101,21 +111,52 @@ const triggerSync = catchAsync(async (req, res) => {
       to
     );
 
-    // Bulk insert trades (skipping duplicates)
+    // 2) Bulk insert trades (skipping duplicates)
     const bulkResult = await tradeService.createBulkTradesForAccount(req.user.id, account.id, mt5Trades);
 
-    // Recalculate daily summaries for affected dates
+    // 3) Recalculate daily summaries for affected dates
     if (bulkResult.inserted > 0) {
       await dailySummaryService.recalculateForTrades(account.id, bulkResult.trades);
     }
 
-    // Update account info
-    await accountService.updateAccountInfo(account.id, {
-      lastSync: new Date(),
-      totalTradesSynced: (account.totalTradesSynced || 0) + bulkResult.inserted,
-    });
+    // 4) Fetch and upsert open positions (Hoà)
+    try {
+      const mt5Positions = await mt5Service.fetchOpenPositions(
+        account.accountId,
+        user.mt5Account.server,
+        decryptedPassword
+      );
+      await openPositionService.upsertPositions(account.id, mt5Positions);
+      logger.info('[AccountController] Upserted %d open positions', mt5Positions.length);
+    } catch (posErr) {
+      // Non-fatal: positions are nice-to-have, don't fail the whole sync
+      logger.warn('[AccountController] Failed to fetch positions (non-fatal): %s', posErr.message);
+    }
 
-    // Mark sync as success
+    // 5) Fetch and update account info (balance, equity) from Hoà
+    try {
+      const accountInfo = await mt5Service.fetchAccountInfo(
+        account.accountId,
+        user.mt5Account.server,
+        decryptedPassword
+      );
+      await accountService.updateAccountInfo(account.id, {
+        lastSync: new Date(),
+        totalTradesSynced: (account.totalTradesSynced || 0) + bulkResult.inserted,
+        balance: accountInfo.balance ?? account.balance,
+        equity: accountInfo.equity ?? account.equity,
+        margin: accountInfo.margin ?? account.margin,
+      });
+    } catch (infoErr) {
+      // Non-fatal: at minimum update lastSync and trade count
+      logger.warn('[AccountController] Failed to fetch account info (non-fatal): %s', infoErr.message);
+      await accountService.updateAccountInfo(account.id, {
+        lastSync: new Date(),
+        totalTradesSynced: (account.totalTradesSynced || 0) + bulkResult.inserted,
+      });
+    }
+
+    // 6) Mark sync as success
     await syncService.markSyncSuccess(syncLog.id, {
       tradesSynced: mt5Trades.length,
       newTradesInserted: bulkResult.inserted,

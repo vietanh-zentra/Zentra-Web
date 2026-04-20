@@ -151,6 +151,64 @@ def connect():
     return jsonify(response), status
 
 
+# ─── POST /account-info ───────────────────────────────────────────────
+@app.route('/account-info', methods=['POST'])
+def account_info():
+    """
+    Fetch account info from MT5.
+    Expected by: mt5.service.js → fetchAccountInfo()
+    """
+    auth_error = validate_api_key()
+    if auth_error: return auth_error
+
+    data, err_resp, err_status = get_required_fields(request.get_json() if request.is_json else {}, ['accountId', 'server', 'password'])
+    if err_resp: return err_resp, err_status
+
+    account_id = data.get('accountId')
+    server = data.get('server')
+    password = data.get('password')
+
+    conn_result = connector.connect(int(account_id), password, server)
+    if not conn_result.get("connected"):
+        response, status = build_connect_response(conn_result)
+        return jsonify(response), status
+
+    info = connector.get_account_info()
+    return jsonify({
+        "success": True,
+        "accountInfo": adapt_account_for_backend(info) if info else {}
+    }), 200
+
+
+# ─── POST /positions ──────────────────────────────────────────────────
+@app.route('/positions', methods=['POST'])
+def positions():
+    """
+    Fetch open positions from MT5.
+    Expected by: mt5.service.js → fetchOpenPositions()
+    """
+    auth_error = validate_api_key()
+    if auth_error: return auth_error
+
+    data, err_resp, err_status = get_required_fields(request.get_json() if request.is_json else {}, ['accountId', 'server', 'password'])
+    if err_resp: return err_resp, err_status
+
+    account_id = data.get('accountId')
+    server = data.get('server')
+    password = data.get('password')
+
+    conn_result = connector.connect(int(account_id), password, server)
+    if not conn_result.get("connected"):
+        response, status = build_connect_response(conn_result)
+        return jsonify(response), status
+
+    pos = connector.get_open_positions()
+    return jsonify({
+        "success": True,
+        "positions": adapt_positions_for_backend(pos) if pos else []
+    }), 200
+
+
 # ─── POST /trades ─────────────────────────────────────────────────────
 @app.route('/trades', methods=['POST'])
 def trades():
