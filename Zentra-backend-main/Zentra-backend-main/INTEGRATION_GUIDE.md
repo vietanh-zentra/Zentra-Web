@@ -1,6 +1,7 @@
 # Hướng dẫn Tích hợp Python MT5 Service — Dành cho Hoà
 
 > **Mục đích:** Hướng dẫn Hoà cách Python Flask service giao tiếp với Node.js backend qua các API mới.
+> **Cập nhật:** 2026-04-20 — Thêm 3 endpoints Hoà phải implement + fix response format.
 
 ---
 
@@ -10,14 +11,18 @@
 Frontend → POST /v1/accounts/:id/sync → Node.js Controller
                                            ↓
                                     SyncLog created (status: in_progress)
-                                           ↓
-                                    → Python Flask Service (Hoà)
-                                           ↓
-                                    Fetch trades from MT5 terminal
-                                           ↓
-                                    Return JSON → Node.js
+                                           ↓ (1)
+                                    POST /trades → Python Flask (Hoà)
                                            ↓
                                     Bulk insert trades (skip duplicates)
+                                           ↓ (2)
+                                    POST /positions → Python Flask (Hoà)
+                                           ↓
+                                    Upsert open positions
+                                           ↓ (3)
+                                    POST /account-info → Python Flask (Hoà)
+                                           ↓
+                                    Update balance / equity / margin
                                            ↓
                                     Recalculate daily summaries
                                            ↓
@@ -26,7 +31,114 @@ Frontend → POST /v1/accounts/:id/sync → Node.js Controller
 
 ---
 
-## 2. Error Codes — Python phải dùng
+## 2. Endpoints mà Hoà phải implement (Python Flask)
+
+Node.js backend sẽ gọi 4 endpoint trên Flask service của Hoà. **TẤT CẢ đều dùng POST**, kèm header `X-API-Key`.
+
+### 2.1 `POST /connect` — Kết nối MT5
+**Request:**
+```json
+{
+  "accountId": 12345678,
+  "server": "MetaQuotes-Demo",
+  "password": "investor_password",
+  "manualLogin": true
+}
+```
+**Success Response:**
+```json
+{
+  "success": true,
+  "accountId": 12345678,
+  "server": "MetaQuotes-Demo",
+  "balance": 10000.00,
+  "equity": 10500.00,
+  "margin": 0.00,
+  "currency": "USD"
+}
+```
+
+### 2.2 `POST /trades` — Lấy lịch sử giao dịch đã đóng
+**Request:**
+```json
+{
+  "accountId": 12345678,
+  "server": "MetaQuotes-Demo",
+  "password": "investor_password",
+  "fromDate": "2026-04-01T00:00:00.000Z",
+  "toDate": "2026-04-20T23:59:59.000Z"
+}
+```
+**Success Response:**
+```json
+{
+  "success": true,
+  "count": 25,
+  "trades": [ ... ]
+}
+```
+
+### 2.3 `POST /positions` — Lấy vị thế đang mở
+**Request:**
+```json
+{
+  "accountId": 12345678,
+  "server": "MetaQuotes-Demo",
+  "password": "investor_password"
+}
+```
+**Success Response:**
+```json
+{
+  "success": true,
+  "positions": [
+    {
+      "ticket": 5001,
+      "symbol": "EURUSD",
+      "tradeType": "BUY",
+      "volume": 0.1,
+      "openPrice": 1.1050,
+      "currentPrice": 1.1075,
+      "openTime": "2026-04-19T10:30:00Z",
+      "stopLoss": 1.1000,
+      "takeProfit": 1.1100,
+      "floatingProfit": 25.00,
+      "swap": 0.00,
+      "magicNumber": 0
+    }
+  ]
+}
+```
+
+### 2.4 `POST /account-info` — Lấy thông tin tài khoản
+**Request:**
+```json
+{
+  "accountId": 12345678,
+  "server": "MetaQuotes-Demo",
+  "password": "investor_password"
+}
+```
+**Success Response:**
+```json
+{
+  "success": true,
+  "accountInfo": {
+    "accountId": 12345678,
+    "balance": 10000.00,
+    "equity": 10500.00,
+    "margin": 250.00,
+    "currency": "USD",
+    "leverage": 100,
+    "company": "MetaQuotes Ltd.",
+    "accountName": "Demo Account"
+  }
+}
+```
+
+---
+
+## 3. Error Codes — Python phải dùng
 
 Khi Python Flask service trả về lỗi, **PHẢI** dùng đúng error codes trong response:
 
@@ -51,29 +163,15 @@ ERROR_CODES = {
 {
   "success": false,
   "errorCode": "MT5_INVALID_CREDENTIALS",
-  "message": "Login failed: invalid account or password",
-  "statusCode": 401
+  "message": "Login failed: invalid account or password"
 }
 ```
 
-### Success Response Format (Python → Node.js):
-```json
-{
-  "success": true,
-  "trades": [ ... ],
-  "accountInfo": {
-    "accountId": 12345678,
-    "server": "MetaQuotes-Demo",
-    "balance": 10000.00,
-    "equity": 10500.00,
-    "currency": "USD"
-  }
-}
-```
+> ⚠️ **QUAN TRỌNG:** Node.js sẽ đọc field `errorCode` (không phải `code` hay `error`). Luôn dùng `errorCode` và `message`.
 
 ---
 
-## 3. Trade Object Format (Python gửi về)
+## 4. Trade Object Format (Python gửi về)
 
 Mỗi trade object trong array `trades` phải có format sau:
 
@@ -120,13 +218,32 @@ Mỗi trade object trong array `trades` phải có format sau:
 
 ---
 
-## 4. File Reference trên GitHub
+## 5. Cấu hình Flask (.env)
+
+Hoà cần set biến môi trường cho Flask service:
+
+```env
+# Flask
+FLASK_PORT=4000
+API_KEY=your-secret-api-key-change-in-production
+
+# MT5 Terminal
+MT5_TERMINAL_PATH=C:\Program Files\MetaTrader 5\terminal64.exe
+```
+
+Node.js backend sẽ gửi header `X-API-Key` — Hoà cần validate header này trùng với `API_KEY`.
+
+---
+
+## 6. File Reference trên GitHub
 
 | File | Link |
 |------|------|
 | Error Codes | `src/utils/errorCodes.js` |
+| MT5 Service (Node gọi Flask) | `src/services/mt5.service.js` |
 | Trade Model (xem fields) | `src/models/trade.model.js` |
 | Account Model | `src/models/account.model.js` |
+| OpenPosition Model | `src/models/openPosition.model.js` |
 | API Reference | `API_REFERENCE.md` |
 
 > **Branch:** `feature/database-api`
@@ -134,11 +251,15 @@ Mỗi trade object trong array `trades` phải có format sau:
 
 ---
 
-## 5. Checklist cho Hoà
+## 7. Checklist cho Hoà
 
-- [ ] Đọc file `errorCodes.js` — copy ERROR_CODES vào Python
-- [ ] Response format đúng JSON (success, errorCode, message)
-- [ ] Trade object format đúng schema bên trên
+- [ ] Implement `POST /connect` — trả `success`, `balance`, `equity`, `currency`
+- [ ] Implement `POST /trades` — trả `success`, `count`, `trades[]`
+- [ ] Implement `POST /positions` — trả `success`, `positions[]`
+- [ ] Implement `POST /account-info` — trả `success`, `accountInfo{}`
+- [ ] Validate header `X-API-Key` trên mọi endpoint
+- [ ] Dùng đúng `errorCode` field trong error response (không phải `code`)
+- [ ] Trade object format đúng schema Section 4
 - [ ] `ticket` field phải unique per trade
 - [ ] `session` auto-detect từ entryTime (London: 14:00-22:00 UTC, NY: 17:00-01:00 UTC, Asia: 01:00-09:00 UTC)
-- [ ] Test endpoint với Postman trước khi ghép
+- [ ] Test từng endpoint với Postman trước khi ghép
