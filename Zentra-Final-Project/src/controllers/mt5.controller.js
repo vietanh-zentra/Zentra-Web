@@ -200,6 +200,8 @@ const disconnectMT5 = catchAsync(async (req, res) => {
     message: 'MT5 account disconnected',
     deletedTrades: !!mt5AccountId,
   });
+});
+
 /**
  * Helper: get user credentials and verify MT5 connected
  */

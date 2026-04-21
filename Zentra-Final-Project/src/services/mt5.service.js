@@ -97,17 +97,11 @@ const fetchAccountInfo = async (accountId, server, password) => {
   logger.info('Fetching MT5 account info via Python service: %s', accountId);
 
   try {
-    const response = await axios.post(
+    const response = await axios.get(
       `${config.mt5.apiUrl}/account-info`,
-      {
-        accountId: parseInt(accountId, 10),
-        server,
-        password,
-      },
       {
         headers: {
           'X-API-Key': config.mt5.apiKey,
-          'Content-Type': 'application/json',
         },
         timeout: 30000,
       }
@@ -121,8 +115,8 @@ const fetchAccountInfo = async (accountId, server, password) => {
       );
     }
 
-    logger.info('Fetched account info for: %s (balance: %s)', accountId, response.data.accountInfo?.balance);
-    return response.data.accountInfo || {};
+    logger.info('Fetched account info for: %s (balance: %s)', accountId, response.data.balance);
+    return response.data;
   } catch (error) {
     logger.error('MT5 fetch account info error: %s', error.message);
     throw parseMt5Error(error, 'Failed to fetch account info from MT5');
@@ -190,17 +184,11 @@ const fetchOpenPositions = async (accountId, server, password) => {
   logger.info('Fetching MT5 open positions via Python service: %s', accountId);
 
   try {
-    const response = await axios.post(
+    const response = await axios.get(
       `${config.mt5.apiUrl}/positions`,
-      {
-        accountId: parseInt(accountId, 10),
-        server,
-        password,
-      },
       {
         headers: {
           'X-API-Key': config.mt5.apiKey,
-          'Content-Type': 'application/json',
         },
         timeout: 30000,
       }
