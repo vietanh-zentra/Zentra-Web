@@ -13,4 +13,7 @@ module.exports.Account = require('./account.model');
 module.exports.OpenPosition = require('./openPosition.model');
 module.exports.DailySummary = require('./dailySummary.model');
 module.exports.SyncLog = require('./syncLog.model');
-
+// D-NEW-4: MT5 Data Expansion models
+module.exports.PerformanceMetrics = require('./performanceMetrics.model');
+module.exports.PendingOrder = require('./pendingOrder.model');
+module.exports.PriceBar = require('./priceBar.model');

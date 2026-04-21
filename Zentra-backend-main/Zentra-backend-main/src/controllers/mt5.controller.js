@@ -200,6 +200,167 @@ const disconnectMT5 = catchAsync(async (req, res) => {
     message: 'MT5 account disconnected',
     deletedTrades: !!mt5AccountId,
   });
+/**
+ * Helper: get user credentials and verify MT5 connected
+ */
+const getMT5Credentials = async (userId) => {
+  const user = await userService.getUserById(userId);
+  if (!user.mt5Account || !user.mt5Account.isConnected) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'MT5 account not connected');
+  }
+  const decryptedPassword = user.getMT5Password();
+  if (!decryptedPassword) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'MT5 password not found');
+  }
+  return { user, decryptedPassword };
+};
+
+// ─── D-NEW-2: MT5 Data Expansion Controllers ────────────────────────
+
+/**
+ * GET /v1/mt5/account/full — Full account info (~40 fields)
+ */
+const getAccountFull = catchAsync(async (req, res) => {
+  logger.info('Getting full account info for user: %s', req.user.id);
+  await getMT5Credentials(req.user.id); // verify connected
+
+  const account = await mt5Service.fetchAccountInfoFull();
+  res.status(httpStatus.OK).send({ success: true, account });
+});
+
+/**
+ * GET /v1/mt5/symbols — List all symbols with market data
+ */
+const getSymbols = catchAsync(async (req, res) => {
+  logger.info('Getting symbols for user: %s', req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  const { group } = req.query;
+  const result = await mt5Service.fetchSymbols(group || null);
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * GET /v1/mt5/symbols/:symbolName — Single symbol detail
+ */
+const getSymbolDetail = catchAsync(async (req, res) => {
+  logger.info('Getting symbol detail: %s for user: %s', req.params.symbolName, req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  const symbol = await mt5Service.fetchSymbolDetail(req.params.symbolName);
+  res.status(httpStatus.OK).send({ success: true, symbol });
+});
+
+/**
+ * GET /v1/mt5/orders/pending — Active pending orders
+ */
+const getPendingOrders = catchAsync(async (req, res) => {
+  logger.info('Getting pending orders for user: %s', req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  const result = await mt5Service.fetchPendingOrders();
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * GET /v1/mt5/orders/history — Historical orders
+ */
+const getOrderHistory = catchAsync(async (req, res) => {
+  logger.info('Getting order history for user: %s', req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  const { from, to } = req.query;
+  const result = await mt5Service.fetchOrderHistory(from || null, to || null);
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * GET /v1/mt5/price-history — OHLC price bars
+ */
+const getPriceHistory = catchAsync(async (req, res) => {
+  const { symbol, timeframe, from, to, count } = req.query;
+  logger.info('Getting price history: %s %s for user: %s', symbol, timeframe, req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  if (!symbol) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Missing required query parameter: symbol');
+  }
+
+  const result = await mt5Service.fetchPriceHistory(
+    symbol,
+    timeframe || 'H1',
+    from || null,
+    to || null,
+    parseInt(count, 10) || 500
+  );
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * GET /v1/mt5/ticks — Tick data
+ */
+const getTickData = catchAsync(async (req, res) => {
+  const { symbol, count } = req.query;
+  logger.info('Getting tick data: %s for user: %s', symbol, req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  if (!symbol) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Missing required query parameter: symbol');
+  }
+
+  const result = await mt5Service.fetchTickData(symbol, parseInt(count, 10) || 1000);
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * GET /v1/mt5/terminal — Terminal info + latency
+ */
+const getTerminalInfo = catchAsync(async (req, res) => {
+  logger.info('Getting terminal info for user: %s', req.user.id);
+  await getMT5Credentials(req.user.id);
+
+  const terminal = await mt5Service.fetchTerminalInfo();
+  res.status(httpStatus.OK).send({ success: true, terminal });
+});
+
+/**
+ * GET /v1/mt5/performance — All performance metrics
+ */
+const getPerformance = catchAsync(async (req, res) => {
+  logger.info('Getting performance metrics for user: %s', req.user.id);
+  const { user, decryptedPassword } = await getMT5Credentials(req.user.id);
+
+  const { from } = req.query;
+  const result = await mt5Service.fetchPerformance(
+    user.mt5Account.accountId,
+    user.mt5Account.server,
+    decryptedPassword,
+    from || null
+  );
+  res.status(httpStatus.OK).send({ success: true, ...result });
+});
+
+/**
+ * POST /v1/mt5/full-sync-v2 — Comprehensive sync (everything)
+ */
+const fullSyncV2 = catchAsync(async (req, res) => {
+  logger.info('Full sync v2 for user: %s', req.user.id);
+  const { user, decryptedPassword } = await getMT5Credentials(req.user.id);
+
+  const { fromDate } = req.body;
+  const result = await mt5Service.fullSyncV2(
+    user.mt5Account.accountId,
+    user.mt5Account.server,
+    decryptedPassword,
+    fromDate || null
+  );
+
+  // Update last sync time
+  await userService.updateUserById(req.user.id, {
+    'mt5Account.lastSyncAt': new Date(),
+  });
+
+  res.status(httpStatus.OK).send({ success: true, ...result });
 });
 
 module.exports = {
@@ -207,4 +368,15 @@ module.exports = {
   syncTrades,
   getConnectionStatus,
   disconnectMT5,
+  // D-NEW-2: MT5 Data Expansion
+  getAccountFull,
+  getSymbols,
+  getSymbolDetail,
+  getPendingOrders,
+  getOrderHistory,
+  getPriceHistory,
+  getTickData,
+  getTerminalInfo,
+  getPerformance,
+  fullSyncV2,
 };

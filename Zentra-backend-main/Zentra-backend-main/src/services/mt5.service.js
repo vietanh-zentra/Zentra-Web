@@ -227,5 +227,232 @@ module.exports = {
   fetchAccountInfo,
   fetchMT5Trades,
   fetchOpenPositions,
-};
 
+  // ─── D-NEW-1: New proxy functions for MT5 Data Expansion ──────────
+
+  /**
+   * Fetch full account info (~40 fields) from MT5 via Python service
+   * Endpoint: GET /account/full on Hoà's Flask
+   */
+  fetchAccountInfoFull: async () => {
+    logger.info('Fetching full account info via Python service');
+    try {
+      const response = await axios.get(`${config.mt5.apiUrl}/account/full`, {
+        headers: { 'X-API-Key': config.mt5.apiKey },
+        timeout: 30000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch full account info',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return response.data.account || {};
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch full account info');
+    }
+  },
+
+  /**
+   * Fetch all symbols with market data
+   * Endpoint: GET /symbols?group=... on Hoà's Flask
+   */
+  fetchSymbols: async (group = null) => {
+    logger.info('Fetching symbols via Python service, group=%s', group);
+    try {
+      const params = group ? { group } : {};
+      const response = await axios.get(`${config.mt5.apiUrl}/symbols`, {
+        headers: { 'X-API-Key': config.mt5.apiKey },
+        params,
+        timeout: 30000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch symbols',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { symbols: response.data.symbols || [], count: response.data.count || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch symbols');
+    }
+  },
+
+  /**
+   * Fetch detail for a single symbol
+   * Endpoint: GET /symbol/:name on Hoà's Flask
+   */
+  fetchSymbolDetail: async (symbolName) => {
+    logger.info('Fetching symbol detail: %s', symbolName);
+    try {
+      const response = await axios.get(`${config.mt5.apiUrl}/symbol/${encodeURIComponent(symbolName)}`, {
+        headers: { 'X-API-Key': config.mt5.apiKey },
+        timeout: 15000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.NOT_FOUND, response.data.message || `Symbol ${symbolName} not found`,
+          { code: response.data.errorCode || ErrorCodes.NOT_FOUND });
+      }
+      return response.data.symbol || {};
+    } catch (error) {
+      throw parseMt5Error(error, `Failed to fetch symbol ${symbolName}`);
+    }
+  },
+
+  /**
+   * Fetch currently active pending orders
+   * Endpoint: GET /orders/pending on Hoà's Flask
+   */
+  fetchPendingOrders: async () => {
+    logger.info('Fetching pending orders via Python service');
+    try {
+      const response = await axios.get(`${config.mt5.apiUrl}/orders/pending`, {
+        headers: { 'X-API-Key': config.mt5.apiKey },
+        timeout: 15000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch pending orders',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { orders: response.data.orders || [], count: response.data.count || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch pending orders');
+    }
+  },
+
+  /**
+   * Fetch historical orders
+   * Endpoint: POST /orders/history on Hoà's Flask
+   */
+  fetchOrderHistory: async (fromDate, toDate) => {
+    logger.info('Fetching order history: %s to %s', fromDate, toDate);
+    try {
+      const body = {};
+      if (fromDate) body.fromDate = fromDate instanceof Date ? fromDate.toISOString() : fromDate;
+      if (toDate) body.toDate = toDate instanceof Date ? toDate.toISOString() : toDate;
+
+      const response = await axios.post(`${config.mt5.apiUrl}/orders/history`, body, {
+        headers: { 'X-API-Key': config.mt5.apiKey, 'Content-Type': 'application/json' },
+        timeout: 30000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch order history',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { orders: response.data.orders || [], count: response.data.count || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch order history');
+    }
+  },
+
+  /**
+   * Fetch OHLC price history bars
+   * Endpoint: POST /price-history on Hoà's Flask
+   */
+  fetchPriceHistory: async (symbol, timeframe = 'H1', fromDate = null, toDate = null, count = 500) => {
+    logger.info('Fetching price history: %s %s count=%d', symbol, timeframe, count);
+    try {
+      const body = { symbol, timeframe, count };
+      if (fromDate) body.fromDate = fromDate instanceof Date ? fromDate.toISOString() : fromDate;
+      if (toDate) body.toDate = toDate instanceof Date ? toDate.toISOString() : toDate;
+
+      const response = await axios.post(`${config.mt5.apiUrl}/price-history`, body, {
+        headers: { 'X-API-Key': config.mt5.apiKey, 'Content-Type': 'application/json' },
+        timeout: 30000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch price history',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { symbol: response.data.symbol, timeframe: response.data.timeframe, bars: response.data.bars || [], count: response.data.count || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch price history');
+    }
+  },
+
+  /**
+   * Fetch tick-level data
+   * Endpoint: POST /ticks on Hoà's Flask
+   */
+  fetchTickData: async (symbol, count = 1000) => {
+    logger.info('Fetching tick data: %s count=%d', symbol, count);
+    try {
+      const response = await axios.post(`${config.mt5.apiUrl}/ticks`, { symbol, count }, {
+        headers: { 'X-API-Key': config.mt5.apiKey, 'Content-Type': 'application/json' },
+        timeout: 30000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch tick data',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { symbol: response.data.symbol, ticks: response.data.ticks || [], count: response.data.count || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch tick data');
+    }
+  },
+
+  /**
+   * Fetch MT5 terminal info + latency
+   * Endpoint: GET /terminal on Hoà's Flask
+   */
+  fetchTerminalInfo: async () => {
+    logger.info('Fetching terminal info via Python service');
+    try {
+      const response = await axios.get(`${config.mt5.apiUrl}/terminal`, {
+        headers: { 'X-API-Key': config.mt5.apiKey },
+        timeout: 10000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch terminal info',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return response.data.terminal || {};
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch terminal info');
+    }
+  },
+
+  /**
+   * Fetch all performance metrics (Sharpe, PF, MDD, etc.)
+   * Endpoint: POST /performance on Hoà's Flask
+   */
+  fetchPerformance: async (accountId, server, password, fromDate = null) => {
+    logger.info('Fetching performance metrics for account: %s', accountId);
+    try {
+      const body = { accountId: parseInt(accountId, 10), server, password };
+      if (fromDate) body.fromDate = fromDate instanceof Date ? fromDate.toISOString() : fromDate;
+
+      const response = await axios.post(`${config.mt5.apiUrl}/performance`, body, {
+        headers: { 'X-API-Key': config.mt5.apiKey, 'Content-Type': 'application/json' },
+        timeout: 60000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to fetch performance',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return { performance: response.data.performance || {}, tradesAnalyzed: response.data.tradesAnalyzed || 0 };
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to fetch performance metrics');
+    }
+  },
+
+  /**
+   * Full sync v2 — everything: account, trades, positions, orders, performance, terminal
+   * Endpoint: POST /full-sync-v2 on Hoà's Flask
+   */
+  fullSyncV2: async (accountId, server, password, fromDate = null) => {
+    logger.info('Full sync v2 for account: %s', accountId);
+    try {
+      const body = { accountId: parseInt(accountId, 10), server, password };
+      if (fromDate) body.fromDate = fromDate instanceof Date ? fromDate.toISOString() : fromDate;
+
+      const response = await axios.post(`${config.mt5.apiUrl}/full-sync-v2`, body, {
+        headers: { 'X-API-Key': config.mt5.apiKey, 'Content-Type': 'application/json' },
+        timeout: 120000,
+      });
+      if (!response.data.success) {
+        throw new ApiError(httpStatus.BAD_REQUEST, response.data.message || 'Failed to full sync v2',
+          { code: response.data.errorCode || ErrorCodes.MT5_DATA_FETCH_FAILED });
+      }
+      return response.data;
+    } catch (error) {
+      throw parseMt5Error(error, 'Failed to full sync v2');
+    }
+  },
+};

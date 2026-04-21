@@ -12,7 +12,34 @@ router.post('/sync', auth(), requireTradingPlan, validate(mt5Validation.syncTrad
 router.get('/status', auth(), mt5Controller.getConnectionStatus);
 router.delete('/disconnect', auth(), mt5Controller.disconnectMT5);
 
+// ─── D-NEW-3: MT5 Data Expansion Routes ─────────────────────────────
+
+// Account — full info (~40 fields)
+router.get('/account/full', auth(), mt5Controller.getAccountFull);
+
+// Symbols / Market Data
+router.get('/symbols', auth(), mt5Controller.getSymbols);
+router.get('/symbols/:symbolName', auth(), mt5Controller.getSymbolDetail);
+
+// Orders
+router.get('/orders/pending', auth(), mt5Controller.getPendingOrders);
+router.get('/orders/history', auth(), mt5Controller.getOrderHistory);
+
+// Price Data
+router.get('/price-history', auth(), mt5Controller.getPriceHistory);
+router.get('/ticks', auth(), mt5Controller.getTickData);
+
+// Terminal
+router.get('/terminal', auth(), mt5Controller.getTerminalInfo);
+
+// Performance Metrics (Sharpe, PF, MDD, etc.)
+router.get('/performance', auth(), mt5Controller.getPerformance);
+
+// Full Sync V2 — everything in one call
+router.post('/full-sync-v2', auth(), mt5Controller.fullSyncV2);
+
 module.exports = router;
+
 
 /**
  * @swagger
