@@ -43,6 +43,7 @@ class ApiClient {
     const token = this.getToken();
     const headers = {
       "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
       ...options.headers,
     };
 
