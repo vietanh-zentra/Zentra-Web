@@ -46,15 +46,20 @@ export default function SignupPage() {
     try {
       // Combine firstName and lastName for the name field
       const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-      await apiClient.register(
+      const result = await apiClient.register(
         fullName || formData.firstName || formData.email,
         formData.email,
         formData.password
       );
-      if (typeof window !== "undefined") {
-        localStorage.setItem("pendingVerificationEmail", formData.email);
+      // If user is already verified (dev mode), go straight to dashboard
+      if (result && result.user && result.user.isEmailVerified) {
+        router.push("/dashboard");
+      } else {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("pendingVerificationEmail", formData.email);
+        }
+        router.push("/auth/verify-email");
       }
-      router.push("/auth/verify-email");
     } catch (err) {
       setError(err.message || "Registration failed. Please try again.");
       console.error("Signup error:", err);

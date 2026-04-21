@@ -265,6 +265,7 @@ class MT5Connector:
         logger.info(f"[POSITIONS] Found {len(result)} open positions")
         return result
 
+
     def full_sync(self, from_date: Optional[datetime] = None) -> Dict:
         """
         Full data synchronization: account + trades + positions + summary.
@@ -315,3 +316,427 @@ class MT5Connector:
             "sync_time_ms": sync_time_ms,
             "total_trades_fetched": len(trades)
         }
+
+    # ────────────────────────────────────────────────────────────────────
+    # NEW METHODS — Phase H-NEW-1 to H-NEW-7
+    # ────────────────────────────────────────────────────────────────────
+
+    def get_account_info_full(self) -> Dict:
+        """
+        [H-NEW-1] Get ALL ~40 fields from mt5.account_info().
+
+        Returns:
+            Dict with comprehensive account data including margin levels,
+            trade mode, limits, and permissions.
+        """
+        logger.info("[ACCOUNT_FULL] Fetching full account info")
+        info = mt5.account_info()
+        if not info:
+            logger.error("[ACCOUNT_FULL] mt5.account_info() returned None")
+            return {}
+
+        # Map ALL available fields
+        result = {
+            # Identity
+            "login": info.login,
+            "name": getattr(info, 'name', ''),
+            "server": info.server,
+            "company": info.company,
+            "currency": info.currency,
+            "leverage": info.leverage,
+
+            # Balance & Equity
+            "balance": round(info.balance, 2),
+            "equity": round(info.equity, 2),
+            "profit": round(info.profit, 2),
+            "credit": round(getattr(info, 'credit', 0.0), 2),
+            "assets": round(getattr(info, 'assets', 0.0), 2),
+            "liabilities": round(getattr(info, 'liabilities', 0.0), 2),
+
+            # Margin
+            "margin": round(info.margin, 2),
+            "marginFree": round(info.margin_free, 2),
+            "marginLevel": round(info.margin_level, 2),
+            "marginInitial": round(getattr(info, 'margin_initial', 0.0), 2),
+            "marginMaintenance": round(getattr(info, 'margin_maintenance', 0.0), 2),
+            "marginSoCall": round(getattr(info, 'margin_so_call', 0.0), 2),
+            "marginSoSo": round(getattr(info, 'margin_so_so', 0.0), 2),
+            "marginSoMode": getattr(info, 'margin_so_mode', 0),
+            "commissionBlocked": round(getattr(info, 'commission_blocked', 0.0), 2),
+
+            # Account Type & Permissions
+            "tradeMode": getattr(info, 'trade_mode', 0),
+            "tradeModeDescription": self._trade_mode_name(getattr(info, 'trade_mode', 0)),
+            "tradeAllowed": bool(getattr(info, 'trade_allowed', False)),
+            "tradeExpert": bool(getattr(info, 'trade_expert', False)),
+            "fifoClose": bool(getattr(info, 'fifo_close', False)),
+            "limitOrders": getattr(info, 'limit_orders', 0),
+
+            # Connection
+            "connected": True,
+            "connectionTimeMs": self._connection_time_ms,
+            "lastSync": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
+        }
+
+        logger.info(f"[ACCOUNT_FULL] {result['login']}: "
+                     f"Balance={result['balance']} {result['currency']}, "
+                     f"Mode={result['tradeModeDescription']}, "
+                     f"MarginLevel={result['marginLevel']}%")
+        return result
+
+    @staticmethod
+    def _trade_mode_name(mode: int) -> str:
+        """Map trade_mode enum to human-readable string."""
+        modes = {0: "Demo", 1: "Contest", 2: "Real"}
+        return modes.get(mode, f"Unknown({mode})")
+
+    def get_symbols_info(self, group: str = None) -> List[Dict]:
+        """
+        [H-NEW-2] Get all available symbols with market data.
+
+        Args:
+            group: Optional filter pattern (e.g., "*USD*", "Forex*")
+
+        Returns:
+            List of symbol dicts with bid/ask/spread/swap/contract info
+        """
+        logger.info(f"[SYMBOLS] Fetching symbols (group={group})")
+
+        if group:
+            symbols = mt5.symbols_get(group)
+        else:
+            # Get only visible (selected in MarketWatch) symbols
+            symbols = mt5.symbols_get()
+
+        if not symbols:
+            logger.info("[SYMBOLS] No symbols found")
+            return []
+
+        result = []
+        for s in symbols:
+            result.append({
+                "symbol": s.name,
+                "description": getattr(s, 'description', ''),
+                "path": getattr(s, 'path', ''),
+                "currencyBase": getattr(s, 'currency_base', ''),
+                "currencyProfit": getattr(s, 'currency_profit', ''),
+                "currencyMargin": getattr(s, 'currency_margin', ''),
+
+                # Pricing
+                "bid": round(s.bid, s.digits) if s.bid else 0.0,
+                "ask": round(s.ask, s.digits) if s.ask else 0.0,
+                "last": round(getattr(s, 'last', 0.0), s.digits),
+                "spread": s.spread,
+                "spreadFloat": bool(getattr(s, 'spread_float', False)),
+                "digits": s.digits,
+                "point": s.point,
+
+                # Volume
+                "volumeMin": s.volume_min,
+                "volumeMax": s.volume_max,
+                "volumeStep": s.volume_step,
+                "contractSize": s.trade_contract_size,
+
+                # Tick
+                "tradeTickValue": getattr(s, 'trade_tick_value', 0.0),
+                "tradeTickSize": getattr(s, 'trade_tick_size', 0.0),
+
+                # Swap
+                "swapLong": getattr(s, 'swap_long', 0.0),
+                "swapShort": getattr(s, 'swap_short', 0.0),
+                "swapMode": getattr(s, 'swap_mode', 0),
+
+                # Session
+                "priceChange": round(getattr(s, 'price_change', 0.0), 2),
+                "priceChangePercent": round(getattr(s, 'price_change_percent', 0.0), 4),
+                "volumeReal": getattr(s, 'volume_real', 0.0),
+                "tradeMode": getattr(s, 'trade_mode', 0),
+                "visible": bool(getattr(s, 'visible', False)),
+                "selected": bool(getattr(s, 'select', False)),
+            })
+
+        logger.info(f"[SYMBOLS] Returning {len(result)} symbols")
+        return result
+
+    def get_symbol_info(self, symbol_name: str) -> Optional[Dict]:
+        """Get detailed info for a single symbol."""
+        logger.info(f"[SYMBOL] Fetching info for {symbol_name}")
+        info = mt5.symbol_info(symbol_name)
+        if not info:
+            logger.warning(f"[SYMBOL] {symbol_name} not found")
+            return None
+
+        # Use get_symbols_info logic for single symbol
+        symbols = self.get_symbols_info()
+        for s in symbols:
+            if s["symbol"] == symbol_name:
+                return s
+
+        return None
+
+    def get_pending_orders(self) -> List[Dict]:
+        """
+        [H-NEW-3] Get currently active pending orders.
+
+        Returns:
+            List of pending order dicts
+        """
+        logger.info("[ORDERS] Fetching pending orders")
+        orders = mt5.orders_get()
+        if not orders:
+            logger.info("[ORDERS] No pending orders")
+            return []
+
+        result = []
+        for o in orders:
+            order_type = self._order_type_name(o.type)
+            result.append({
+                "ticket": o.ticket,
+                "symbol": o.symbol,
+                "type": o.type,
+                "typeName": order_type,
+                "volume": o.volume_current,
+                "volumeInitial": o.volume_initial,
+                "priceOpen": o.price_open,
+                "priceCurrent": o.price_current,
+                "stopLoss": o.sl if o.sl > 0 else None,
+                "takeProfit": o.tp if o.tp > 0 else None,
+                "timeSetup": datetime.utcfromtimestamp(o.time_setup).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                "timeExpiration": datetime.utcfromtimestamp(o.time_expiration).strftime('%Y-%m-%dT%H:%M:%SZ') if o.time_expiration > 0 else None,
+                "state": o.state,
+                "magic": o.magic,
+                "comment": o.comment,
+                "positionId": getattr(o, 'position_id', 0),
+            })
+
+        logger.info(f"[ORDERS] Found {len(result)} pending orders")
+        return result
+
+    @staticmethod
+    def _order_type_name(order_type: int) -> str:
+        """Map order type enum to string."""
+        types = {
+            0: "BUY", 1: "SELL",
+            2: "BUY_LIMIT", 3: "SELL_LIMIT",
+            4: "BUY_STOP", 5: "SELL_STOP",
+            6: "BUY_STOP_LIMIT", 7: "SELL_STOP_LIMIT",
+        }
+        return types.get(order_type, f"UNKNOWN({order_type})")
+
+    def get_order_history(self, from_date: Optional[datetime] = None,
+                          to_date: Optional[datetime] = None) -> List[Dict]:
+        """
+        [H-NEW-4] Get historical orders (executed/cancelled/expired).
+
+        Args:
+            from_date: Start date (defaults to 365 days ago)
+            to_date: End date (defaults to now)
+
+        Returns:
+            List of historical order dicts
+        """
+        if not from_date:
+            from_date = datetime.utcnow() - timedelta(days=365)
+        if not to_date:
+            to_date = datetime.utcnow() + timedelta(days=1)
+
+        logger.info(f"[ORDER_HISTORY] Fetching from {from_date} to {to_date}")
+        orders = mt5.history_orders_get(from_date, to_date)
+
+        if not orders:
+            logger.info("[ORDER_HISTORY] No historical orders found")
+            return []
+
+        result = []
+        for o in orders:
+            result.append({
+                "ticket": o.ticket,
+                "symbol": o.symbol,
+                "type": o.type,
+                "typeName": self._order_type_name(o.type),
+                "state": o.state,
+                "volumeInitial": o.volume_initial,
+                "volumeCurrent": o.volume_current,
+                "priceOpen": o.price_open,
+                "priceCurrent": getattr(o, 'price_current', 0.0),
+                "priceStopLimit": getattr(o, 'price_stoplimit', 0.0),
+                "stopLoss": o.sl if o.sl > 0 else None,
+                "takeProfit": o.tp if o.tp > 0 else None,
+                "timeSetup": datetime.utcfromtimestamp(o.time_setup).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                "timeDone": datetime.utcfromtimestamp(o.time_done).strftime('%Y-%m-%dT%H:%M:%SZ') if o.time_done > 0 else None,
+                "timeExpiration": datetime.utcfromtimestamp(o.time_expiration).strftime('%Y-%m-%dT%H:%M:%SZ') if o.time_expiration > 0 else None,
+                "magic": o.magic,
+                "comment": o.comment,
+                "positionId": o.position_id,
+                "dealId": getattr(o, 'position_by_id', 0),
+            })
+
+        logger.info(f"[ORDER_HISTORY] Found {len(result)} historical orders")
+        return result
+
+    def get_price_history(self, symbol: str, timeframe: int = None,
+                          from_date: Optional[datetime] = None,
+                          to_date: Optional[datetime] = None,
+                          count: int = 500) -> List[Dict]:
+        """
+        [H-NEW-5] Get OHLC price bars.
+
+        Args:
+            symbol: Symbol name (e.g., "EURUSD")
+            timeframe: MT5 timeframe constant (default H1)
+            from_date: Start date
+            to_date: End date
+            count: Max bars to return
+
+        Returns:
+            List of OHLC bar dicts
+        """
+        if timeframe is None:
+            timeframe = mt5.TIMEFRAME_H1
+
+        logger.info(f"[PRICE] Fetching {symbol} bars, tf={timeframe}, count={count}")
+
+        if from_date and to_date:
+            rates = mt5.copy_rates_range(symbol, timeframe, from_date, to_date)
+        else:
+            from_dt = from_date or datetime.utcnow()
+            rates = mt5.copy_rates_from(symbol, timeframe, from_dt, count)
+
+        if rates is None or len(rates) == 0:
+            logger.info(f"[PRICE] No price data for {symbol}")
+            return []
+
+        result = []
+        for r in rates:
+            result.append({
+                "time": datetime.utcfromtimestamp(r['time']).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                "timestamp": int(r['time']),
+                "open": round(float(r['open']), 5),
+                "high": round(float(r['high']), 5),
+                "low": round(float(r['low']), 5),
+                "close": round(float(r['close']), 5),
+                "tickVolume": int(r['tick_volume']),
+                "spread": int(r['spread']),
+                "realVolume": int(r['real_volume']),
+            })
+
+        logger.info(f"[PRICE] Returning {len(result)} bars for {symbol}")
+        return result
+
+    def get_tick_data(self, symbol: str,
+                      from_date: Optional[datetime] = None,
+                      count: int = 1000) -> List[Dict]:
+        """
+        [H-NEW-6] Get tick-level data.
+
+        Args:
+            symbol: Symbol name
+            from_date: Start date (defaults to now)
+            count: Number of ticks
+
+        Returns:
+            List of tick dicts
+        """
+        logger.info(f"[TICKS] Fetching {count} ticks for {symbol}")
+
+        from_dt = from_date or datetime.utcnow()
+        ticks = mt5.copy_ticks_from(symbol, from_dt, count, mt5.COPY_TICKS_ALL)
+
+        if ticks is None or len(ticks) == 0:
+            logger.info(f"[TICKS] No tick data for {symbol}")
+            return []
+
+        result = []
+        for t in ticks:
+            result.append({
+                "time": datetime.utcfromtimestamp(t['time']).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                "timestampMs": int(t['time_msc']),
+                "bid": round(float(t['bid']), 5),
+                "ask": round(float(t['ask']), 5),
+                "last": round(float(t['last']), 5),
+                "volume": int(t['volume']),
+                "volumeReal": float(t['volume_real']),
+                "flags": int(t['flags']),
+            })
+
+        logger.info(f"[TICKS] Returning {len(result)} ticks for {symbol}")
+        return result
+
+    def get_terminal_info(self) -> Dict:
+        """
+        [H-NEW-7] Get MT5 terminal information.
+
+        Returns:
+            Dict with terminal status, version, latency, etc.
+        """
+        logger.info("[TERMINAL] Fetching terminal info")
+        info = mt5.terminal_info()
+        if not info:
+            logger.error("[TERMINAL] terminal_info() returned None")
+            return {}
+
+        result = {
+            "connected": bool(info.connected),
+            "tradeAllowed": bool(info.trade_allowed),
+            "tradeExpertAllowed": bool(getattr(info, 'trade_expert', False)),
+            "community": bool(getattr(info, 'community_account', False)),
+            "communityConnection": bool(getattr(info, 'community_connection', False)),
+            "pingLast": getattr(info, 'ping_last', 0),
+            "company": info.company,
+            "name": info.name,
+            "language": getattr(info, 'language', ''),
+            "path": info.path,
+            "dataPath": getattr(info, 'data_path', ''),
+            "commonDataPath": getattr(info, 'commondata_path', ''),
+            "build": info.build,
+            "maxBars": getattr(info, 'maxbars', 0),
+            "codepage": getattr(info, 'codepage', 0),
+            "mqid": bool(getattr(info, 'mqid', False)),
+        }
+
+        logger.info(f"[TERMINAL] {result['company']} build {result['build']}, "
+                     f"ping={result['pingLast']}ms")
+        return result
+
+    def full_sync_v2(self, from_date: Optional[datetime] = None) -> Dict:
+        """
+        Enhanced full sync — includes EVERYTHING: account, trades, positions,
+        orders, performance metrics, terminal info.
+
+        Args:
+            from_date: Start date for trade history
+
+        Returns:
+            Comprehensive sync dict with all available data
+        """
+        from performance_calculator import PerformanceCalculator
+
+        logger.info("[FULL_SYNC_V2] Starting comprehensive synchronization")
+        start_time = datetime.now()
+
+        account = self.get_account_info_full()
+        trades = self.get_trade_history(from_date, None)
+        positions = self.get_open_positions()
+        pending_orders = self.get_pending_orders()
+        terminal = self.get_terminal_info()
+
+        # Performance metrics
+        performance = PerformanceCalculator.calculate_all(trades)
+
+        sync_time_ms = int((datetime.now() - start_time).total_seconds() * 1000)
+
+        logger.info(f"[FULL_SYNC_V2] Complete: {len(trades)} trades, "
+                     f"{len(positions)} positions, {len(pending_orders)} pending, "
+                     f"sync_time={sync_time_ms}ms")
+
+        return {
+            "account": account,
+            "trades": trades,
+            "openPositions": positions,
+            "pendingOrders": pending_orders,
+            "performance": performance,
+            "terminal": terminal,
+            "syncTimeMs": sync_time_ms,
+            "totalTradesFetched": len(trades),
+        }
+

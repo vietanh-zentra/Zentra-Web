@@ -6,6 +6,11 @@ const userController = require('../../controllers/user.controller');
 
 const router = express.Router();
 
+// /users/me — any authenticated user can get their own profile
+router.route('/me').get(auth(), (req, res) => {
+  res.send(req.user);
+});
+
 router
   .route('/')
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)

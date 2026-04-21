@@ -1,4 +1,5 @@
-EMAIL DÙNG CHUNG CHO DỰ ÁN:
+EMAIL DÙNG CHUNG CH'
+O DỰ ÁN:
   Email:    vietanh.zentra@gmail.com
   Password: Vietanh789
   (Dùng email này để đăng nhập tất cả: Vercel, GitHub, AWS)
