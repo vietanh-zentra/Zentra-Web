@@ -371,3 +371,224 @@ newTradesInserted Number    New trades stored
 totalTimeMs     Number      Sync duration
 errorCode       String      Error code if failed
 ```
+
+### PerformanceMetrics (NEW)
+```
+userId          ObjectId    → User
+accountId       ObjectId    → Account
+totalTrades     Number      Total trades
+winRate         Number      Win percentage
+netProfitLoss   Number      Net P/L
+profitFactor    Number      Σ(wins) / Σ(losses)
+sharpeRatio     Number      Risk-adjusted return
+maxDrawdown     Number      Peak-to-trough amount
+recoveryFactor  Number      Net P/L / Max Drawdown
+expectancy      Number      Expected P/L per trade
+bySymbol        Mixed       Per-symbol breakdown
+```
+
+### PendingOrder (NEW)
+```
+accountId       ObjectId    → Account
+ticket          Number      Order ticket
+symbol          String      Trading symbol
+typeName        String      BUY_LIMIT | SELL_STOP...
+volume          Number      Lot size
+priceOpen       Number      Order price
+stopLoss        Number      SL price
+takeProfit      Number      TP price
+timeExpiration  Date        Expiration time
+```
+
+### PriceBar (NEW)
+```
+symbol          String      Trading symbol
+timeframe       String      M1|M5|M15|M30|H1|H4|D1|W1|MN1
+open/high/low/close Number  OHLC data
+tickVolume      Number      Tick volume
+TTL: auto-delete after 30 days
+```
+
+---
+
+## MT5 Data Expansion Endpoints (D-NEW)
+
+> **Base URL:** `/v1/mt5`
+> **Auth:** All endpoints require `Bearer <JWT>` token + MT5 account must be connected
+
+### `GET /v1/mt5/account/full` — Full Account Info (~40 fields)
+
+Returns comprehensive MT5 account info including margin levels, trade mode, permissions.
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "account": {
+    "login": 12345678,
+    "balance": 10000.00,
+    "equity": 10500.00,
+    "margin": 250.00,
+    "marginLevel": 4200.00,
+    "tradeMode": 0,
+    "tradeModeDescription": "Demo",
+    "tradeAllowed": true,
+    "leverage": 100,
+    "currency": "USD"
+  }
+}
+```
+
+---
+
+### `GET /v1/mt5/symbols` — List All Symbols
+
+**Query:** `?group=*USD*` (optional filter)
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "symbols": [
+    { "symbol": "EURUSD", "bid": 1.1050, "ask": 1.1052, "spread": 2, "volumeMin": 0.01 }
+  ],
+  "count": 150
+}
+```
+
+---
+
+### `GET /v1/mt5/symbols/:symbolName` — Symbol Detail
+
+**Response `200`:**
+```json
+{ "success": true, "symbol": { "symbol": "EURUSD", "bid": 1.1050, ... } }
+```
+
+---
+
+### `GET /v1/mt5/orders/pending` — Active Pending Orders
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "orders": [
+    { "ticket": 5001, "symbol": "EURUSD", "typeName": "BUY_LIMIT", "volume": 0.1, "priceOpen": 1.1000 }
+  ],
+  "count": 2
+}
+```
+
+---
+
+### `GET /v1/mt5/orders/history` — Historical Orders
+
+**Query:** `?from=2026-01-01T00:00:00Z&to=2026-04-21T00:00:00Z`
+
+**Response `200`:**
+```json
+{ "success": true, "orders": [ ... ], "count": 50 }
+```
+
+---
+
+### `GET /v1/mt5/price-history` — OHLC Price Bars
+
+**Query:** `?symbol=EURUSD&timeframe=H1&count=500&from=...&to=...`
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "symbol": "EURUSD",
+  "timeframe": "H1",
+  "bars": [
+    { "time": "2026-04-21T10:00:00Z", "open": 1.1050, "high": 1.1075, "low": 1.1040, "close": 1.1065 }
+  ],
+  "count": 500
+}
+```
+
+---
+
+### `GET /v1/mt5/ticks` — Tick Data
+
+**Query:** `?symbol=EURUSD&count=1000`
+
+**Response `200`:**
+```json
+{ "success": true, "symbol": "EURUSD", "ticks": [ ... ], "count": 1000 }
+```
+
+---
+
+### `GET /v1/mt5/terminal` — Terminal Info
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "terminal": {
+    "connected": true,
+    "tradeAllowed": true,
+    "pingLast": 35,
+    "company": "MetaQuotes",
+    "build": 4230
+  }
+}
+```
+
+---
+
+### `GET /v1/mt5/performance` — Performance Metrics
+
+**Query:** `?from=2026-01-01T00:00:00Z` (optional)
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "performance": {
+    "totalTrades": 150,
+    "winRate": 65.33,
+    "netProfitLoss": 2500.50,
+    "profitFactor": 2.15,
+    "sharpeRatio": 1.82,
+    "maxDrawdown": 450.00,
+    "maxDrawdownPercent": 4.5,
+    "recoveryFactor": 5.56,
+    "expectancy": 16.67,
+    "maxWinStreak": 8,
+    "maxLossStreak": 3,
+    "bySymbol": { "EURUSD": { "count": 80, "netProfit": 1500.00 } }
+  },
+  "tradesAnalyzed": 150
+}
+```
+
+---
+
+### `POST /v1/mt5/full-sync-v2` — Comprehensive Sync
+
+Syncs everything in one call: account, trades, positions, orders, performance, terminal.
+
+**Request Body:**
+```json
+{ "fromDate": "2026-01-01T00:00:00Z" }
+```
+
+**Response `200`:**
+```json
+{
+  "success": true,
+  "account": { ... },
+  "trades": [ ... ],
+  "openPositions": [ ... ],
+  "pendingOrders": [ ... ],
+  "performance": { ... },
+  "terminal": { ... },
+  "syncTimeMs": 3500,
+  "totalTradesFetched": 150
+}
+```
