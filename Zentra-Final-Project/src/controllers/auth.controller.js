@@ -6,11 +6,9 @@ const logger = require('../config/logger');
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
-  // Auto-verify email in development (no SMTP needed)
-  if (config.env === 'development') {
-    await userService.updateUserById(user.id, { isEmailVerified: true });
-    user.isEmailVerified = true;
-  }
+  // Auto-verify email (SMTP not configured — email verification disabled)
+  await userService.updateUserById(user.id, { isEmailVerified: true });
+  user.isEmailVerified = true;
   const tokens = await tokenService.generateAuthTokens(user);
   res.status(httpStatus.CREATED).send({ user, tokens });
 });
