@@ -402,6 +402,60 @@ class ApiClient {
     });
   }
 
+  // ─── MT5 Data Expansion API Methods ─────────────────────────────
+
+  async getAccountFull() {
+    return this.fetch("/mt5/account/full");
+  }
+
+  async getSymbols(group = null) {
+    const query = group ? `?group=${encodeURIComponent(group)}` : "";
+    return this.fetch(`/mt5/symbols${query}`);
+  }
+
+  async getSymbolDetail(symbolName) {
+    return this.fetch(`/mt5/symbols/${encodeURIComponent(symbolName)}`);
+  }
+
+  async getPendingOrders() {
+    return this.fetch("/mt5/orders/pending");
+  }
+
+  async getOrderHistory(from = null, to = null) {
+    const params = [];
+    if (from) params.push(`from=${encodeURIComponent(from)}`);
+    if (to) params.push(`to=${encodeURIComponent(to)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/mt5/orders/history${query}`);
+  }
+
+  async getPriceHistory(symbol, timeframe = "H1", count = 500) {
+    const params = [`symbol=${encodeURIComponent(symbol)}`, `timeframe=${timeframe}`, `count=${count}`];
+    return this.fetch(`/mt5/price-history?${params.join("&")}`);
+  }
+
+  async getTickData(symbol, count = 1000) {
+    return this.fetch(`/mt5/ticks?symbol=${encodeURIComponent(symbol)}&count=${count}`);
+  }
+
+  async getTerminalInfo() {
+    return this.fetch("/mt5/terminal");
+  }
+
+  async getPerformance(from = null) {
+    const query = from ? `?from=${encodeURIComponent(from)}` : "";
+    return this.fetch(`/mt5/performance${query}`);
+  }
+
+  async fullSyncV2(fromDate = null) {
+    const body = fromDate ? { fromDate } : {};
+    return this.fetch("/mt5/full-sync-v2", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  }
+
+
   // User endpoints
   async getUser(userId) {
     return this.fetch(`/users/${userId}`);

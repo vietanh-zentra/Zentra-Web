@@ -1029,25 +1029,31 @@ export default function TradesPage() {
                       />
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Symbol
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Volume
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                       Entry Time
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-                      Exit Time
+                      Entry Price
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Exit Price
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                       Session
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-                      Risk %
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                       P/L
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                       R/R
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-                      Target %
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                       Status
@@ -1083,34 +1089,48 @@ export default function TradesPage() {
                           className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary cursor-pointer"
                         />
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                        {trade.symbol || "—"}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {trade.tradeType ? (
+                          <span className={`px-2 py-1 text-xs font-bold rounded-full ${
+                            trade.tradeType === "BUY"
+                              ? "bg-emerald-100 text-emerald-800"
+                              : "bg-rose-100 text-rose-800"
+                          }`}>
+                            {trade.tradeType}
+                          </span>
+                        ) : "—"}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {trade.volume != null ? trade.volume.toFixed(2) : "—"}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatDate(trade.entryTime)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatDate(trade.exitTime)}
+                        {trade.openPrice != null ? trade.openPrice.toFixed(5) : "—"}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {trade.closePrice != null ? trade.closePrice.toFixed(5) : "—"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                          {trade.session}
+                          {trade.session || "—"}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {trade.riskPercentUsed}%
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${
-                          trade.profitLoss >= 0
+                          (trade.profitLoss ?? trade.netProfit ?? 0) >= 0
                             ? "text-green-600"
                             : "text-red-600"
                         }`}
                       >
-                        {formatCurrency(trade.profitLoss)}
+                        {formatCurrency(trade.profitLoss ?? trade.netProfit)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {trade.riskRewardAchieved?.toFixed(2) || "N/A"}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {trade.targetPercentAchieved}%
+                        {trade.riskRewardAchieved?.toFixed(2) || "—"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <div className="flex flex-col gap-1">
@@ -1124,9 +1144,14 @@ export default function TradesPage() {
                               Exited Early
                             </span>
                           )}
-                          {!trade.stopLossHit && !trade.exitedEarly && (
+                          {(trade.profitLoss ?? trade.netProfit ?? 0) >= 0 && !trade.stopLossHit && !trade.exitedEarly && (
                             <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-800">
-                              Normal
+                              Win
+                            </span>
+                          )}
+                          {(trade.profitLoss ?? trade.netProfit ?? 0) < 0 && !trade.stopLossHit && (
+                            <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 text-red-800">
+                              Loss
                             </span>
                           )}
                         </div>
