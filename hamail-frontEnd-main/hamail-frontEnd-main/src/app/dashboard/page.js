@@ -50,6 +50,8 @@ import PsychologicalStateDistribution from "@/components/dashboard/widgets/Psych
 import MT5AccountCard from "@/components/dashboard/widgets/MT5AccountCard";
 import PerformanceMetricsCard from "@/components/dashboard/widgets/PerformanceMetricsCard";
 import MT5PositionsCard from "@/components/dashboard/widgets/MT5PositionsCard";
+import OrderHistoryCard from "@/components/dashboard/widgets/OrderHistoryCard";
+import MarketInfoCard from "@/components/dashboard/widgets/MarketInfoCard";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -779,6 +781,12 @@ export default function Dashboard() {
           {/* MT5 Live Positions + Pending Orders */}
           <div className="mt-4">
             <MT5PositionsCard />
+          </div>
+
+          {/* Order History + Market Watch */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+            <OrderHistoryCard />
+            <MarketInfoCard />
           </div>
 
           {/* Old layout - keeping for reference but commented out */}
