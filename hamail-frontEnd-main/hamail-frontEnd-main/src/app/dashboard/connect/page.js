@@ -136,13 +136,19 @@ export default function ConnectPage() {
       const result = await apiClient.syncMT5Trades();
       await notifyTradesUpdated();
 
+      // BUG-04 fix: Update lastSyncAt immediately in state
+      setMt5Status((prev) => ({
+        ...prev,
+        lastSyncAt: new Date().toISOString(),
+      }));
+
       setToast({
         show: true,
         message: `Successfully synced ${result.count || 0} trades from MT5!`,
         type: "success",
       });
 
-      // Reload status to get updated lastSyncAt
+      // Also reload full status from server
       await loadMT5Status();
     } catch (error) {
       console.error("Error syncing MT5 trades:", error);
@@ -155,6 +161,41 @@ export default function ConnectPage() {
       setIsSyncing(false);
     }
   };
+
+  // FEAT-09: Full Sync V2 — syncs everything in one call
+  const [isFullSyncing, setIsFullSyncing] = useState(false);
+  const handleFullSync = async () => {
+    setIsFullSyncing(true);
+    try {
+      const result = await apiClient.fullSyncV2();
+      await notifyTradesUpdated();
+
+      // Update lastSyncAt immediately
+      setMt5Status((prev) => ({
+        ...prev,
+        lastSyncAt: new Date().toISOString(),
+      }));
+
+      const tradeCount = result.totalTradesFetched || result.trades?.length || 0;
+      setToast({
+        show: true,
+        message: `Full sync complete! ${tradeCount} trades, account data, positions, and performance metrics updated.`,
+        type: "success",
+      });
+
+      await loadMT5Status();
+    } catch (error) {
+      console.error("Error full sync V2:", error);
+      setToast({
+        show: true,
+        message: error.message || "Failed to run full sync.",
+        type: "error",
+      });
+    } finally {
+      setIsFullSyncing(false);
+    }
+  };
+
 
   const handleDisconnect = async () => {
     if (!confirm("Are you sure you want to disconnect your MT5 account?")) {
@@ -414,7 +455,7 @@ export default function ConnectPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="grid md:grid-cols-2 gap-4"
           >
-            {/* Sync Trades Button */}
+            {/* Full Sync V2 Button — FEAT-09 */}
             <motion.div
               className="p-6 rounded-none backdrop-blur-xl transition-all duration-300 relative overflow-hidden"
               style={{
@@ -428,28 +469,50 @@ export default function ConnectPage() {
               <div className="absolute inset-0 rounded-none bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
               <div className="relative z-10">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Sync Trades
+                  Full Sync V2
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Import your latest trades from MT5. If no date is specified,
-                  it will sync from your last sync time or 30 days ago.
+                <p className="text-sm text-gray-600 mb-2">
+                  Sync everything at once: trades, account info, positions, 
+                  orders, and performance metrics.
+                </p>
+                <p className="text-xs text-gray-400 mb-4">
+                  Recommended for complete data refresh.
                 </p>
                 <GlassmorphicButton
-                  onClick={handleSync}
-                  disabled={isSyncing}
+                  onClick={handleFullSync}
+                  disabled={isFullSyncing || isSyncing}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full px-6 py-3"
                   icon={
-                    isSyncing ? (
+                    isFullSyncing ? (
                       <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <ArrowPathIcon className="w-5 h-5" />
                     )
                   }
                 >
-                  {isSyncing ? "Syncing..." : "Sync Trades"}
+                  {isFullSyncing ? "Full Syncing..." : "Full Sync V2"}
                 </GlassmorphicButton>
+
+                {/* Quick sync smaller link */}
+                <button
+                  onClick={handleSync}
+                  disabled={isSyncing || isFullSyncing}
+                  className="w-full mt-3 text-center text-sm text-primary hover:text-primary/80 disabled:text-gray-400 flex items-center justify-center gap-1"
+                >
+                  {isSyncing ? (
+                    <>
+                      <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                      Syncing trades...
+                    </>
+                  ) : (
+                    <>
+                      <ArrowPathIcon className="w-3 h-3" />
+                      Quick sync trades only
+                    </>
+                  )}
+                </button>
               </div>
             </motion.div>
 
