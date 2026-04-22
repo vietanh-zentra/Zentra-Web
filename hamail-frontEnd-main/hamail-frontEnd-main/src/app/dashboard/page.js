@@ -47,6 +47,8 @@ import ZentraBreathwork from "@/components/dashboard/widgets/ZentraBreathwork";
 import QuoteOfTheDay from "@/components/dashboard/widgets/QuoteOfTheDay";
 import PerformanceWindow from "@/components/dashboard/widgets/PerformanceWindow";
 import PsychologicalStateDistribution from "@/components/dashboard/widgets/PsychologicalStateDistribution";
+import MT5AccountCard from "@/components/dashboard/widgets/MT5AccountCard";
+import PerformanceMetricsCard from "@/components/dashboard/widgets/PerformanceMetricsCard";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -765,6 +767,12 @@ export default function Dashboard() {
                 tradingPlan={tradingPlan}
               />
             </div>
+          </div>
+
+          {/* MT5 Data Expansion: Account + Performance */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+            <MT5AccountCard />
+            <PerformanceMetricsCard />
           </div>
 
           {/* Old layout - keeping for reference but commented out */}
