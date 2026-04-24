@@ -180,10 +180,7 @@ export default function TradingPlanPage() {
         type: "success",
       });
 
-      // Auto-hide toast after 3 seconds
-      setTimeout(() => {
-        setToast({ show: false, message: "", type: "success" });
-      }, 3000);
+
     } catch (error) {
       console.error("Error saving trading plan:", error);
       setToast({
@@ -222,10 +219,7 @@ export default function TradingPlanPage() {
       type: "success",
     });
 
-    // Auto-hide toast after 3 seconds
-    setTimeout(() => {
-      setToast({ show: false, message: "", type: "success" });
-    }, 3000);
+
 
     // Redirect to dashboard after a short delay
     if (isFirstTime) {
