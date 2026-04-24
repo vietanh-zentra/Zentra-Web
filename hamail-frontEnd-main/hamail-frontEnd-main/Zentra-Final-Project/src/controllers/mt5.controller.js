@@ -362,6 +362,33 @@ const fullSyncV2 = catchAsync(async (req, res) => {
     fromDate || null
   );
 
+  if (result.trades && result.trades.length > 0) {
+    const transformedTrades = result.trades.map((trade) => ({
+      entryTime: new Date(trade.entryTime),
+      exitTime: new Date(trade.exitTime),
+      symbol: trade.mt5Symbol || trade.symbol || null,
+      tradeType: trade.tradeType || (trade.type === 0 ? 'BUY' : trade.type === 1 ? 'SELL' : null),
+      volume: trade.volume || null,
+      openPrice: trade.openPrice || trade.entryPrice || null,
+      closePrice: trade.closePrice || trade.exitPrice || null,
+      riskPercentUsed: trade.riskPercentUsed,
+      profitLoss: trade.profitLoss || trade.netProfit || trade.profit,
+      riskRewardAchieved: trade.riskRewardAchieved,
+      session: trade.session,
+      stopLossHit: trade.stopLossHit,
+      exitedEarly: trade.exitedEarly,
+      targetPercentAchieved: trade.targetPercentAchieved,
+      notes: trade.notes,
+      mt5DealId: trade.mt5DealId,
+      source: {
+        type: 'mt5',
+        mt5AccountId: user.mt5Account.accountId,
+      },
+    }));
+
+    await tradeService.createBulkTrades(req.user.id, transformedTrades);
+  }
+
   // Update last sync time
   await userService.updateUserById(req.user.id, {
     'mt5Account.lastSyncAt': new Date(),

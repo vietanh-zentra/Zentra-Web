@@ -210,18 +210,46 @@ const analyzeImportedTrades = async (userId, trades) => {
  * @returns {Promise<Array<Trade>>}
  */
 const createBulkTrades = async (userId, tradesData) => {
-  logger.info('Service: Creating bulk trades for user: %s', userId);
+  logger.info('Service: Creating/Upserting bulk trades for user: %s', userId);
   logger.info('Service: Number of trades: %d', tradesData.length);
 
-  const trades = tradesData.map((tradeData) => ({
-    userId,
-    ...tradeData,
-    // Default to manual source if not specified (MT5 sync passes source explicitly)
-    source: tradeData.source || { type: 'manual' },
-  }));
+  if (tradesData.length === 0) return [];
 
-  const result = await Trade.insertMany(trades);
-  logger.info('Service: Bulk trades created successfully: %d', result.length);
+  const bulkOps = tradesData.map((tradeData) => {
+    const tradeDoc = {
+      userId,
+      ...tradeData,
+      source: tradeData.source || { type: 'manual' },
+    };
+
+    if (tradeData.mt5DealId) {
+      return {
+        updateOne: {
+          filter: { userId, mt5DealId: tradeData.mt5DealId },
+          update: { $set: tradeDoc },
+          upsert: true,
+        },
+      };
+    } else {
+      return {
+        insertOne: {
+          document: tradeDoc,
+        },
+      };
+    }
+  });
+
+  await Trade.bulkWrite(bulkOps);
+
+  // Fetch the affected trades to return and analyze
+  const mt5DealIds = tradesData.map(t => t.mt5DealId).filter(Boolean);
+  const filter = mt5DealIds.length > 0 
+    ? { userId, $or: [{ mt5DealId: { $in: mt5DealIds } }, { entryTime: { $in: tradesData.map(t => t.entryTime) } }] }
+    : { userId, entryTime: { $in: tradesData.map(t => t.entryTime) } };
+
+  const result = await Trade.find(filter).lean();
+
+  logger.info('Service: Bulk trades processed successfully: %d', result.length);
 
   // Analyze imported trades and store heatmap + stability history
   await analyzeImportedTrades(userId, result);
