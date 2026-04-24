@@ -6,6 +6,52 @@ const { Trade, BehaviorHeatmapHistory, StabilityTrendHistory } = require('../mod
 const logger = require('../config/logger');
 
 /**
+ * Helper to safely transform raw MT5 trade data into Trade schema format
+ * preventing Mongoose validation errors
+ */
+const transformMT5Trade = (trade, accountId) => {
+  // Extract times safely
+  const rawEntry = trade.entryTime || trade.openTime || trade.time_in || trade.time;
+  const rawExit = trade.exitTime || trade.closeTime || trade.time_out || trade.time;
+  
+  // Calculate a default time if none provided
+  const entryDate = rawEntry ? new Date(rawEntry) : new Date();
+  const exitDate = rawExit ? new Date(rawExit) : new Date();
+  
+  // Determine trade type (enum allows 'BUY', 'SELL')
+  let tradeType = trade.tradeType;
+  if (!tradeType) {
+    if (trade.type === 0) tradeType = 'BUY';
+    else if (trade.type === 1) tradeType = 'SELL';
+  }
+
+  return {
+    entryTime: isNaN(entryDate.getTime()) ? new Date() : entryDate,
+    exitTime: isNaN(exitDate.getTime()) ? new Date() : exitDate,
+    symbol: trade.mt5Symbol || trade.symbol || undefined,
+    tradeType: tradeType || undefined,
+    volume: trade.volume || undefined,
+    openPrice: trade.openPrice || trade.entryPrice || undefined,
+    closePrice: trade.closePrice || trade.exitPrice || undefined,
+    riskPercentUsed: trade.riskPercentUsed,
+    profitLoss: trade.profitLoss ?? trade.netProfit ?? trade.profit ?? 0,
+    riskRewardAchieved: trade.riskRewardAchieved,
+    session: trade.session || 'LONDON', // Required by schema
+    stopLossHit: trade.stopLossHit || false, // Required by schema
+    exitedEarly: trade.exitedEarly || false, // Required by schema
+    targetPercentAchieved: trade.targetPercentAchieved,
+    notes: trade.notes,
+    mt5DealId: trade.mt5DealId || trade.ticket || undefined,
+    ticket: trade.ticket || trade.mt5DealId || undefined,
+    mt5Symbol: trade.mt5Symbol || trade.symbol || undefined,
+    source: {
+      type: 'mt5',
+      mt5AccountId: accountId,
+    },
+  };
+};
+
+/**
  * Connect user's MT5 account
  */
 const connectMT5 = catchAsync(async (req, res) => {
@@ -94,29 +140,7 @@ const syncTrades = catchAsync(async (req, res) => {
   logger.info('Fetched %d trades from MT5, importing to database', mt5Trades.length);
 
   // Transform and save trades with source tagging
-  const transformedTrades = mt5Trades.map((trade) => ({
-    entryTime: new Date(trade.entryTime),
-    exitTime: new Date(trade.exitTime),
-    symbol: trade.mt5Symbol || trade.symbol || null,
-    tradeType: trade.tradeType || (trade.type === 0 ? 'BUY' : trade.type === 1 ? 'SELL' : null),
-    volume: trade.volume || null,
-    openPrice: trade.openPrice || trade.entryPrice || null,
-    closePrice: trade.closePrice || trade.exitPrice || null,
-    riskPercentUsed: trade.riskPercentUsed,
-    profitLoss: trade.profitLoss || trade.netProfit || trade.profit,
-    riskRewardAchieved: trade.riskRewardAchieved,
-    session: trade.session,
-    stopLossHit: trade.stopLossHit,
-    exitedEarly: trade.exitedEarly,
-    targetPercentAchieved: trade.targetPercentAchieved,
-    notes: trade.notes,
-    mt5DealId: trade.mt5DealId,
-    mt5Symbol: trade.mt5Symbol || trade.symbol || null,
-    source: {
-      type: 'mt5',
-      mt5AccountId: user.mt5Account.accountId,
-    },
-  }));
+  const transformedTrades = mt5Trades.map((trade) => transformMT5Trade(trade, user.mt5Account.accountId));
 
   // Use bulk create
   const savedTrades = await tradeService.createBulkTrades(req.user.id, transformedTrades);
@@ -363,28 +387,7 @@ const fullSyncV2 = catchAsync(async (req, res) => {
   );
 
   if (result.trades && result.trades.length > 0) {
-    const transformedTrades = result.trades.map((trade) => ({
-      entryTime: new Date(trade.entryTime),
-      exitTime: new Date(trade.exitTime),
-      symbol: trade.mt5Symbol || trade.symbol || null,
-      tradeType: trade.tradeType || (trade.type === 0 ? 'BUY' : trade.type === 1 ? 'SELL' : null),
-      volume: trade.volume || null,
-      openPrice: trade.openPrice || trade.entryPrice || null,
-      closePrice: trade.closePrice || trade.exitPrice || null,
-      riskPercentUsed: trade.riskPercentUsed,
-      profitLoss: trade.profitLoss || trade.netProfit || trade.profit,
-      riskRewardAchieved: trade.riskRewardAchieved,
-      session: trade.session,
-      stopLossHit: trade.stopLossHit,
-      exitedEarly: trade.exitedEarly,
-      targetPercentAchieved: trade.targetPercentAchieved,
-      notes: trade.notes,
-      mt5DealId: trade.mt5DealId,
-      source: {
-        type: 'mt5',
-        mt5AccountId: user.mt5Account.accountId,
-      },
-    }));
+    const transformedTrades = result.trades.map((trade) => transformMT5Trade(trade, user.mt5Account.accountId));
 
     await tradeService.createBulkTrades(req.user.id, transformedTrades);
   }
