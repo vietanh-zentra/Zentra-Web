@@ -216,13 +216,17 @@ class MT5Connector:
 
         logger.info(f"[TRADE_HISTORY] Raw deals from MT5: {len(deals)}")
 
+        # Fetch ALL orders in the same date range to prevent N+1 query problem
+        orders = mt5.history_orders_get(from_date, to_date)
+        orders_dict = {o.ticket: o for o in orders} if orders else {}
+
         # Use DataNormalizer to pair deals and transform
         paired_trades = DataNormalizer.pair_open_close_deals(deals)
         logger.info(f"[TRADE_HISTORY] Paired into {len(paired_trades)} complete trades")
 
         result = []
         for pid, data in paired_trades.items():
-            trade_json = DataNormalizer.transform_to_contract(pid, data)
+            trade_json = DataNormalizer.transform_to_contract(pid, data, orders_dict)
             result.append(trade_json)
 
         logger.info(f"[TRADE_HISTORY] Normalized {len(result)} trades to CONTRACT format")
