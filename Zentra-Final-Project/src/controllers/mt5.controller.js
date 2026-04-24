@@ -107,13 +107,30 @@ const syncTrades = catchAsync(async (req, res) => {
     notes: trade.notes,
     mt5DealId: trade.mt5DealId,
     mt5Symbol: trade.mt5Symbol,
+    // MT5 raw data fields (required for unique index)
+    ticket: trade.ticket,
+    orderId: trade.orderId,
+    dealInId: trade.dealInId,
+    dealOutId: trade.dealOutId,
+    positionId: trade.positionId,
+    tradeType: trade.tradeType,
+    volume: trade.volume,
+    openPrice: trade.openPrice,
+    closePrice: trade.closePrice,
+    stopLoss: trade.stopLoss,
+    takeProfit: trade.takeProfit,
+    commission: trade.commission,
+    swap: trade.swap,
+    netProfit: trade.netProfit,
+    magicNumber: trade.magicNumber,
+    durationSeconds: trade.durationSeconds,
     source: {
       type: 'mt5',
       mt5AccountId: user.mt5Account.accountId,
     },
   }));
 
-  // Use bulk create
+  // Use bulk create (handles duplicates gracefully)
   const savedTrades = await tradeService.createBulkTrades(req.user.id, transformedTrades);
 
   // Update last sync time
