@@ -1,0 +1,26 @@
+# Zentra MT5 Engine — Python Dependencies
+# Author: Hoà (MT5 Engine Lead)
+# Python 3.10+
+
+# Core MT5
+MetaTrader5>=5.0.45
+
+# Flask API
+Flask>=3.0.0
+flask-cors>=5.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# UI Automation (for first-time login)
+pyautogui>=0.9.54
+pyperclip>=1.8.2
+Pillow>=10.0.0
+
+# Testing
+pytest>=7.0.0
+
+# Production WSGI server (platform-specific)
+gunicorn>=21.2.0; sys_platform != 'win32'
+waitress>=2.1.0; sys_platform == 'win32'
