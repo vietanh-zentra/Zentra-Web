@@ -137,6 +137,8 @@ export default function ConnectPage() {
       await notifyTradesUpdated();
 
       // BUG-04 fix: Update lastSyncAt immediately in state
+      // Don't call loadMT5Status() here — it would overwrite lastSyncAt
+      // if the server hasn't persisted it yet
       setMt5Status((prev) => ({
         ...prev,
         lastSyncAt: new Date().toISOString(),
@@ -147,9 +149,6 @@ export default function ConnectPage() {
         message: `Successfully synced ${result.count || 0} trades from MT5!`,
         type: "success",
       });
-
-      // Also reload full status from server
-      await loadMT5Status();
     } catch (error) {
       console.error("Error syncing MT5 trades:", error);
       setToast({
@@ -170,7 +169,7 @@ export default function ConnectPage() {
       const result = await apiClient.fullSyncV2();
       await notifyTradesUpdated();
 
-      // Update lastSyncAt immediately
+      // BUG-04 fix: Update lastSyncAt immediately — don't reload from server
       setMt5Status((prev) => ({
         ...prev,
         lastSyncAt: new Date().toISOString(),
@@ -182,8 +181,6 @@ export default function ConnectPage() {
         message: `Full sync complete! ${tradeCount} trades, account data, positions, and performance metrics updated.`,
         type: "success",
       });
-
-      await loadMT5Status();
     } catch (error) {
       console.error("Error full sync V2:", error);
       setToast({

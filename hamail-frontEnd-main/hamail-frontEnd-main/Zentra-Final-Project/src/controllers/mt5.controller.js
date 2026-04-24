@@ -97,8 +97,13 @@ const syncTrades = catchAsync(async (req, res) => {
   const transformedTrades = mt5Trades.map((trade) => ({
     entryTime: new Date(trade.entryTime),
     exitTime: new Date(trade.exitTime),
+    symbol: trade.mt5Symbol || trade.symbol || null,
+    tradeType: trade.tradeType || (trade.type === 0 ? 'BUY' : trade.type === 1 ? 'SELL' : null),
+    volume: trade.volume || null,
+    openPrice: trade.openPrice || trade.entryPrice || null,
+    closePrice: trade.closePrice || trade.exitPrice || null,
     riskPercentUsed: trade.riskPercentUsed,
-    profitLoss: trade.profitLoss,
+    profitLoss: trade.profitLoss || trade.netProfit || trade.profit,
     riskRewardAchieved: trade.riskRewardAchieved,
     session: trade.session,
     stopLossHit: trade.stopLossHit,
@@ -106,7 +111,7 @@ const syncTrades = catchAsync(async (req, res) => {
     targetPercentAchieved: trade.targetPercentAchieved,
     notes: trade.notes,
     mt5DealId: trade.mt5DealId,
-    mt5Symbol: trade.mt5Symbol,
+    mt5Symbol: trade.mt5Symbol || trade.symbol || null,
     source: {
       type: 'mt5',
       mt5AccountId: user.mt5Account.accountId,
