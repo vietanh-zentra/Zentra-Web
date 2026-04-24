@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 300 100">
+  <defs>
+    <linearGradient id="zentra-gradient" x1="0%" y1="100%" x2="0%" y2="0%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0e8d0" />
+      <stop offset="50%" stop-color="#00bfa6" />
+      <stop offset="100%" stop-color="#000080" />
+    </linearGradient>
+  </defs>
+  <text 
+    x="150" 
+    y="70" 
+    font-family="system-ui, -apple-system, Arial, sans-serif" 
+    font-size="65" 
+    font-weight="bold" 
+    text-anchor="middle" 
+    fill="url(#zentra-gradient)"
+    letter-spacing="-3"
+  >
+    ZENTRA
+  </text>
+</svg>

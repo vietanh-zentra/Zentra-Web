@@ -220,11 +220,26 @@ const createBulkTrades = async (userId, tradesData) => {
     source: tradeData.source || { type: 'manual' },
   }));
 
-  const result = await Trade.insertMany(trades);
+  let result;
+  try {
+    result = await Trade.insertMany(trades, { ordered: false });
+  } catch (err) {
+    // E11000 duplicate key errors are expected when re-syncing — extract successful inserts
+    if (err.code === 11000 || (err.writeErrors && err.insertedDocs)) {
+      result = err.insertedDocs || [];
+      const dupeCount = tradesData.length - result.length;
+      logger.info('Service: Inserted %d trades, skipped %d duplicates', result.length, dupeCount);
+    } else {
+      throw err;
+    }
+  }
+
   logger.info('Service: Bulk trades created successfully: %d', result.length);
 
   // Analyze imported trades and store heatmap + stability history
-  await analyzeImportedTrades(userId, result);
+  if (result.length > 0) {
+    await analyzeImportedTrades(userId, result);
+  }
 
   return result;
 };

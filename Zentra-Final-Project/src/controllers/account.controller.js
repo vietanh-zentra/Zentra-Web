@@ -78,7 +78,7 @@ const triggerSync = catchAsync(async (req, res) => {
   const account = await accountService.getAccountById(accountId, req.user.id);
 
   // Check for concurrent sync
-  const inProgress = await syncService.isSyncInProgress(account.id);
+  const inProgress = await syncService.isSyncInProgress(account._id);
   if (inProgress) {
     throw new (require('../utils/ApiError'))(
       409,
@@ -88,7 +88,7 @@ const triggerSync = catchAsync(async (req, res) => {
   }
 
   // Create sync log
-  const syncLog = await syncService.createSyncLog(account.id, syncType || 'full', { fromDate, toDate });
+  const syncLog = await syncService.createSyncLog(account._id, syncType || 'full', { fromDate, toDate });
   const startTime = Date.now();
 
   try {
@@ -112,11 +112,11 @@ const triggerSync = catchAsync(async (req, res) => {
     );
 
     // 2) Bulk insert trades (skipping duplicates)
-    const bulkResult = await tradeService.createBulkTradesForAccount(req.user.id, account.id, mt5Trades);
+    const bulkResult = await tradeService.createBulkTradesForAccount(req.user.id, account._id, mt5Trades);
 
     // 3) Recalculate daily summaries for affected dates
     if (bulkResult.inserted > 0) {
-      await dailySummaryService.recalculateForTrades(account.id, bulkResult.trades);
+      await dailySummaryService.recalculateForTrades(account._id, bulkResult.trades);
     }
 
     // 4) Fetch and upsert open positions (Hoà)
@@ -126,7 +126,7 @@ const triggerSync = catchAsync(async (req, res) => {
         user.mt5Account.server,
         decryptedPassword
       );
-      await openPositionService.upsertPositions(account.id, mt5Positions);
+      await openPositionService.upsertPositions(account._id, mt5Positions);
       logger.info('[AccountController] Upserted %d open positions', mt5Positions.length);
     } catch (posErr) {
       // Non-fatal: positions are nice-to-have, don't fail the whole sync
@@ -140,7 +140,7 @@ const triggerSync = catchAsync(async (req, res) => {
         user.mt5Account.server,
         decryptedPassword
       );
-      await accountService.updateAccountInfo(account.id, {
+      await accountService.updateAccountInfo(account._id, {
         lastSync: new Date(),
         totalTradesSynced: (account.totalTradesSynced || 0) + bulkResult.inserted,
         balance: accountInfo.balance ?? account.balance,
@@ -150,7 +150,7 @@ const triggerSync = catchAsync(async (req, res) => {
     } catch (infoErr) {
       // Non-fatal: at minimum update lastSync and trade count
       logger.warn('[AccountController] Failed to fetch account info (non-fatal): %s', infoErr.message);
-      await accountService.updateAccountInfo(account.id, {
+      await accountService.updateAccountInfo(account._id, {
         lastSync: new Date(),
         totalTradesSynced: (account.totalTradesSynced || 0) + bulkResult.inserted,
       });

@@ -35,18 +35,30 @@ class DataNormalizer:
     """
 
     @staticmethod
-    def get_tp_sl_from_order(order_ticket: int) -> Tuple[Optional[float], Optional[float]]:
+    def get_tp_sl_from_order(order_ticket: int, orders_dict: Dict[int, Any] = None) -> Tuple[Optional[float], Optional[float]]:
         """
         Lookup TP and SL from order history.
 
         Args:
             order_ticket: The order ticket to look up
+            orders_dict: Optional pre-fetched dict mapping order_ticket -> order to avoid N+1 query problem
 
         Returns:
             Tuple of (take_profit, stop_loss), either can be None
         """
         if not order_ticket:
             return (None, None)
+            
+        # O(1) Memory lookup if dict is provided
+        if orders_dict is not None and order_ticket in orders_dict:
+            order = orders_dict[order_ticket]
+            tp = getattr(order, 'price_tp', None) or getattr(order, 'tp', None)
+            sl = getattr(order, 'price_sl', None) or getattr(order, 'sl', None)
+            tp = tp if tp and tp > 0 else None
+            sl = sl if sl and sl > 0 else None
+            return (tp, sl)
+
+        # Fallback to O(N) network call
         try:
             orders = mt5.history_orders_get(ticket=order_ticket)
             if orders and len(orders) > 0:
@@ -157,13 +169,14 @@ class DataNormalizer:
         return complete_trades
 
     @staticmethod
-    def transform_to_contract(position_id: int, trade_data: Dict[str, Any]) -> Dict[str, Any]:
+    def transform_to_contract(position_id: int, trade_data: Dict[str, Any], orders_dict: Dict[int, Any] = None) -> Dict[str, Any]:
         """
         Transform a paired trade into CONTRACT.md Section 4.2 JSON format.
 
         Args:
             position_id: The MT5 position_id
             trade_data: Output from pair_open_close_deals()
+            orders_dict: Optional dictionary of all historical orders
 
         Returns:
             Dict matching CONTRACT.md closed trade schema
@@ -174,7 +187,7 @@ class DataNormalizer:
 
         # Lookup TP/SL from order history
         order_ticket = getattr(open_deal, 'order', None) or getattr(open_deal, 'ticket', None)
-        tp, sl = DataNormalizer.get_tp_sl_from_order(order_ticket)
+        tp, sl = DataNormalizer.get_tp_sl_from_order(order_ticket, orders_dict)
 
         # Convert timestamps: Unix → ISO 8601 UTC
         open_time_iso = datetime.utcfromtimestamp(

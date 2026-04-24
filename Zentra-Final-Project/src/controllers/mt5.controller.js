@@ -2,8 +2,27 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const ApiError = require('../utils/ApiError');
 const { mt5Service, userService, tradeService } = require('../services');
-const { Trade, BehaviorHeatmapHistory, StabilityTrendHistory } = require('../models');
+const { Trade, Account, BehaviorHeatmapHistory, StabilityTrendHistory } = require('../models');
 const logger = require('../config/logger');
+
+/**
+ * Find or create an Account record for the given user's MT5 account.
+ * Returns the Mongoose document so we can use account._id.
+ */
+const findOrCreateAccount = async (userId, mt5AccountId, brokerServer) => {
+  let account = await Account.findOne({ userId, accountId: mt5AccountId });
+  if (!account) {
+    account = new Account({
+      userId,
+      accountId: mt5AccountId,
+      brokerServer: brokerServer || 'unknown',
+      isConnected: true,
+    });
+    await account.save();
+    logger.info('Created new Account record: %s (id: %s)', mt5AccountId, account._id);
+  }
+  return account;
+};
 
 /**
  * Connect user's MT5 account
@@ -69,14 +88,22 @@ const syncTrades = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'MT5 account not connected');
   }
 
+  // Find or create Account record to get the MongoDB ObjectId
+  const account = await findOrCreateAccount(req.user.id, user.mt5Account.accountId, user.mt5Account.server);
+
+  // Clean up any corrupt trades (accountId: null) from previous buggy syncs
+  const cleanupResult = await Trade.deleteMany({ userId: req.user.id, accountId: null });
+  if (cleanupResult.deletedCount > 0) {
+    logger.info('Cleaned up %d corrupt trades (accountId: null) for user: %s', cleanupResult.deletedCount, req.user.id);
+  }
+
   const { fromDate } = req.body;
   const from = user.mt5Account.lastSyncAt
     ? new Date(user.mt5Account.lastSyncAt)
-    : new Date(fromDate || Date.now() - 30 * 24 * 60 * 60 * 1000); // Default to 30 days ago
-  const to = new Date(Date.now()); // Always use current time as toDate
+    : new Date(fromDate || Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const to = new Date(Date.now());
   logger.info('Syncing trades from %s to %s (current time)', from.toISOString(), to.toISOString());
 
-  // Get decrypted MT5 password
   const decryptedPassword = user.getMT5Password();
   if (!decryptedPassword) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'MT5 password not found');
@@ -93,8 +120,9 @@ const syncTrades = catchAsync(async (req, res) => {
 
   logger.info('Fetched %d trades from MT5, importing to database', mt5Trades.length);
 
-  // Transform and save trades with source tagging
+  // Transform trades — include accountId (ObjectId) for unique index
   const transformedTrades = mt5Trades.map((trade) => ({
+    accountId: account._id,
     entryTime: new Date(trade.entryTime),
     exitTime: new Date(trade.exitTime),
     riskPercentUsed: trade.riskPercentUsed,
@@ -107,13 +135,29 @@ const syncTrades = catchAsync(async (req, res) => {
     notes: trade.notes,
     mt5DealId: trade.mt5DealId,
     mt5Symbol: trade.mt5Symbol,
+    ticket: trade.ticket,
+    orderId: trade.orderId,
+    dealInId: trade.dealInId,
+    dealOutId: trade.dealOutId,
+    positionId: trade.positionId,
+    tradeType: trade.tradeType,
+    volume: trade.volume,
+    openPrice: trade.openPrice,
+    closePrice: trade.closePrice,
+    stopLoss: trade.stopLoss,
+    takeProfit: trade.takeProfit,
+    commission: trade.commission,
+    swap: trade.swap,
+    netProfit: trade.netProfit,
+    magicNumber: trade.magicNumber,
+    durationSeconds: trade.durationSeconds,
     source: {
       type: 'mt5',
       mt5AccountId: user.mt5Account.accountId,
     },
   }));
 
-  // Use bulk create
+  // Bulk insert — skips duplicates gracefully
   const savedTrades = await tradeService.createBulkTrades(req.user.id, transformedTrades);
 
   // Update last sync time
@@ -349,6 +393,15 @@ const fullSyncV2 = catchAsync(async (req, res) => {
   logger.info('Full sync v2 for user: %s', req.user.id);
   const { user, decryptedPassword } = await getMT5Credentials(req.user.id);
 
+  // Find or create Account record
+  const account = await findOrCreateAccount(req.user.id, user.mt5Account.accountId, user.mt5Account.server);
+
+  // Clean up any corrupt trades (accountId: null) from previous buggy syncs
+  const cleanupResult = await Trade.deleteMany({ userId: req.user.id, accountId: null });
+  if (cleanupResult.deletedCount > 0) {
+    logger.info('Cleaned up %d corrupt trades (accountId: null) for user: %s', cleanupResult.deletedCount, req.user.id);
+  }
+
   const { fromDate } = req.body;
   const result = await mt5Service.fullSyncV2(
     user.mt5Account.accountId,
@@ -357,12 +410,77 @@ const fullSyncV2 = catchAsync(async (req, res) => {
     fromDate || null
   );
 
+  // Save trades to MongoDB if Python returned any
+  const pythonTrades = result.trades || [];
+  let savedCount = 0;
+  if (pythonTrades.length > 0) {
+    logger.info('Full sync v2: saving %d trades to MongoDB', pythonTrades.length);
+    const transformedTrades = pythonTrades.map((trade) => ({
+      accountId: account._id,
+      entryTime: new Date(trade.entryTime),
+      exitTime: new Date(trade.exitTime),
+      profitLoss: trade.profitLoss || trade.netProfit || 0,
+      session: trade.session || 'LONDON',
+      stopLossHit: trade.stopLossHit || false,
+      exitedEarly: trade.exitedEarly || false,
+      riskPercentUsed: trade.riskPercentUsed || null,
+      riskRewardAchieved: trade.riskRewardAchieved || null,
+      targetPercentAchieved: trade.targetPercentAchieved || null,
+      notes: trade.notes || '',
+      mt5DealId: trade.mt5DealId || trade.dealOutId,
+      mt5Symbol: trade.mt5Symbol || trade.symbol,
+      ticket: trade.ticket,
+      orderId: trade.orderId,
+      dealInId: trade.dealInId,
+      dealOutId: trade.dealOutId,
+      positionId: trade.positionId,
+      tradeType: trade.tradeType,
+      volume: trade.volume,
+      openPrice: trade.openPrice,
+      closePrice: trade.closePrice,
+      stopLoss: trade.stopLoss,
+      takeProfit: trade.takeProfit,
+      commission: trade.commission || 0,
+      swap: trade.swap || 0,
+      netProfit: trade.netProfit,
+      magicNumber: trade.magicNumber || 0,
+      durationSeconds: trade.durationSeconds,
+      source: {
+        type: 'mt5',
+        mt5AccountId: user.mt5Account.accountId,
+      },
+    }));
+
+    const savedTrades = await tradeService.createBulkTrades(req.user.id, transformedTrades);
+    savedCount = savedTrades.length;
+    logger.info('Full sync v2: saved %d new trades to MongoDB', savedCount);
+  }
+
+  // Update account info if returned
+  if (result.accountInfo) {
+    try {
+      account.balance = result.accountInfo.balance ?? account.balance;
+      account.equity = result.accountInfo.equity ?? account.equity;
+      account.margin = result.accountInfo.margin ?? account.margin;
+      account.currency = result.accountInfo.currency ?? account.currency;
+      account.leverage = result.accountInfo.leverage ?? account.leverage;
+      account.lastSync = new Date();
+      await account.save();
+    } catch (e) {
+      logger.warn('Failed to update account info: %s', e.message);
+    }
+  }
+
   // Update last sync time
   await userService.updateUserById(req.user.id, {
     'mt5Account.lastSyncAt': new Date(),
   });
 
-  res.status(httpStatus.OK).send({ success: true, ...result });
+  res.status(httpStatus.OK).send({
+    success: true,
+    ...result,
+    savedTradesToDb: savedCount,
+  });
 });
 
 module.exports = {

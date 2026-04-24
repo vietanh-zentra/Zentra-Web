@@ -233,9 +233,27 @@ class MT5Connector:
         logger.info(f"[TRADE_HISTORY] Fetching deals from {from_date.isoformat()} to {to_date.isoformat()}")
 
         # Pass datetime objects directly — MT5 handles timezone conversion internally
+        # Retry logic: after switching accounts, MT5 terminal needs time to
+        # download trade history from the broker server.  First attempt may
+        # return 0 deals — retry up to 3 times with a short delay.
         deals = mt5.history_deals_get(from_date, to_date)
-        if not deals:
-            logger.info("[TRADE_HISTORY] No deals found in date range")
+
+        if not deals or len(deals) == 0:
+            MAX_RETRIES = 3
+            RETRY_DELAY = 3  # seconds
+            for attempt in range(1, MAX_RETRIES + 1):
+                logger.info(f"[TRADE_HISTORY] 0 deals on attempt, retrying "
+                            f"({attempt}/{MAX_RETRIES}) after {RETRY_DELAY}s "
+                            f"(waiting for history download)...")
+                time.sleep(RETRY_DELAY)
+                deals = mt5.history_deals_get(from_date, to_date)
+                if deals and len(deals) > 0:
+                    logger.info(f"[TRADE_HISTORY] Got {len(deals)} deals on "
+                                f"retry #{attempt}")
+                    break
+
+        if not deals or len(deals) == 0:
+            logger.info("[TRADE_HISTORY] No deals found after retries")
             return []
 
         logger.info(f"[TRADE_HISTORY] Raw deals from MT5: {len(deals)}")
