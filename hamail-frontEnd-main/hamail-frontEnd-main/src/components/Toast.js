@@ -1,8 +1,16 @@
 "use client";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
-export default function Toast({ show, message, type = "success", onClose }) {
+export default function Toast({ show, message, type = "success", onClose, duration = 2000 }) {
+  // Auto-hide after duration (default 2s)
+  useEffect(() => {
+    if (show && onClose) {
+      const timer = setTimeout(() => onClose(), duration);
+      return () => clearTimeout(timer);
+    }
+  }, [show, onClose, duration]);
   return (
     <AnimatePresence>
       {show && (
