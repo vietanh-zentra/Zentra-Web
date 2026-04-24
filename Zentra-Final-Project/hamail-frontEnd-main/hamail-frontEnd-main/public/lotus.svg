@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lotusStroke" x1="-0.175" y1="0.908" x2="0.825" y2="-0.092">
+      <stop offset="0" stop-color="#2ee7ff"/>
+      <stop offset="0.5" stop-color="#5fcbff"/>
+      <stop offset="1" stop-color="#a26bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="401.252" height="260.055" fill="#050c18" style="" transform="matrix(-1, 0, 0, 1, 0, 0)" x="-401"/>
+  <g fill="none" stroke="url(#lotusStroke)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1, 0, 0, 1, 174.11794, 194.379049)">
+    <path d="M 20.915 44.942 C -41.305 -31.146 -41.305 -126.25 20.915 -183.32 C 83.135 -126.25 83.135 -31.146 20.915 44.942" style="transform-origin: 22.098px -56.152px; stroke-width: 7px;" transform="matrix(0.999848, -0.017453, 0.017452, 0.999848, 0, 0)"/>
+    <g transform="matrix(1.18618, -0.654872, 0.710398, 1.086007, -18.502282, 12.45881)" style="transform-origin: 40.6003px -68.6108px;">
+      <path d=" M 0 0 C -40 -55 -40 -125 0 -170 C 40 -125 40 -55 0 0 " style="stroke-width: 5.28495px;"/>
+    </g>
+    <g transform="matrix(1.208312, 0.613075, -0.672064, 1.110138, 61.216585, 13.314311)" style="transform-origin: -39.1185px -69.4663px;">
+      <path d=" M 0 0 C -40 -55 -40 -125 0 -170 C 40 -125 40 -55 0 0 " style="stroke-width: 5.28495px;"/>
+    </g>
+    <g transform="matrix(0.672064, -1.110138, 1.208312, 0.613075, -47.368162, -17.033476)" style="transform-origin: 69.4663px -39.1185px;">
+      <path d=" M 0 0 C -35 -45 -35 -105 0 -150 C 35 -105 35 -45 0 0 " style="stroke-width: 5.28527px;"/>
+    </g>
+    <g transform="matrix(0.710398, 1.086007, -1.18618, 0.654872, 90.708819, -15.551678)" style="transform-origin: -68.6107px -40.6003px;">
+      <path d=" M 0 0 C -35 -45 -35 -105 0 -150 C 35 -105 35 -45 0 0 " style="stroke-width: 5.28526px;"/>
+    </g>
+    <g transform="matrix(1.382462, -0.024131, -0.022132, -1.267946, 21.242547, -135.870808)" style="transform-origin: 0.8555px 79.7188px;">
+      <g transform="rotate(-35)"/>
+      <g transform="rotate(35)"/>
+    </g>
+  </g>
+</svg>
