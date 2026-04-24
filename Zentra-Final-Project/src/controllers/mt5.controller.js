@@ -69,6 +69,12 @@ const syncTrades = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'MT5 account not connected');
   }
 
+  // Clean up any corrupt trades (accountId: null) from previous buggy syncs
+  const cleanupResult = await Trade.deleteMany({ userId: req.user.id, accountId: null });
+  if (cleanupResult.deletedCount > 0) {
+    logger.info('Cleaned up %d corrupt trades (accountId: null) for user: %s', cleanupResult.deletedCount, req.user.id);
+  }
+
   const { fromDate } = req.body;
   const from = user.mt5Account.lastSyncAt
     ? new Date(user.mt5Account.lastSyncAt)
@@ -365,6 +371,12 @@ const getPerformance = catchAsync(async (req, res) => {
 const fullSyncV2 = catchAsync(async (req, res) => {
   logger.info('Full sync v2 for user: %s', req.user.id);
   const { user, decryptedPassword } = await getMT5Credentials(req.user.id);
+
+  // Clean up any corrupt trades (accountId: null) from previous buggy syncs
+  const cleanupResult = await Trade.deleteMany({ userId: req.user.id, accountId: null });
+  if (cleanupResult.deletedCount > 0) {
+    logger.info('Cleaned up %d corrupt trades (accountId: null) for user: %s', cleanupResult.deletedCount, req.user.id);
+  }
 
   const { fromDate } = req.body;
   const result = await mt5Service.fullSyncV2(
