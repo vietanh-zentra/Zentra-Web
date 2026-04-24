@@ -24,26 +24,32 @@ const hexToRgba = (hex, alpha = 1) => {
 };
 
 const NavLink = ({ href, icon, label, isActive }) => {
+  const router = useRouter();
   return (
-    <Link
-      href={href}
-      className={`flex flex-row items-center justify-center px-[18px] py-3 transition-all duration-200 rounded-full group cursor-pointer ${
+    <div
+      onClick={(e) => {
+        e.preventDefault();
+        router.push(href);
+      }}
+      role="link"
+      tabIndex={0}
+      className={`flex flex-row items-center justify-center px-[18px] py-3 transition-all duration-200 rounded-full group cursor-pointer select-none ${
         isActive
           ? "bg-[#00BFA6] text-white "
           : "bg-transparent text-[#363636] bg-[#EAF1F0] border border-[#FFFFFF] hover:bg-white/50"
       }`}
     >
       <div
-        className={`flex items-center justify-center mr-[10px] pointer-events-none ${isActive ? "text-white" : "text-[#363636]"}`}
+        className={`flex items-center justify-center mr-[10px] ${isActive ? "text-white" : "text-[#363636]"}`}
       >
         {icon}
       </div>
       <span
-        className={`text-sm font-medium pointer-events-none ${isActive ? "text-white" : "text-[#363636]"}`}
+        className={`text-sm font-medium ${isActive ? "text-white" : "text-[#363636]"}`}
       >
         {label}
       </span>
-    </Link>
+    </div>
   );
 };
 
