@@ -59,110 +59,86 @@ class MT5Connector:
     def connect(self, account_id: int = None, password: str = None,
                 server: str = None, manual_login: bool = False) -> Dict:
         """
-        Connect to MT5 server. Returns account_info or error with standard error codes.
+        Connect to MT5 server. Uses path-only initialization to reuse
+        the terminal's existing session, avoiding IPC disconnection.
 
         Args:
             account_id: Override login from __init__
             password: Override password from __init__
             server: Override server from __init__
-            manual_login: If True, attempt UI automation for first-time login
+            manual_login: Ignored (kept for API compatibility)
 
         Returns:
             Dict with 'connected' bool and 'account_info' or 'error'
         """
-        # Use params from __init__ if not overridden
         account_id = account_id or self.login
         password = password or self.password
         server = server or self.server
 
         if not account_id or not password or not server:
-            logger.error("connect() called without credentials and no __init__ credentials set")
+            logger.error("connect() called without credentials")
             return {"connected": False, "error": {"code": "INVALID_CREDENTIALS",
                     "message": "Missing account_id, password, or server"}}
 
         # Check if already connected to this account
-        if self.connected and check_account_logged_in(account_id):
-            logger.info(f"Account {account_id} already connected, reusing session")
-            return {"connected": True, "account_info": self.get_account_info()}
+        if self.connected:
+            try:
+                info = mt5.account_info()
+                if info and info.login == int(account_id):
+                    logger.info(f"Account {account_id} already connected, reusing session")
+                    return {"connected": True, "account_info": self.get_account_info()}
+            except Exception:
+                pass
 
         logger.info(f"[CONNECT] Starting connection for account {account_id} @ {server}")
-        logger.info(f"[CONNECT] Manual login: {manual_login}")
         logger.info(f"[CONNECT] MT5 path: {MT5_PATH}, exists: {os.path.exists(MT5_PATH)}")
 
         start_time = time.time()
 
         try:
-            # Attempt 1: Direct initialization
-            logger.info("[CONNECT] Step 1: Attempting direct mt5.initialize()")
-            if mt5.initialize(path=MT5_PATH, login=account_id, password=password,
-                              server=server, timeout=CONNECTION_TIMEOUT_MS, portable=False):
-                if check_account_logged_in(account_id):
-                    self.connected = True
-                    self._connection_time_ms = int((time.time() - start_time) * 1000)
-                    logger.info(f"[CONNECT] Direct login SUCCESS in {self._connection_time_ms}ms")
-                    return {"connected": True, "account_info": self.get_account_info()}
-                else:
-                    logger.warning("[CONNECT] mt5.initialize() returned True but account not logged in. Retrying...")
-                    mt5.shutdown()
+            # Clean any stale connection
+            try:
+                mt5.shutdown()
+            except Exception:
+                pass
+            time.sleep(0.5)
 
-            # Attempt 2: UI automation (if requested)
-            if manual_login:
-                logger.info("[CONNECT] Step 2: Attempting automated UI login")
-                auto_success, auto_err = ensure_account_logged_in(
-                    account_id, password, server, MT5_PATH, use_automation=True
-                )
-                if auto_success:
-                    logger.info("[CONNECT] UI automation completed, verifying login...")
-                    time.sleep(2)
-                    if mt5.initialize(path=MT5_PATH, login=account_id, password=password,
-                                      server=server, timeout=CONNECTION_TIMEOUT_MS, portable=False):
-                        if check_account_logged_in(account_id):
-                            self.connected = True
-                            self._connection_time_ms = int((time.time() - start_time) * 1000)
-                            logger.info(f"[CONNECT] Automation login SUCCESS in {self._connection_time_ms}ms")
-                            return {"connected": True, "account_info": self.get_account_info()}
-                    error_code = mt5.last_error()
-                    logger.error(f"[CONNECT] Post-automation init failed: {error_code}")
-                    return {"connected": False, "error": {"code": "MT5_NOT_INITIALIZED",
-                            "message": f"MT5 init failed after automation: {error_code}"}}
-                else:
-                    logger.warning(f"[CONNECT] UI automation failed: {auto_err}")
+            # Step 1: Initialize with PATH ONLY (reuse terminal session)
+            logger.info("[CONNECT] Step 1: mt5.initialize(path only)")
+            if not mt5.initialize(path=MT5_PATH):
+                error_code = mt5.last_error()
+                logger.error(f"[CONNECT] mt5.initialize() failed: {error_code}")
+                return {"connected": False, "error": {"code": "MT5_NOT_INITIALIZED",
+                        "message": f"MT5 terminal init failed: {error_code}"}}
 
-            # Attempt 3: Retry direct initialization with reconnect logic
-            for attempt in range(1, MAX_RECONNECT_ATTEMPTS + 1):
-                logger.info(f"[CONNECT] Step 3: Retry attempt {attempt}/{MAX_RECONNECT_ATTEMPTS}")
-                try:
-                    mt5.shutdown()
-                except Exception:
-                    pass
-                time.sleep(RECONNECT_DELAY_SECONDS)
+            # Step 2: Check if the right account is already logged in
+            info = mt5.account_info()
+            if info and info.login == int(account_id):
+                self.connected = True
+                self._connection_time_ms = int((time.time() - start_time) * 1000)
+                logger.info(f"[CONNECT] SUCCESS (reused session) in {self._connection_time_ms}ms")
+                return {"connected": True, "account_info": self.get_account_info()}
 
-                if mt5.initialize(path=MT5_PATH, login=account_id, password=password,
-                                  server=server, timeout=CONNECTION_TIMEOUT_MS, portable=False):
-                    account_info = mt5.account_info()
-                    if account_info and account_info.login == account_id:
-                        self.connected = True
-                        self._connection_time_ms = int((time.time() - start_time) * 1000)
-                        logger.info(f"[CONNECT] Retry #{attempt} SUCCESS in {self._connection_time_ms}ms")
-                        return {"connected": True, "account_info": self.get_account_info()}
+            # Step 3: Different account — use mt5.login() (does NOT restart terminal)
+            logger.info(f"[CONNECT] Terminal has different account, attempting mt5.login()")
+            if mt5.login(int(account_id), password=password, server=server,
+                         timeout=CONNECTION_TIMEOUT_MS):
+                self.connected = True
+                self._connection_time_ms = int((time.time() - start_time) * 1000)
+                logger.info(f"[CONNECT] SUCCESS (mt5.login) in {self._connection_time_ms}ms")
+                return {"connected": True, "account_info": self.get_account_info()}
 
-            # All attempts failed — determine error type
+            # Login failed
             error_code = mt5.last_error()
             total_time = int((time.time() - start_time) * 1000)
-            logger.error(f"[CONNECT] ALL ATTEMPTS FAILED after {total_time}ms. Last error: {error_code}")
+            logger.error(f"[CONNECT] mt5.login() failed after {total_time}ms: {error_code}")
 
-            if error_code and error_code[0] == -10005:
-                return {"connected": False, "error": {"code": "CONNECTION_TIMEOUT",
-                        "message": f"Connection timed out after {total_time}ms. Error: {error_code}"}}
-            elif error_code and error_code[0] == -10004:
+            if error_code and error_code[0] == -10004:
                 return {"connected": False, "error": {"code": "INVALID_CREDENTIALS",
                         "message": f"Invalid login, password, or server. Error: {error_code}"}}
-            elif error_code and error_code[0] in (-10003, -10001):
-                return {"connected": False, "error": {"code": "MT5_NOT_INITIALIZED",
-                        "message": f"MT5 terminal could not be launched. Error: {error_code}"}}
             else:
-                return {"connected": False, "error": {"code": "SERVER_UNREACHABLE",
-                        "message": f"Could not reach MT5 server. Error: {error_code}"}}
+                return {"connected": False, "error": {"code": "CONNECTION_TIMEOUT",
+                        "message": f"Connection failed after {total_time}ms. Error: {error_code}"}}
 
         except Exception as e:
             logger.error(f"[CONNECT] EXCEPTION: {str(e)}", exc_info=True)
