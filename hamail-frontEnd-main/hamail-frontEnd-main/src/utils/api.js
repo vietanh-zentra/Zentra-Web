@@ -1,6 +1,5 @@
 // API client for backend connection
-// const API_BASE_URL = "https://api.hellozentra.com/v1" 
-const API_BASE_URL = "/api/proxy" 
+const API_BASE_URL = "https://api.hellozentra.com/v1"
 
 // Normalise any date value to "YYYY-MM-DD" string expected by the backend.
 const toDateStr = (date) => {
