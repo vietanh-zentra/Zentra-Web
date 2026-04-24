@@ -1,9 +1,19 @@
-EMAIL DÙNG CHUNG CH'
-O DỰ ÁN:
+================================================================================
+                    ZENTRA MT5 WEB — TÀI NGUYÊN DỰ ÁN
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+A. TÀI KHOẢN NỘI BỘ (Team Dev)
+────────────────────────────────────────────────────────────────────────────────
+
+EMAIL DÙNG CHUNG CHO DỰ ÁN:
   Email:    vietanh.zentra@gmail.com
   Password: Vietanh789
-  (Dùng email này để đăng nhập tất cả: Vercel, GitHub, AWS)
+  (Dùng email này để đăng nhập: GitHub)
 
+GITHUB:
+  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+  Repo:      https://github.com/vietanh-zentra/Zentra-Web
 
 MT5 DEMO ACCOUNT:
   Company:  MetaQuotes Ltd.
@@ -12,30 +22,68 @@ MT5 DEMO ACCOUNT:
   Password: W@JpEl7n
   Investor: 1l!zBdGv  (read-only, dùng cái này để kết nối)
 
-AWS:
-  Console:  https://415066135731.signin.aws.amazon.com/console
-  User:     vietanh.zentra@gmail.com
-  Password: Teamzentra789!   (ĐÃ ĐỔI ngày 20/04/2026, mật khẩu cũ hết hạn)
+────────────────────────────────────────────────────────────────────────────────
+B. TÀI KHOẢN KHÁCH HÀNG (Hamail Paracha)
+────────────────────────────────────────────────────────────────────────────────
 
+⚠️ ĐÂY LÀ TÀI KHOẢN CỦA KHÁCH — CHỈ DÙNG CHO DEPLOYMENT, KHÔNG CHIA SẺ!
+⚠️ TIỀN TRỪ THẲNG VÀO THẺ TÍN DỤNG KHÁCH — CẨN THẬN KHI THAO TÁC!
+⚠️ TỔNG CHI PHÍ TỐI ĐA: ~$45/THÁNG — KHÔNG VƯỢT QUÁ!
 
+1. MONGODB ATLAS (Database)
+   URL:      https://cloud.mongodb.com
+   Email:    hamilghani@live.co.uk
+   Password: Teamzentra456?
+   Gói:      M0 Free → Nâng M2 ($9/tháng) khi cần
+   Dùng để:  Lưu trữ database Zentra
 
-VERCEL:
-  Đã được invite bởi: leoparacha7-9577 (leoparacha7@gmail.com)
-  Team name: Leo's projects
-  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
-  Link invite: https://vercel.com/invites/AKD8gGH1HgJ4hnQo9uHx59hOEndMP0CzmmWOmBmulVRJ07UB?flow=signup
-  ⚠️ Invite hết hạn sau 7 ngày (từ 17/04/2026) → ACCEPT NGAY!
+2. VERCEL (Frontend Hosting)
+   URL:      https://vercel.com
+   Email:    hparacha97@outlook.com
+   Gói:      Hobby ($0)
+   Dùng để:  Deploy frontend Next.js
 
-GITHUB:
-  Đăng nhập: vietanh.zentra@gmail.com / Vietanh789
+3. AWS (MT5 Engine Server)
+   URL:      https://console.aws.amazon.com
+   Email:    hparacha97@outlook.com
+   Password: Hellozentra111!
+   ⚠️ CẦN MFA CODE — Hỏi sếp khi đăng nhập!
+   Instance: EC2 t3.small Windows — 54.254.198.56
+   Gói:      t3.small ($29/tháng)
+   Dùng để:  Chạy MT5 Engine (Python + MetaTrader 5)
 
-Khách hàng chính của dự án
-Tên khách hàng: Hamail Paracha.
+4. RENDER.COM (Backend API Hosting)
+   URL:      https://render.com
+   Email:    hparacha97@outlook.com
+   Password: Teamzentra456?
+   Gói:      Starter ($7/tháng)
+   Dùng để:  Deploy Node.js backend API
 
+────────────────────────────────────────────────────────────────────────────────
+C. THÔNG TIN KHÁCH HÀNG
+────────────────────────────────────────────────────────────────────────────────
 
-⚠️⚠️⚠️ GITHUB REPO CỦA KHÁCH: CHƯA ĐƯỢC MỜI ⚠️⚠️⚠️
-  Khách (Hamail) chưa gửi invite vào repo GitHub của dự án Zentra.
-  Người quản lý dự án đã nhắc nhưng khách chưa phản hồi.
-  → Các bạn CÓ THỂ bắt đầu code trên local/repo riêng trước.
-  → Khi nào có invite GitHub, anh sẽ forward ngay.
-  → KHÔNG CẦN CHỜ, cứ code đi, sau push lên repo khách sau.
+Tên:  Hamail Paracha
+Email liên hệ: hparacha97@outlook.com
+Vai trò: Product Owner / Nhà tài trợ dự án
+
+────────────────────────────────────────────────────────────────────────────────
+D. TỔNG CHI PHÍ HÀNG THÁNG
+────────────────────────────────────────────────────────────────────────────────
+
+| Dịch vụ        | Gói          | Chi phí     |
+|-----------------|--------------|-------------|
+| AWS EC2         | t3.small     | $29.00      |
+| MongoDB Atlas   | M2 Starter   | $9.00       |
+| Render.com      | Starter      | $7.00       |
+| Vercel          | Hobby        | $0.00       |
+| TỔNG            |              | ~$45.00     |
+
+────────────────────────────────────────────────────────────────────────────────
+E. GHI CHÚ BẢO MẬT
+────────────────────────────────────────────────────────────────────────────────
+
+- KHÔNG commit file này vào git (.gitignore)
+- KHÔNG chia sẻ thông tin ra ngoài team
+- Đổi password ngay sau khi deployment xong
+- AWS cần MFA code → liên hệ sếp mỗi khi đăng nhập

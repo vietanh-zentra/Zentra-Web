@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Zentra Phase 1 — Progress Report</title>
+<title>Zentra Phase 1 — Final Production Report</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -101,18 +101,18 @@ body{font-family:'Inter',sans-serif;color:#1e293b;background:#d1d5db;font-size:1
       <div class="vq-name">V Q U A N T</div>
       <div class="vq-div">W E B 3&nbsp;&nbsp;&nbsp;E N G I N E E R I N G&nbsp;&nbsp;&nbsp;D I V I S I O N</div>
     </div>
-    <div class="cover-pill">P H A S E&nbsp;&nbsp;1&nbsp;&nbsp;—&nbsp;&nbsp;R E P O R T</div>
+    <div class="cover-pill">P H A S E&nbsp;&nbsp;1&nbsp;&nbsp;—&nbsp;&nbsp;F I N A L&nbsp;&nbsp;R E P O R T</div>
     <div class="cover-title">Zentra MT5 Engine</div>
-    <div class="cover-sub">MetaTrader 5 Integration · Progress Report</div>
+    <div class="cover-sub">MetaTrader 5 Integration · Production Release</div>
     <div class="cover-grid">
       <div><div class="cg-label">Project</div><div class="cg-value">MT5 Engine + Node.js API</div></div>
-      <div><div class="cg-label">Platform</div><div class="cg-value">Windows / Docker</div></div>
-      <div><div class="cg-label">Document Type</div><div class="cg-value">Phase 1 — Progress Report</div></div>
-      <div><div class="cg-label">Version</div><div class="cg-value">v1.0 — April 2026</div></div>
+      <div><div class="cg-label">Platform</div><div class="cg-value">Vercel (Prod) / AWS EC2</div></div>
+      <div><div class="cg-label">Document Type</div><div class="cg-value">Phase 1 — Final Production Report</div></div>
+      <div><div class="cg-label">Version</div><div class="cg-value">v1.1 — April 2026</div></div>
       <div><div class="cg-label">Team</div><div class="cg-value">Đàm Văn Hoà & Nguyễn Mạnh Dũng</div></div>
-      <div><div class="cg-label">Status</div><div class="cg-value" style="color:#059669">Completed</div></div>
+      <div><div class="cg-label">Status</div><div class="cg-value" style="color:#059669">100% Production Ready</div></div>
     </div>
-    <div class="cover-footer">VQuant — Phase 1 Progress Report v1.0 · Confidential</div>
+    <div class="cover-footer">VQuant — Phase 1 Final Report v1.1 · Confidential</div>
   </div>
 </div>
 
@@ -158,6 +158,9 @@ body{font-family:'Inter',sans-serif;color:#1e293b;background:#d1d5db;font-size:1
     <div class="task avoid-break"><div class="task-badge green">D1–D3</div><div><div class="task-name">MongoDB Schemas & Route Architecture</div><div class="task-desc">5 collections: Account, Trade, OpenPosition, DailySummary, SyncLog. 10 REST endpoints with JSDoc, bulk insert, CRUD.</div></div></div>
     <div class="task avoid-break"><div class="task-badge green">D4–D5</div><div><div class="task-name">Error Handling & Performance Testing</div><div class="task-desc">Unified <code>errorCodes.js</code>. Bulk: 1,000 trades in &lt;5s. Standardized API response format.</div></div></div>
     <div class="task avoid-break"><div class="task-badge green">D6–D7</div><div><div class="task-name">Docker + API Documentation</div><div class="task-desc"><code>node:18-alpine</code> Docker + <code>docker-compose.yml</code> via <code>host.docker.internal</code>. Full <code>API_DOCS.md</code>.</div></div></div>
+    <div class="task avoid-break"><div class="task-badge green">D8</div><div><div class="task-name">Production Deployment (Vercel)</div><div class="task-desc">Resolved Monorepo build paths and Husky pre-commit hooks causing Vercel deployment failures. Successfully deployed to <code>api.hellozentra.com</code>.</div></div></div>
+    <div class="task avoid-break"><div class="task-badge green">D9</div><div><div class="task-name">Trade Data Normalization Engine</div><div class="task-desc">Implemented <code>transformMT5Trade</code> to dynamically handle raw Python MT5 data, map missing dates, cast enum types, and apply strict schema defaults to prevent Mongoose validation crashes.</div></div></div>
+    <div class="task avoid-break"><div class="task-badge green">D10</div><div><div class="task-name">Full Sync V2 & Upsert Pipeline</div><div class="task-desc">Upgraded <code>createBulkTrades</code> to use MongoDB <code>bulkWrite</code> with Upsert matching on <code>mt5DealId</code>. Completely eliminated trade duplication and ensured accurate historical synchronization.</div></div></div>
   </div>
 
   <!-- 04 API Table -->
@@ -166,7 +169,8 @@ body{font-family:'Inter',sans-serif;color:#1e293b;background:#d1d5db;font-size:1
     <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Status</th></tr></thead>
     <tbody>
       <tr><td>POST</td><td>/v1/mt5/connect</td><td>Connect MT5 account</td><td><span class="pill pill-green">Done</span></td></tr>
-      <tr><td>POST</td><td>/v1/mt5/sync</td><td>Sync trades from MT5</td><td><span class="pill pill-green">Done</span></td></tr>
+      <tr><td>POST</td><td>/v1/mt5/sync</td><td>Quick sync trades from MT5</td><td><span class="pill pill-green">Done</span></td></tr>
+      <tr><td>POST</td><td>/v1/mt5/full-sync-v2</td><td>Comprehensive data sync & Upsert</td><td><span class="pill pill-green">Done</span></td></tr>
       <tr><td>GET</td><td>/v1/mt5/status</td><td>Connection status</td><td><span class="pill pill-green">Done</span></td></tr>
       <tr><td>DELETE</td><td>/v1/mt5/disconnect</td><td>Disconnect MT5</td><td><span class="pill pill-green">Done</span></td></tr>
       <tr><td>GET</td><td>/v1/trades</td><td>List all trades</td><td><span class="pill pill-green">Done</span></td></tr>

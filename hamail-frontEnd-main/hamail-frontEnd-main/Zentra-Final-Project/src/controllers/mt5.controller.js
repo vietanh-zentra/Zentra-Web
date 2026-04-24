@@ -10,16 +10,16 @@ const logger = require('../config/logger');
  * preventing Mongoose validation errors
  */
 const transformMT5Trade = (trade, accountId) => {
-  // Extract times safely
-  const rawEntry = trade.entryTime || trade.openTime || trade.time_in || trade.time;
-  const rawExit = trade.exitTime || trade.closeTime || trade.time_out || trade.time;
+  // Extract times safely handling both camelCase and snake_case from Python
+  const rawEntry = trade.entryTime || trade.openTime || trade.open_time || trade.time_in || trade.time;
+  const rawExit = trade.exitTime || trade.closeTime || trade.close_time || trade.time_out || trade.time;
   
   // Calculate a default time if none provided
   const entryDate = rawEntry ? new Date(rawEntry) : new Date();
   const exitDate = rawExit ? new Date(rawExit) : new Date();
   
   // Determine trade type (enum allows 'BUY', 'SELL')
-  let tradeType = trade.tradeType;
+  let tradeType = trade.tradeType || trade.trade_type;
   if (!tradeType) {
     if (trade.type === 0) tradeType = 'BUY';
     else if (trade.type === 1) tradeType = 'SELL';
@@ -31,10 +31,10 @@ const transformMT5Trade = (trade, accountId) => {
     symbol: trade.mt5Symbol || trade.symbol || undefined,
     tradeType: tradeType || undefined,
     volume: trade.volume || undefined,
-    openPrice: trade.openPrice || trade.entryPrice || undefined,
-    closePrice: trade.closePrice || trade.exitPrice || undefined,
+    openPrice: trade.openPrice || trade.open_price || trade.entryPrice || undefined,
+    closePrice: trade.closePrice || trade.close_price || trade.exitPrice || undefined,
     riskPercentUsed: trade.riskPercentUsed,
-    profitLoss: trade.profitLoss ?? trade.netProfit ?? trade.profit ?? 0,
+    profitLoss: trade.profitLoss ?? trade.netProfit ?? trade.net_profit ?? trade.profit ?? 0,
     riskRewardAchieved: trade.riskRewardAchieved,
     session: trade.session || 'LONDON', // Required by schema
     stopLossHit: trade.stopLossHit || false, // Required by schema
