@@ -171,7 +171,7 @@ const Sidebar = ({ collapsed = false, onToggle }) => {
       )}
 
       {/* Top Navbar Container */}
-      <div className="w-full fixed top-0 left-0 right-0 z-40 px-8 py-[30px] bg-[#DDE7E7]">
+      <div className="w-full fixed top-0 left-0 right-0 z-50 px-8 py-[30px] bg-[#DDE7E7]">
         <div className="flex items-center justify-between max-w-[1920px] mx-auto">
           {/* Logo Section */}
           <div className="flex items-center mr-36 ">
