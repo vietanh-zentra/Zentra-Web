@@ -11,7 +11,7 @@ export default function Toast({ show, message, type = "success", onClose }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.9 }}
           transition={{ duration: 0.3 }}
-          className="fixed top-[120px] right-4 z-[9999] max-w-md"
+          className="fixed top-4 right-4 z-50 max-w-md"
         >
           <div
             className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md ${

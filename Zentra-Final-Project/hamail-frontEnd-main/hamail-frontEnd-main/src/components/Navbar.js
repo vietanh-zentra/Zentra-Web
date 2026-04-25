@@ -73,16 +73,11 @@ export default function Navbar() {
     }
   };
 
-  // Don't render landing page navbar on dashboard pages
-  if (pathname?.startsWith("/dashboard")) {
-    return null;
-  }
-
   return (
     <>
       {/* Desktop Navbar */}
       <header
-        className={`z-50 w-full fixed overflow-hidden  ${figtree.className}
+        className={`z-[9999] w-full fixed overflow-hidden  ${figtree.className}
     ${open ? "hidden md:block" : "block"}
   `}
       >
@@ -95,19 +90,19 @@ export default function Navbar() {
               <Logo />
             </div>
 
-            {/* Center: Navigation Items - Desktop */}
-            <div className="hidden md:flex items-center gap-6">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className="text-[16px] leading-5 font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+          {/* Center: Navigation Items - Desktop */}
+          <div className="hidden md:flex items-center gap-6">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleSmoothScroll(e, item.href)}
+                className="text-[16px] leading-5 font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
 
             {/* Right: Login/Dashboard Button */}
             {/* <div className="hidden md:flex items-center">
@@ -128,21 +123,21 @@ export default function Navbar() {
               )}
             </a>
           </div> */}
-            <div className="hidden md:flex items-center">
-              <a
-                href={"/dashboard"}
-                className="text-[16px] leading-5 font-medium py-3.5 px-8 rounded-full gap-4 bg-[#00BFA6]  text-white transition-colors duration-200 flex items-center"
-              >
-                Dashboard
-                <Image
-                  src="/images/right-arrow.svg"
-                  width={580}
-                  height={500}
-                  alt="right-arrow"
-                  className="w-full h-full object-cover"
-                />
-              </a>
-            </div>
+          <div className="hidden md:flex items-center">
+            <a
+              href={"/dashboard"}
+              className="text-[16px] leading-5 font-medium py-3.5 px-8 rounded-full gap-4 bg-[#00BFA6]  text-white transition-colors duration-200 flex items-center"
+            >
+              Dashboard
+              <Image
+                src="/images/right-arrow.svg"
+                width={580}
+                height={500}
+                alt="right-arrow"
+                className="w-full h-full object-cover"
+              />
+            </a>
+          </div>
 
             {/* Mobile Menu Button */}
             <button
