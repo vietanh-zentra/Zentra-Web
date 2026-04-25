@@ -176,7 +176,7 @@ export default function DashboardRootLayout({ children }) {
           setHasTradingPlan,
         }}
       >
-        <div className="fixed top-[100px] left-0 right-0 bottom-0 bg-white" style={{ zIndex: 30 }}>
+        <div className="fixed inset-0 bg-white">
           <style jsx global>{`
             nav {
               display: none !important;
