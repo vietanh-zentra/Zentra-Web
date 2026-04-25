@@ -201,16 +201,14 @@ export default function DashboardRootLayout({ children }) {
           `}</style>
 
           <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-          <div className="fixed inset-0 pt-[100px] overflow-hidden" style={{ zIndex: 30 }}>
-            <div className="flex h-full">
-              <div
-                className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
-                  sidebarCollapsed ? "" : ""
-                }`}
-              >
-                <div className="w-full py-2 md:pt-8 pt-4">
-                  {children}
-                </div>
+          <div className="mt-[100px]">
+            <div
+              className={`flex-1 transition-all duration-300 w-full min-w-0 ${
+                sidebarCollapsed ? "" : ""
+              }`}
+            >
+              <div className="w-full py-2 md:pt-8 pt-4">
+                {children}
               </div>
             </div>
           </div>
