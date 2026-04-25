@@ -73,6 +73,11 @@ export default function Navbar() {
     }
   };
 
+  // Don't render landing page navbar on dashboard pages
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <>
       {/* Desktop Navbar */}

@@ -37,6 +37,11 @@ export default function Footer() {
     }
   };
 
+  // Don't render footer on dashboard pages
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="w-full ">
       <div className=" mx-auto px-5 sm:px-[120px] py-[30px]">
