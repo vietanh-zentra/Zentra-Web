@@ -176,26 +176,15 @@ export default function DashboardRootLayout({ children }) {
           setHasTradingPlan,
         }}
       >
-        <div className="fixed inset-0 bg-white">
-          <style jsx global>{`
-            nav {
-              display: none !important;
-            }
-            footer {
-              display: none !important;
-            }
-          `}</style>
-
-          <div className="flex h-full">
-            <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-            <div
-              className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
-                sidebarCollapsed ? "" : ""
-              }`}
-            >
-              <div className="w-full py-2  md:pt-8  pt-16">
-                {children}
-              </div>
+        <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+        <div className="fixed inset-0 pt-[100px]" style={{ zIndex: 1 }}>
+          <div
+            className={`h-full overflow-y-auto transition-all duration-300 w-full min-w-0 ${
+              sidebarCollapsed ? "" : ""
+            }`}
+          >
+            <div className="w-full py-2 md:pt-8 pt-4">
+              {children}
             </div>
           </div>
         </div>
