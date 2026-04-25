@@ -397,7 +397,8 @@ const fullSyncV2 = catchAsync(async (req, res) => {
   const account = await findOrCreateAccount(req.user.id, user.mt5Account.accountId, user.mt5Account.server);
 
   // Clean up any corrupt trades (accountId: null) from previous buggy syncs
-  const cleanupResult = await Trade.deleteMany({ userId: req.user.id, accountId: null });
+  // Also clean globally since unique index {accountId, ticket} conflicts when accountId is null
+  const cleanupResult = await Trade.deleteMany({ accountId: null });
   if (cleanupResult.deletedCount > 0) {
     logger.info('Cleaned up %d corrupt trades (accountId: null) for user: %s', cleanupResult.deletedCount, req.user.id);
   }

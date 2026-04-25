@@ -225,7 +225,7 @@ const createBulkTrades = async (userId, tradesData) => {
     result = await Trade.insertMany(trades, { ordered: false });
   } catch (err) {
     // E11000 duplicate key errors are expected when re-syncing — extract successful inserts
-    if (err.code === 11000 || (err.writeErrors && err.insertedDocs)) {
+    if (err.code === 11000 || err.name === 'BulkWriteError' || (err.writeErrors && err.insertedDocs)) {
       result = err.insertedDocs || [];
       const dupeCount = tradesData.length - result.length;
       logger.info('Service: Inserted %d trades, skipped %d duplicates', result.length, dupeCount);
