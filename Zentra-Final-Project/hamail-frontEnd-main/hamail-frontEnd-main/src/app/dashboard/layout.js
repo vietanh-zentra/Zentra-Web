@@ -59,18 +59,6 @@ export default function DashboardRootLayout({ children }) {
     }
   }, []);
 
-  // Force-hide landing page header (z-[9999]) and footer on dashboard
-  useEffect(() => {
-    const header = document.querySelector("header");
-    const footer = document.querySelector("footer");
-    if (header) header.style.display = "none";
-    if (footer) footer.style.display = "none";
-    return () => {
-      if (header) header.style.display = "";
-      if (footer) footer.style.display = "";
-    };
-  }, []);
-
   const toggleSidebar = () => {
     const newState = !sidebarCollapsed;
     setSidebarCollapsed(newState);
@@ -188,11 +176,9 @@ export default function DashboardRootLayout({ children }) {
           setHasTradingPlan,
         }}
       >
-        <style jsx global>{`
+        <div className="fixed inset-0 bg-white">
+          <style jsx global>{`
             nav {
-              display: none !important;
-            }
-            header {
               display: none !important;
             }
             footer {
@@ -200,18 +186,19 @@ export default function DashboardRootLayout({ children }) {
             }
           `}</style>
 
-          <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-          <div className="mt-[100px]">
+          <div className="flex h-full">
+            <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
             <div
-              className={`flex-1 transition-all duration-300 w-full min-w-0 ${
+              className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
                 sidebarCollapsed ? "" : ""
               }`}
             >
-              <div className="w-full py-2 md:pt-8 pt-4">
+              <div className="w-full py-2  md:pt-8  pt-16">
                 {children}
               </div>
             </div>
           </div>
+        </div>
       </TradingPlanProvider>
     </PsychologicalStateProvider>
   );

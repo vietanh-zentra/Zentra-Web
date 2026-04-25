@@ -73,16 +73,11 @@ export default function Navbar() {
     }
   };
 
-  // Don't render landing page navbar on dashboard pages
-  if (pathname?.startsWith("/dashboard")) {
-    return null;
-  }
-
   return (
     <>
       {/* Desktop Navbar */}
       <header
-        className={`z-40 w-full fixed overflow-hidden  ${figtree.className}
+        className={`z-[9999] w-full fixed overflow-hidden  ${figtree.className}
     ${open ? "hidden md:block" : "block"}
   `}
       >
