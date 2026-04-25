@@ -33,11 +33,10 @@ const NavLink = ({ href, icon, label, isActive }) => {
       }}
       role="link"
       tabIndex={0}
-      className={`flex flex-row items-center justify-center px-[18px] py-3 transition-all duration-200 rounded-full group cursor-pointer select-none ${
-        isActive
+      className={`flex flex-row items-center justify-center px-[18px] py-3 transition-all duration-200 rounded-full group cursor-pointer select-none ${isActive
           ? "bg-[#00BFA6] text-white "
           : "bg-transparent text-[#363636] bg-[#EAF1F0] border border-[#FFFFFF] hover:bg-white/50"
-      }`}
+        }`}
     >
       <div
         className={`flex items-center justify-center mr-[10px] ${isActive ? "text-white" : "text-[#363636]"}`}
@@ -273,9 +272,8 @@ const Sidebar = ({ collapsed = false, onToggle }) => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-y-0 left-0 w-64 bg-white  shadow-xl transform transition-transform duration-300 ease-in-out z-50 lg:hidden ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed inset-y-0 left-0 w-64 bg-white  shadow-xl transform transition-transform duration-300 ease-in-out z-50 lg:hidden ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
