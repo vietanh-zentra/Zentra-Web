@@ -189,7 +189,7 @@ export default function DashboardRootLayout({ children }) {
           <div className="flex h-full">
             <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
             <div
-              className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
+              className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 relative z-0 ${
                 sidebarCollapsed ? "" : ""
               }`}
             >
