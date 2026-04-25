@@ -178,6 +178,9 @@ export default function DashboardRootLayout({ children }) {
       >
         <div className="fixed inset-0 bg-white">
           <style jsx global>{`
+            header {
+              display: none !important;
+            }
             nav {
               display: none !important;
             }
