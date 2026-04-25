@@ -178,6 +178,9 @@ export default function DashboardRootLayout({ children }) {
       >
         <div className="fixed inset-0 bg-white">
           <style jsx global>{`
+            header {
+              display: none !important;
+            }
             nav {
               display: none !important;
             }
@@ -187,6 +190,7 @@ export default function DashboardRootLayout({ children }) {
           `}</style>
 
           <div className="flex h-full">
+            <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
             <div
               className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
                 sidebarCollapsed ? "" : ""
@@ -198,8 +202,6 @@ export default function DashboardRootLayout({ children }) {
             </div>
           </div>
         </div>
-        {/* Sidebar rendered OUTSIDE fixed container so navbar z-50 is at top-level */}
-        <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
       </TradingPlanProvider>
     </PsychologicalStateProvider>
   );
