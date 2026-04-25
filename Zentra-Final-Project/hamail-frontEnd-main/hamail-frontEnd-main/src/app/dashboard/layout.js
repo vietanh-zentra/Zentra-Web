@@ -176,8 +176,7 @@ export default function DashboardRootLayout({ children }) {
           setHasTradingPlan,
         }}
       >
-        <div className="fixed top-[100px] left-0 right-0 bottom-0 bg-white" style={{ zIndex: 30 }}>
-          <style jsx global>{`
+        <style jsx global>{`
             nav {
               display: none !important;
             }
@@ -186,19 +185,20 @@ export default function DashboardRootLayout({ children }) {
             }
           `}</style>
 
-          <div className="flex h-full">
-            <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-            <div
-              className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
-                sidebarCollapsed ? "" : ""
-              }`}
-            >
-              <div className="w-full py-2  md:pt-8  pt-16">
-                {children}
+          <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+          <div className="fixed inset-0 pt-[100px] overflow-hidden" style={{ zIndex: 30 }}>
+            <div className="flex h-full">
+              <div
+                className={`flex-1 overflow-auto transition-all duration-300 w-full min-w-0 ${
+                  sidebarCollapsed ? "" : ""
+                }`}
+              >
+                <div className="w-full py-2 md:pt-8 pt-4">
+                  {children}
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </TradingPlanProvider>
     </PsychologicalStateProvider>
   );
