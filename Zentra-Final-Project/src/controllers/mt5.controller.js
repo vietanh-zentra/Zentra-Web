@@ -412,40 +412,42 @@ const fullSyncV2 = catchAsync(async (req, res) => {
   );
 
   // Save trades to MongoDB if Python returned any
+  // IMPORTANT: Python DataNormalizer returns snake_case keys (open_time, net_profit, etc.)
+  // We must map both snake_case AND camelCase to handle any adapter layer differences.
   const pythonTrades = result.trades || [];
   let savedCount = 0;
   if (pythonTrades.length > 0) {
-    logger.info('Full sync v2: saving %d trades to MongoDB', pythonTrades.length);
+    logger.info('Full sync v2: saving %d trades to MongoDB (sample keys: %s)', pythonTrades.length, Object.keys(pythonTrades[0]).join(', '));
     const transformedTrades = pythonTrades.map((trade) => ({
       accountId: account._id,
-      entryTime: new Date(trade.entryTime),
-      exitTime: new Date(trade.exitTime),
-      profitLoss: trade.profitLoss || trade.netProfit || 0,
+      entryTime: new Date(trade.entryTime || trade.open_time),
+      exitTime: new Date(trade.exitTime || trade.close_time),
+      profitLoss: trade.profitLoss || trade.net_profit || trade.netProfit || 0,
       session: trade.session || 'LONDON',
-      stopLossHit: trade.stopLossHit || false,
-      exitedEarly: trade.exitedEarly || false,
-      riskPercentUsed: trade.riskPercentUsed || null,
-      riskRewardAchieved: trade.riskRewardAchieved || null,
-      targetPercentAchieved: trade.targetPercentAchieved || null,
-      notes: trade.notes || '',
-      mt5DealId: trade.mt5DealId || trade.dealOutId,
+      stopLossHit: trade.stopLossHit || trade.stop_loss_hit || false,
+      exitedEarly: trade.exitedEarly || trade.exited_early || false,
+      riskPercentUsed: trade.riskPercentUsed || trade.risk_percent_used || null,
+      riskRewardAchieved: trade.riskRewardAchieved || trade.risk_reward_achieved || null,
+      targetPercentAchieved: trade.targetPercentAchieved || trade.target_percent_achieved || null,
+      notes: trade.notes || trade.comment || '',
+      mt5DealId: trade.mt5DealId || trade.dealOutId || trade.deal_out_id,
       mt5Symbol: trade.mt5Symbol || trade.symbol,
       ticket: trade.ticket,
-      orderId: trade.orderId,
-      dealInId: trade.dealInId,
-      dealOutId: trade.dealOutId,
-      positionId: trade.positionId,
-      tradeType: trade.tradeType,
+      orderId: trade.orderId || trade.order_id,
+      dealInId: trade.dealInId || trade.deal_in_id,
+      dealOutId: trade.dealOutId || trade.deal_out_id,
+      positionId: trade.positionId || trade.position_id,
+      tradeType: trade.tradeType || trade.trade_type,
       volume: trade.volume,
-      openPrice: trade.openPrice,
-      closePrice: trade.closePrice,
-      stopLoss: trade.stopLoss,
-      takeProfit: trade.takeProfit,
+      openPrice: trade.openPrice || trade.open_price,
+      closePrice: trade.closePrice || trade.close_price,
+      stopLoss: trade.stopLoss || trade.stop_loss,
+      takeProfit: trade.takeProfit || trade.take_profit,
       commission: trade.commission || 0,
       swap: trade.swap || 0,
-      netProfit: trade.netProfit,
-      magicNumber: trade.magicNumber || 0,
-      durationSeconds: trade.durationSeconds,
+      netProfit: trade.netProfit || trade.net_profit,
+      magicNumber: trade.magicNumber || trade.magic_number || 0,
+      durationSeconds: trade.durationSeconds || trade.duration_seconds,
       source: {
         type: 'mt5',
         mt5AccountId: user.mt5Account.accountId,
