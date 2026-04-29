@@ -55,7 +55,7 @@ import MarketInfoCard from "@/components/dashboard/widgets/MarketInfoCard";
 import RevengeTradingCard from "@/components/dashboard/widgets/RevengeTradingCard";
 import EarlyExitCard from "@/components/dashboard/widgets/EarlyExitCard";
 import OvertradingCard from "@/components/dashboard/widgets/OvertradingCard";
-import { useRevengeTrading, useEarlyExits, useOvertrading } from "@/app/hooks/useBehavior";
+import { useRevengeTrading, useEarlyExits, useOvertrading, useFullBehaviorAnalysis } from "@/app/hooks/useBehavior";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -172,6 +172,7 @@ export default function Dashboard() {
   const { data: revengeData, loading: revengeLoading } = useRevengeTrading(selectedDate);
   const { data: earlyExitData, loading: earlyExitLoading } = useEarlyExits(selectedDate);
   const { data: overtradingData, loading: overtradingLoading } = useOvertrading(selectedDate);
+  const { data: fullBehaviorData } = useFullBehaviorAnalysis(selectedDate);
 
   // Transform v2 data for widgets
   // Transform consistency trend data to preserve date and score for PsychologicalStabilityTrend
@@ -749,6 +750,7 @@ export default function Dashboard() {
                     selectedDate={selectedDate}
                     trades={tradesData?.results || []}
                     tradingPlan={tradingPlan}
+                    behaviorData={fullBehaviorData}
                   />
                 </div>
               </div>
@@ -777,6 +779,7 @@ export default function Dashboard() {
                 selectedDate={selectedDate}
                 trades={tradesData?.results || []}
                 tradingPlan={tradingPlan}
+                behaviorData={fullBehaviorData}
               />
             </div>
           </div>

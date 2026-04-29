@@ -540,6 +540,7 @@ export default function PsychologicalStabilityTrend({
   selectedDate = null,
   trades = [],
   tradingPlan = null,
+  behaviorData = null,
 }) {
   const [dateRange, setDateRange] = useState(() => {
     const base = selectedDate ? new Date(selectedDate) : new Date();

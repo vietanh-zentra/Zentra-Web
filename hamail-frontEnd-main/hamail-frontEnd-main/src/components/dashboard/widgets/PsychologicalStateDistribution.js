@@ -361,6 +361,7 @@ export default function PsychologicalStateDistribution({
   selectedDate = null,
   trades = [],
   tradingPlan = null,
+  behaviorData = null,
 }) {
   const selectedDayKey = useMemo(() => {
     if (!selectedDate) return null;
@@ -408,7 +409,66 @@ export default function PsychologicalStateDistribution({
     return traits;
   }, [selectedDayKey, trades, tradingPlan]);
 
-  const resolvedHasNoTrades = Boolean(hasNoTrades) || !traitsData;
+  // If backend behavioral API data is available, map it to trait scores
+  const apiTraitsData = useMemo(() => {
+    if (!behaviorData || behaviorData.insufficient_data) return null;
+    const revenge = behaviorData.revenge_trading;
+    const earlyExits = behaviorData.early_exits;
+    const overtrading = behaviorData.overtrading;
+    const impulsive = behaviorData.impulsive_entries;
+    const mb = behaviorData.mental_battery;
+
+    if (!revenge && !earlyExits && !overtrading) return null;
+
+    return {
+      Impulsiveness: {
+        value: clampScore(
+          (impulsive?.rate || 0) * 100 * 0.5 +
+          (revenge?.revenge_rate || 0) * 100 * 0.5
+        ),
+        change: null,
+        reasons: [
+          revenge?.count > 0 ? `${revenge.count} revenge trades` : null,
+          impulsive?.cluster_count > 0 ? `${impulsive.cluster_count} rapid-fire clusters` : null,
+        ].filter(Boolean),
+      },
+      Consistency: {
+        value: clampScore(mb?.percentage || 50),
+        change: null,
+        reasons: mb?.factors?.filter(f => f.impact === 'positive').map(f => f.detail) || [],
+      },
+      Discipline: {
+        value: clampScore(
+          100 - (overtrading?.overtrading_days || 0) * 15 -
+          (earlyExits?.rate || 0) * 50
+        ),
+        change: null,
+        reasons: [
+          overtrading?.detected ? `${overtrading.overtrading_days} overtrading days` : null,
+          earlyExits?.count > 0 ? `${earlyExits.count} early exits` : null,
+        ].filter(Boolean),
+      },
+      Aggression: {
+        value: clampScore(50 + (overtrading?.excess_trades || 0) * 5),
+        change: null,
+        reasons: [
+          overtrading?.peak_count ? `Peak: ${overtrading.peak_count} trades/day` : null,
+        ].filter(Boolean),
+      },
+      Hesitation: {
+        value: clampScore((earlyExits?.rate || 0) * 100),
+        change: null,
+        reasons: [
+          earlyExits?.count > 0 ? `${earlyExits.count} early exits (${((earlyExits.rate || 0) * 100).toFixed(1)}%)` : null,
+          earlyExits?.potential_missed_profit > 0 ? `$${earlyExits.potential_missed_profit.toFixed(0)} missed profit` : null,
+        ].filter(Boolean),
+      },
+    };
+  }, [behaviorData]);
+
+  // Prefer API data over client-side computation
+  const effectiveTraitsData = apiTraitsData || traitsData;
+  const resolvedHasNoTrades = Boolean(hasNoTrades) || !effectiveTraitsData;
 
   useEffect(() => {
     console.log("TRAITS DATE:", selectedDate);
@@ -480,13 +540,13 @@ export default function PsychologicalStateDistribution({
         {categories.map((category, index) => {
           const rawValue = resolvedHasNoTrades
             ? 0
-            : traitsData?.[category]?.value ?? fallbackMappedValues?.[category] ?? 0;
+            : effectiveTraitsData?.[category]?.value ?? fallbackMappedValues?.[category] ?? 0;
 
           const value = Math.min(100, Math.max(0, rawValue));
-          const change = traitsData?.[category]?.change ?? null;
-          const reasons = traitsData?.[category]?.reasons ?? [];
-          const tooltip = !resolvedHasNoTrades && traitsData?.[category]
-            ? `${category} ${value}% (${change >= 0 ? "+" : ""}${change}) | ${reasons.join(" • ")}`
+          const change = effectiveTraitsData?.[category]?.change ?? null;
+          const reasons = effectiveTraitsData?.[category]?.reasons ?? [];
+          const tooltip = !resolvedHasNoTrades && effectiveTraitsData?.[category]
+            ? `${category} ${value}% (${change !== null ? (change >= 0 ? "+" : "") + change : "~"}) | ${reasons.join(" • ")}`
             : null;
 
           return (

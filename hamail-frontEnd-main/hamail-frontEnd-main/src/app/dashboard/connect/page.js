@@ -15,6 +15,7 @@ import Toast from "@/components/Toast";
 import GlassmorphicButton from "@/components/GlassmorphicButton";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../../tailwind.config.js";
+import BrokerServerSelector from "@/components/dashboard/BrokerServerSelector";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -397,16 +398,12 @@ export default function ConnectPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Server
+                    Broker / Server
                   </label>
-                  <input
-                    type="text"
+                  {/* Searchable broker dropdown */}
+                  <BrokerServerSelector
                     value={formData.server}
-                    onChange={(e) =>
-                      handleInputChange("server", e.target.value)
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="e.g., Broker-Demo"
+                    onChange={(server) => handleInputChange("server", server)}
                   />
                 </div>
                 <div>
