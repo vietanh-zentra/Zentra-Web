@@ -52,6 +52,10 @@ import PerformanceMetricsCard from "@/components/dashboard/widgets/PerformanceMe
 import MT5PositionsCard from "@/components/dashboard/widgets/MT5PositionsCard";
 import OrderHistoryCard from "@/components/dashboard/widgets/OrderHistoryCard";
 import MarketInfoCard from "@/components/dashboard/widgets/MarketInfoCard";
+import RevengeTradingCard from "@/components/dashboard/widgets/RevengeTradingCard";
+import EarlyExitCard from "@/components/dashboard/widgets/EarlyExitCard";
+import OvertradingCard from "@/components/dashboard/widgets/OvertradingCard";
+import { useRevengeTrading, useEarlyExits, useOvertrading } from "@/app/hooks/useBehavior";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -163,6 +167,11 @@ export default function Dashboard() {
     refetch: refetchConsistencyTrend,
   } = useConsistencyTrend("7", selectedDate);
   const { data: dailyQuoteData, loading: dailyQuoteLoading } = useDailyQuote(selectedDate);
+
+  // Behavioral Analysis hooks (Phase 2)
+  const { data: revengeData, loading: revengeLoading } = useRevengeTrading(selectedDate);
+  const { data: earlyExitData, loading: earlyExitLoading } = useEarlyExits(selectedDate);
+  const { data: overtradingData, loading: overtradingLoading } = useOvertrading(selectedDate);
 
   // Transform v2 data for widgets
   // Transform consistency trend data to preserve date and score for PsychologicalStabilityTrend
@@ -787,6 +796,16 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
             <OrderHistoryCard />
             <MarketInfoCard />
+          </div>
+
+          {/* Behavioral Analysis Section (Phase 2) */}
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-3">Behavioral Analysis</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <RevengeTradingCard data={revengeData} loading={revengeLoading} />
+              <EarlyExitCard data={earlyExitData} loading={earlyExitLoading} />
+              <OvertradingCard data={overtradingData} loading={overtradingLoading} />
+            </div>
           </div>
 
           {/* Old layout - keeping for reference but commented out */}

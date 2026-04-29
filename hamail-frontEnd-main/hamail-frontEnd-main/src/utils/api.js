@@ -594,6 +594,57 @@ class ApiClient {
     const query = date ? `?date=${toDateStr(date)}` : "";
     return this.fetchV2(`/zentra/daily-quote${query}`);
   }
+
+  // ─── Behavioral Analysis API (Phase 2) ─────────────────────────
+  async getRevengeTrading(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/revenge-trading${query}`);
+  }
+
+  async getEarlyExits(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/early-exits${query}`);
+  }
+
+  async getOvertrading(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/overtrading${query}`);
+  }
+
+  async getImpulsiveEntries(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/impulsive-entries${query}`);
+  }
+
+  async getBehaviorMentalBattery(date = null) {
+    const query = date ? `?date=${toDateStr(date)}` : "";
+    return this.fetch(`/behavior/mental-battery${query}`);
+  }
+
+  async getFullBehaviorAnalysis(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/full-analysis${query}`);
+  }
 }
 
 // Export singleton instance
