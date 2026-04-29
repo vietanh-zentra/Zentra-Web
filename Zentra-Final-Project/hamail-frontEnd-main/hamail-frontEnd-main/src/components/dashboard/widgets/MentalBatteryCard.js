@@ -1,78 +1,222 @@
 "use client";
-import { motion } from "framer-motion";
-import { Battery50Icon } from "@heroicons/react/24/solid";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
 import CardIconTooltip from "./CardIconTooltip";
-import Image from "next/image";
+import { useCoachAdvice } from "@/app/hooks/useBehavior";
 
+// ─── SVG Arc Gauge ───────────────────────────────────────────────
+function ArcGauge({ percentage, level }) {
+  const clampedPct = Math.min(100, Math.max(0, percentage));
+  const size = 220;
+  const strokeWidth = 14;
+  const radius = (size - strokeWidth) / 2;
+  const cx = size / 2;
+  const cy = size / 2;
+
+  // Arc from 225° (bottom-left) to -45° (bottom-right) = 270° sweep
+  const startAngle = 135;   // degrees (bottom-left)
+  const totalSweep = 270;   // degrees
+
+  const polarToCartesian = (angleDeg) => {
+    const rad = ((angleDeg - 90) * Math.PI) / 180;
+    return {
+      x: cx + radius * Math.cos(rad),
+      y: cy + radius * Math.sin(rad),
+    };
+  };
+
+  const describeArc = (start, end) => {
+    const s = polarToCartesian(end);
+    const e = polarToCartesian(start);
+    const sweep = end - start <= 180 ? "0" : "1";
+    return `M ${s.x} ${s.y} A ${radius} ${radius} 0 ${sweep} 0 ${e.x} ${e.y}`;
+  };
+
+  const endAngle = startAngle + (totalSweep * clampedPct) / 100;
+  const bgPath = describeArc(startAngle, startAngle + totalSweep);
+  const fgPath = clampedPct > 0 ? describeArc(startAngle, endAngle) : "";
+
+  // Gradient ID
+  const gradientId = "battery-arc-gradient";
+
+  // Glow color based on level
+  const glowColor =
+    level === "Low" ? "#AAFFEF" : level === "Strong" ? "#00BFA6" : "#30EDCF";
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      {/* Glow effect */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background: `radial-gradient(circle, ${glowColor}30 0%, transparent 70%)`,
+        }}
+        animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.95, 1.05, 0.95] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF6B6B" />
+            <stop offset="35%" stopColor="#FFD93D" />
+            <stop offset="65%" stopColor="#30EDCF" />
+            <stop offset="100%" stopColor="#00BFA6" />
+          </linearGradient>
+          <filter id="arc-glow">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Background arc */}
+        <path
+          d={bgPath}
+          fill="none"
+          stroke="#D5E0E0"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+        />
+
+        {/* Foreground arc — animated */}
+        {clampedPct > 0 && (
+          <motion.path
+            d={fgPath}
+            fill="none"
+            stroke={`url(#${gradientId})`}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            filter="url(#arc-glow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
+        )}
+      </svg>
+
+      {/* Center content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <motion.span
+          className="text-[42px] font-bold text-gray-800 leading-none tracking-tight"
+          key={clampedPct}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          {clampedPct}%
+        </motion.span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Status Messages ─────────────────────────────────────────────
+const STATUS_MESSAGES = {
+  Strong: "You're performing at peak — ride the momentum",
+  Stable: "Steady state — stay focused and disciplined",
+  Low: "Energy drained — consider taking a break",
+};
+
+// ─── Main Component ──────────────────────────────────────────────
 export default function MentalBatteryCard({
   percentage = 45,
   level = "Stable",
   message,
   hasNoTrades = false,
+  selectedDate = null,
 }) {
   const batteryLevel = Math.min(100, Math.max(0, percentage));
+  const { data: coachAdvice, loading: adviceLoading } = useCoachAdvice(selectedDate);
 
   const getNormalizedLevel = (l, p) => {
     const lower = l?.toLowerCase();
-    if (lower === "optimal" || lower === "strong" || p >= 66) return { label: "Strong", index: 2 };
-    if (lower === "strained" || lower === "low" || lower === "high risk" || lower === "high_risk" || p < 33) return { label: "Low", index: 0 };
+    if (lower === "optimal" || lower === "strong" || p >= 66)
+      return { label: "Strong", index: 2 };
+    if (
+      lower === "strained" ||
+      lower === "low" ||
+      lower === "high risk" ||
+      lower === "high_risk" ||
+      p < 33
+    )
+      return { label: "Low", index: 0 };
     return { label: "Stable", index: 1 };
   };
 
-  const { label: displayLevel, index: activeIndex } = getNormalizedLevel(level, batteryLevel);
+  const { label: displayLevel, index: activeIndex } = getNormalizedLevel(
+    level,
+    batteryLevel
+  );
 
   const statusBars = [
-    { label: "Low", color: "#AAFFEF" },
-    { label: "Stable", color: "#30EDCF" },
-    { label: "Strong", color: "#00BFA6" },
+    { label: "Low", color: "#AAFFEF", dotColor: "#B2FFF0" },
+    { label: "Stable", color: "#30EDCF", dotColor: "#37E3C0" },
+    { label: "Strong", color: "#00BFA6", dotColor: "#00BFA6" },
   ];
 
+  // Dynamic status message
+  const statusMessage = message || STATUS_MESSAGES[displayLevel] || "";
+
+  // Card wrapper with entrance animation
   const CardWrapper = ({ children }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-[#ECF1F1] rounded-[20px] p-5 shadow-sm border border-[#FFFFFF] flex flex-col relative"
+      className="bg-[#ECF1F1] rounded-[20px] p-5 shadow-sm border border-[#FFFFFF] flex flex-col relative overflow-hidden"
     >
       {children}
     </motion.div>
   );
 
+  // ── No-data state ──────────────────────────────────────────────
   if (hasNoTrades) {
     return (
       <CardWrapper>
-        <div className="flex justify-between items-center ">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-2">
           <h3 className="text-xl font-medium text-gray-700">Mental Battery</h3>
           <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-            <Battery50Icon className="w-5 h-5 text-gray-400" />
-
+            <BatteryIcon className="text-gray-400" />
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center py-4">
-          <div className="relative w-48 h-48 opacity-20 grayscale">
-            <Image
-              src="/brain1.png"
-              alt="Brain"
-              fill
-              className="object-contain"
-            />
+        {/* Empty gauge */}
+        <div className="flex-1 flex flex-col items-center justify-center py-3">
+          <div className="opacity-30">
+            <ArcGauge percentage={0} level="Low" />
           </div>
-          <div className="mt-6 text-center">
-            <div className="text-4xl font-bold text-gray-400">--%</div>
-            <p className="text-sm text-gray-500 mt-2">
-              No data available for this date
-            </p>
-          </div>
+          <p className="text-sm text-gray-500 mt-2 text-center">
+            No data available for this date
+          </p>
+        </div>
+
+        {/* Status bars dimmed */}
+        <div className="grid grid-cols-3 mt-2">
+          {statusBars.map((bar) => (
+            <div key={bar.label} className="flex flex-col items-center gap-2">
+              <div
+                className="w-full h-11 rounded-2xl"
+                style={{ backgroundColor: bar.color, opacity: 0.15 }}
+              />
+              <span className="text-[12px] font-medium text-gray-400 uppercase tracking-wider">
+                {bar.label}
+              </span>
+            </div>
+          ))}
         </div>
       </CardWrapper>
     );
   }
 
+  // ── Main render ────────────────────────────────────────────────
   return (
     <CardWrapper>
       {/* Header */}
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center mb-1">
         <h3 className="text-xl font-medium text-[#363636]">Mental Battery</h3>
         <CardIconTooltip
           title="Mental Battery"
@@ -80,75 +224,65 @@ export default function MentalBatteryCard({
           position="bottom"
         >
           <div className="w-10 h-10 rounded-full bg-[#F2F7F7] border border-[#FFFFFF] flex items-center justify-center shadow-sm cursor-help">
-            {/* <Battery50Icon className="w-5 h-5 text-gray-600" /> */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={18}
-              height={18}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-battery-full-icon lucide-battery-full text-[#363636]"
-            >
-              <path d="M10 10v4" />
-              <path d="M14 10v4" />
-              <path d="M22 14v-4" />
-              <path d="M6 10v4" />
-              <rect x="2" y="6" width="16" height="12" rx="2" />
-            </svg>
-
+            <BatteryIcon className="text-[#363636]" />
           </div>
         </CardIconTooltip>
       </div>
 
-      {/* Brain Image */}
-      <div className="flex-1 flex items-center justify-center relative p-[20px]">
-        <motion.div
-          className="relative w-[211px] h-[212px]"
-          animate={{ rotate: [0, 18, -18, 0] }}
-          transition={{
-            duration: 8,        // slow premium motion
-            ease: "linear",
-            repeat: Infinity,
-          }}
-        >
-          {/* Subtle glow behind brain */}
-          <div className="absolute inset-0 bg-teal-200/20 rounded-full blur-3xl" />
-
-          <Image
-            src="/brain1.png"
-            alt="Brain Visualization"
-            fill
-            className="object-contain"
-            priority
-          />
-        </motion.div>
+      {/* Arc Gauge */}
+      <div className="flex-1 flex items-center justify-center py-2">
+        <ArcGauge percentage={batteryLevel} level={displayLevel} />
       </div>
 
-      {/* Percentage & Status Badge */}
-      <div className="flex items-center  mb-4">
-        <span className="text-[32px] font-semibold text-gray-800 tracking-tight">{batteryLevel}%</span>
-        <div className="flex items-center gap-2 px-4 py-1.5 bg-white/60 backdrop-blur-sm rounded-full border border-white/60 text-sm font-semibold text-gray-600 shadow-sm">
-          <span className={`w-2.5 h-2.5 rounded-full ${activeIndex === 0 ? "bg-[#B2FFF0]" : activeIndex === 1 ? "bg-[#37E3C0]" : "bg-[#00BFA6]"
-            }`} />
+      {/* Status Badge + Message */}
+      <div className="flex flex-col items-center mb-3">
+        {/* Badge */}
+        <motion.div
+          className="flex items-center gap-2 px-4 py-1.5 bg-white/60 backdrop-blur-sm rounded-full border border-white/60 text-sm font-semibold text-gray-600 shadow-sm mb-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        >
+          <motion.span
+            className="w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: statusBars[activeIndex].dotColor }}
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
           {displayLevel}
-        </div>
+        </motion.div>
+
+        {/* Dynamic message */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={displayLevel}
+            className="text-xs text-gray-500 text-center px-2 leading-relaxed"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.3 }}
+          >
+            {statusMessage}
+          </motion.p>
+        </AnimatePresence>
       </div>
 
       {/* Status Bars */}
-      <div className="grid grid-cols-3 ">
+      <div className="grid grid-cols-3">
         {statusBars.map((bar, index) => (
           <div key={bar.label} className="flex flex-col items-center gap-2">
-            <div
-              className="w-full h-11  rounded-2xl transition-all duration-500"
+            <motion.div
+              className="w-full h-11 rounded-2xl transition-all duration-500"
               style={{
                 backgroundColor: bar.color,
                 opacity: index <= activeIndex ? 1 : 0.2,
-                boxShadow: index === activeIndex ? `0 4px 12px ${bar.color}40` : 'none',
+                boxShadow:
+                  index === activeIndex
+                    ? `0 4px 14px ${bar.color}50`
+                    : "none",
               }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 300 }}
             />
             <span className="text-[12px] font-medium text-gray-500 uppercase tracking-wider">
               {bar.label}
@@ -156,6 +290,69 @@ export default function MentalBatteryCard({
           </div>
         ))}
       </div>
+
+      {/* Coach Advice Block */}
+      {!hasNoTrades && (
+        <div className="mt-5 pt-4 border-t border-gray-100/60">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-700 tracking-wide">Coach's Note</span>
+          </div>
+          <div className="bg-[#F8FAFC] border border-blue-50/50 rounded-xl p-3.5 min-h-[70px] flex items-center">
+            {adviceLoading ? (
+              <div className="animate-pulse flex flex-col gap-2 w-full">
+                <div className="h-2.5 bg-blue-100/50 rounded w-3/4"></div>
+                <div className="h-2.5 bg-blue-100/50 rounded w-1/2"></div>
+              </div>
+            ) : coachAdvice?.lines?.length > 0 ? (
+              <ul className="flex flex-col gap-2 w-full">
+                {coachAdvice.lines.map((line, idx) => (
+                  <motion.li 
+                    key={idx}
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * idx, duration: 0.4 }}
+                    className="text-[13px] text-gray-600 leading-snug flex items-start gap-2.5"
+                  >
+                    <span className="text-blue-400 mt-[3px] text-[10px]">●</span>
+                    <span className="flex-1">{line}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[13px] text-gray-400 italic w-full text-center">No recent advice available.</p>
+            )}
+          </div>
+        </div>
+      )}
     </CardWrapper>
+  );
+}
+
+// ─── Battery Icon ────────────────────────────────────────────────
+function BatteryIcon({ className = "" }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={18}
+      height={18}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`lucide lucide-battery-full ${className}`}
+    >
+      <path d="M10 10v4" />
+      <path d="M14 10v4" />
+      <path d="M22 14v-4" />
+      <path d="M6 10v4" />
+      <rect x="2" y="6" width="16" height="12" rx="2" />
+    </svg>
   );
 }

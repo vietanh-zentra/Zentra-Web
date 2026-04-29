@@ -1206,5 +1206,7434 @@
         "type": "live"
       }
     ]
+  },
+  {
+    "id": "cmcmarkets",
+    "name": "CMC Markets",
+    "display_name": "CMC Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CMCMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CMCMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "saxobank",
+    "name": "Saxo Bank",
+    "display_name": "Saxo Bank",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SaxoBank-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SaxoBank-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cityindex",
+    "name": "City Index",
+    "display_name": "City Index",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CityIndex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CityIndex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "interactivebrokers",
+    "name": "Interactive Brokers",
+    "display_name": "Interactive Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "InteractiveBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "InteractiveBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "plus500",
+    "name": "Plus500",
+    "display_name": "Plus500",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Plus500-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Plus500-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "etoro",
+    "name": "eToro",
+    "display_name": "eToro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "eToro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "eToro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xtb",
+    "name": "XTB",
+    "display_name": "XTB",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XTB-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XTB-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forex_com",
+    "name": "Forex.com",
+    "display_name": "Forex.com",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FOREXcom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FOREXcom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradersway",
+    "name": "Trader's Way",
+    "display_name": "Trader's Way",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradersWay-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradersWay-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "lmfx",
+    "name": "LMFX",
+    "display_name": "LMFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LMFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LMFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ironfx",
+    "name": "IronFX",
+    "display_name": "IronFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "IronFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IronFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xmtrading",
+    "name": "XM Trading",
+    "display_name": "XM Trading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XMTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XMTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxdd",
+    "name": "FXDD",
+    "display_name": "FXDD",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXDD-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXDD-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fibogroup",
+    "name": "FIBO Group",
+    "display_name": "FIBO Group",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FIBOGroup-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FIBOGroup-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "grandcapital",
+    "name": "Grand Capital",
+    "display_name": "Grand Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GrandCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GrandCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ifcmarkets",
+    "name": "IFC Markets",
+    "display_name": "IFC Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "IFCMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IFCMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "turnkeyfx",
+    "name": "TurnkeyForex",
+    "display_name": "TurnkeyForex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TurnkeyForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TurnkeyForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "coinexx",
+    "name": "Coinexx",
+    "display_name": "Coinexx",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Coinexx-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Coinexx-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hugosway",
+    "name": "Hugo's Way",
+    "display_name": "Hugo's Way",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HugosWay-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HugosWay-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icmcapital",
+    "name": "ICM Capital",
+    "display_name": "ICM Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ICMCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICMCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mbtrading",
+    "name": "MB Trading",
+    "display_name": "MB Trading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MBTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MBTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fortfs",
+    "name": "Fort Financial",
+    "display_name": "Fort Financial",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FortFS-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FortFS-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxflat",
+    "name": "FXFlat",
+    "display_name": "FXFlat",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXFlat-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXFlat-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gkfx",
+    "name": "GKFX",
+    "display_name": "GKFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GKFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GKFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aaafx",
+    "name": "AAAFX",
+    "display_name": "AAAFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AAAFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AAAFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mtrading",
+    "name": "MTrading",
+    "display_name": "MTrading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "freshforex",
+    "name": "FreshForex",
+    "display_name": "FreshForex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FreshForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FreshForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finotec",
+    "name": "Finotec",
+    "display_name": "Finotec",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Finotec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Finotec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "yadix",
+    "name": "Yadix",
+    "display_name": "Yadix",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Yadix-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Yadix-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxview",
+    "name": "FXView",
+    "display_name": "FXView",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXView-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXView-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aetos",
+    "name": "Aetos",
+    "display_name": "Aetos",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AETOS-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AETOS-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "valutrades",
+    "name": "Valutrades",
+    "display_name": "Valutrades",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Valutrades-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Valutrades-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "topfx",
+    "name": "TopFX",
+    "display_name": "TopFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TopFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TopFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradingpro",
+    "name": "TradingPRO",
+    "display_name": "TradingPRO",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradingPRO-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradingPRO-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "olymptrade",
+    "name": "OlympTrade",
+    "display_name": "OlympTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OlympTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OlympTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "squaredfinancial",
+    "name": "Squared Financial",
+    "display_name": "Squared Financial",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SquaredFinancial-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SquaredFinancial-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dukascopy",
+    "name": "Dukascopy",
+    "display_name": "Dukascopy",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Dukascopy-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Dukascopy-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ufx",
+    "name": "UFX",
+    "display_name": "UFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "UFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "UFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xmau",
+    "name": "XM AU",
+    "display_name": "XM AU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XMAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XMAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "marketscom",
+    "name": "Markets.com",
+    "display_name": "Markets.com",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Marketscom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Marketscom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "360capital",
+    "name": "360 Capital",
+    "display_name": "360 Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "360Capital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "360Capital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fondex",
+    "name": "Fondex",
+    "display_name": "Fondex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Fondex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Fondex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "captrader",
+    "name": "CapTrader",
+    "display_name": "CapTrader",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CapTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CapTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "onezero",
+    "name": "oneZero",
+    "display_name": "oneZero",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "oneZero-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "oneZero-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "centrofx",
+    "name": "CentroFX",
+    "display_name": "CentroFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CentroFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CentroFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradenation",
+    "name": "Trade Nation",
+    "display_name": "Trade Nation",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeNation-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeNation-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "spreadex",
+    "name": "Spreadex",
+    "display_name": "Spreadex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Spreadex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Spreadex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cmc",
+    "name": "CMC",
+    "display_name": "CMC",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CMC-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CMC-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "darwinex",
+    "name": "Darwinex",
+    "display_name": "Darwinex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Darwinex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Darwinex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "4xhub",
+    "name": "4xHub",
+    "display_name": "4xHub",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "4xHub-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "4xHub-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fpg",
+    "name": "FPG",
+    "display_name": "FPG",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FPG-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FPG-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oqtima",
+    "name": "Oqtima",
+    "display_name": "Oqtima",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Oqtima-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Oqtima-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "plexytrade",
+    "name": "PlexyTrade",
+    "display_name": "PlexyTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PlexyTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PlexyTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oneroyal",
+    "name": "OneRoyal",
+    "display_name": "OneRoyal",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OneRoyal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OneRoyal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "equiti",
+    "name": "Equiti",
+    "display_name": "Equiti",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Equiti-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Equiti-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "myfxmarkets",
+    "name": "MyFXMarkets",
+    "display_name": "MyFXMarkets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MyFXMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MyFXMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "trademax",
+    "name": "TradeMax",
+    "display_name": "TradeMax",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeMax-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeMax-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mscinvestment",
+    "name": "MSC Investment",
+    "display_name": "MSC Investment",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MSCInvestment-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MSCInvestment-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "accentforex",
+    "name": "AccentForex",
+    "display_name": "AccentForex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AccentForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AccentForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bkfx",
+    "name": "BKFX",
+    "display_name": "BKFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BKFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BKFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "charterprime",
+    "name": "CharterPrime",
+    "display_name": "CharterPrime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CharterPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CharterPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxlider",
+    "name": "FXLider",
+    "display_name": "FXLider",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXLider-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXLider-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "noor",
+    "name": "Noor Capital",
+    "display_name": "Noor Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NoorCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NoorCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ingot",
+    "name": "Ingot Brokers",
+    "display_name": "Ingot Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "IngotBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IngotBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "startrader",
+    "name": "StarTrader",
+    "display_name": "StarTrader",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "StarTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "StarTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tmgm",
+    "name": "TMGM",
+    "display_name": "TMGM",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TMGM-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TMGM-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mex",
+    "name": "MEX Exchange",
+    "display_name": "MEX Exchange",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MEXExchange-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MEXExchange-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "anzoCapital",
+    "name": "Anzo Capital",
+    "display_name": "Anzo Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AnzoCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AnzoCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forexchief",
+    "name": "ForexChief",
+    "display_name": "ForexChief",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForexChief-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexChief-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "clmarkets",
+    "name": "CL Markets",
+    "display_name": "CL Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CLMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CLMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "realfx",
+    "name": "RealFX",
+    "display_name": "RealFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RealFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RealFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ifxbrokers",
+    "name": "IFX Brokers",
+    "display_name": "IFX Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "IFXBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IFXBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "skandinaviska",
+    "name": "SEB",
+    "display_name": "SEB",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SEB-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SEB-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hankotrade",
+    "name": "HankoTrade",
+    "display_name": "HankoTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HankoTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HankoTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "jfdbrokers",
+    "name": "JFD Brokers",
+    "display_name": "JFD Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "JFD-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "JFD-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradeo",
+    "name": "Tradeo",
+    "display_name": "Tradeo",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Tradeo-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Tradeo-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xglobal",
+    "name": "XGlobal Markets",
+    "display_name": "XGlobal Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "blueberry",
+    "name": "Blueberry Markets",
+    "display_name": "Blueberry Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BlueberryMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BlueberryMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ebc",
+    "name": "EBC Financial",
+    "display_name": "EBC Financial",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "EBCFinancial-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EBCFinancial-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "puprime",
+    "name": "PU Prime",
+    "display_name": "PU Prime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PUPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PUPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "unfxb",
+    "name": "United Ntn FX",
+    "display_name": "United Ntn FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "UNFXB-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "UNFXB-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dxtrade",
+    "name": "DXTrade",
+    "display_name": "DXTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DXTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DXTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradeeu",
+    "name": "Trade.EU",
+    "display_name": "Trade.EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "octaau",
+    "name": "Octa AU",
+    "display_name": "Octa AU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OctaAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OctaAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "litefinance",
+    "name": "LiteFinance Pro",
+    "display_name": "LiteFinance Pro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LiteFinancePro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LiteFinancePro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aximtrade",
+    "name": "AximTrade",
+    "display_name": "AximTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AximTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AximTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "juno",
+    "name": "Juno Markets",
+    "display_name": "Juno Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "JunoMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "JunoMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "iexs",
+    "name": "IEXS",
+    "display_name": "IEXS",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "IEXS-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IEXS-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "infinox",
+    "name": "Infinox",
+    "display_name": "Infinox",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Infinox-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Infinox-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vantageau",
+    "name": "Vantage AU",
+    "display_name": "Vantage AU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "VantageAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "VantageAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "khwezi",
+    "name": "Khwezi Trade",
+    "display_name": "Khwezi Trade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "KhweziTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KhweziTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "errante_cy",
+    "name": "Errante CY",
+    "display_name": "Errante CY",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ErranteCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ErranteCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "salmamarkets",
+    "name": "Salma Markets",
+    "display_name": "Salma Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SalmaMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SalmaMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cfhclearing",
+    "name": "CFH Clearing",
+    "display_name": "CFH Clearing",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CFHClearing-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CFHClearing-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "clsa",
+    "name": "CLSA Premium",
+    "display_name": "CLSA Premium",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CLSA-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CLSA-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "stonex",
+    "name": "StoneX",
+    "display_name": "StoneX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "StoneX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "StoneX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cbfx",
+    "name": "CBFX",
+    "display_name": "CBFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CBFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CBFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "accuindex",
+    "name": "Accuindex",
+    "display_name": "Accuindex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Accuindex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Accuindex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "amega",
+    "name": "Amega",
+    "display_name": "Amega",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Amega-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Amega-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mirrox",
+    "name": "Mirrox",
+    "display_name": "Mirrox",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Mirrox-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Mirrox-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finomarkets",
+    "name": "Fino Markets",
+    "display_name": "Fino Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FinoMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FinoMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hfeu",
+    "name": "HF Markets EU",
+    "display_name": "HF Markets EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HFEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HFEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "exante",
+    "name": "Exante",
+    "display_name": "Exante",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Exante-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Exante-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cabana",
+    "name": "Cabana Capitals",
+    "display_name": "Cabana Capitals",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CabanaCapitals-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CabanaCapitals-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icdmarkets",
+    "name": "ICD Markets",
+    "display_name": "ICD Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ICDMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICDMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "doto",
+    "name": "Doto",
+    "display_name": "Doto",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Doto-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Doto-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "capital_com",
+    "name": "Capital.com",
+    "display_name": "Capital.com",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Capitalcom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Capitalcom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "zfx",
+    "name": "ZFX",
+    "display_name": "ZFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ZFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ZFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dbginvesting",
+    "name": "DBG Investing",
+    "display_name": "DBG Investing",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DBGInvesting-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DBGInvesting-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fixio",
+    "name": "FIXIO",
+    "display_name": "FIXIO",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FIXIO-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FIXIO-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cxmarkets",
+    "name": "CX Markets",
+    "display_name": "CX Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CXMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CXMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forexvox",
+    "name": "ForexVox",
+    "display_name": "ForexVox",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForexVox-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexVox-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "acdforex",
+    "name": "ACD Forex",
+    "display_name": "ACD Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ACDForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ACDForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cibfx",
+    "name": "CIBfx",
+    "display_name": "CIBfx",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CIBfx-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CIBfx-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mq5broker",
+    "name": "MQ5 Broker",
+    "display_name": "MQ5 Broker",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MQ5Broker-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MQ5Broker-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "moomoo",
+    "name": "Moomoo",
+    "display_name": "Moomoo",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Moomoo-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Moomoo-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "webull",
+    "name": "Webull",
+    "display_name": "Webull",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Webull-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Webull-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mig",
+    "name": "MIG Bank",
+    "display_name": "MIG Bank",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MIGBank-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MIGBank-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "deltafx",
+    "name": "DeltaFX",
+    "display_name": "DeltaFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DeltaFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DeltaFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "libertex",
+    "name": "Libertex",
+    "display_name": "Libertex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Libertex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Libertex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forexclub",
+    "name": "ForexClub",
+    "display_name": "ForexClub",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForexClub-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexClub-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "maxfx",
+    "name": "MaxFX",
+    "display_name": "MaxFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MaxFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MaxFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxprimus",
+    "name": "FXPrimus",
+    "display_name": "FXPrimus",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXPrimus-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXPrimus-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aafxtrading",
+    "name": "AAFXTrading",
+    "display_name": "AAFXTrading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AAFXTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AAFXTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forexmart",
+    "name": "ForexMart",
+    "display_name": "ForexMart",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForexMart-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexMart-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "excentral",
+    "name": "eXcentral",
+    "display_name": "eXcentral",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "eXcentral-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "eXcentral-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "capex",
+    "name": "CAPEX",
+    "display_name": "CAPEX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CAPEX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CAPEX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "skilling",
+    "name": "Skilling",
+    "display_name": "Skilling",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Skilling-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Skilling-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "scandinavian",
+    "name": "Scandinavian Capital",
+    "display_name": "Scandinavian Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ScandinavianCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ScandinavianCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "triomarkets",
+    "name": "TrioMarkets",
+    "display_name": "TrioMarkets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TrioMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TrioMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "interstellar",
+    "name": "InterstellarFX",
+    "display_name": "InterstellarFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "InterstellarFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "InterstellarFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "t4trade",
+    "name": "T4Trade",
+    "display_name": "T4Trade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "T4Trade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "T4Trade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "itrustcapital",
+    "name": "iTrustCapital",
+    "display_name": "iTrustCapital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "iTrustCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "iTrustCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "scope",
+    "name": "Scope Markets",
+    "display_name": "Scope Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ScopeMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ScopeMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "traderscom",
+    "name": "Traders.com",
+    "display_name": "Traders.com",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Traderscom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Traderscom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "radex",
+    "name": "Radex Markets",
+    "display_name": "Radex Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RadexMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RadexMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aaatrade",
+    "name": "AAATrade",
+    "display_name": "AAATrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AAATrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AAATrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "keytomarkets",
+    "name": "Key to Markets",
+    "display_name": "Key to Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "KeyToMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KeyToMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "colmex",
+    "name": "Colmex Pro",
+    "display_name": "Colmex Pro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ColmexPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ColmexPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradedirect",
+    "name": "TradeDirect365",
+    "display_name": "TradeDirect365",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeDirect365-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeDirect365-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "conotoxia",
+    "name": "Conotoxia",
+    "display_name": "Conotoxia",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Conotoxia-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Conotoxia-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxpig",
+    "name": "FXPig",
+    "display_name": "FXPig",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXPig-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXPig-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icmbrokers",
+    "name": "ICM Brokers",
+    "display_name": "ICM Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ICMBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICMBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fortrade",
+    "name": "Fortrade",
+    "display_name": "Fortrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Fortrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Fortrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fbsau",
+    "name": "FBS AU",
+    "display_name": "FBS AU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FBSAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FBSAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ufxmarkets",
+    "name": "UFX Markets",
+    "display_name": "UFX Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "UFXMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "UFXMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxgiants",
+    "name": "FXGiants",
+    "display_name": "FXGiants",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXGiants-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXGiants-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "paxforex",
+    "name": "PaxForex",
+    "display_name": "PaxForex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PaxForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PaxForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "marketspot",
+    "name": "MarketSpot",
+    "display_name": "MarketSpot",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MarketSpot-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MarketSpot-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxcl",
+    "name": "FXCL",
+    "display_name": "FXCL",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXCL-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXCL-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gmimarkets",
+    "name": "GMI Markets",
+    "display_name": "GMI Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GMIMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GMIMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forextime",
+    "name": "ForexTime",
+    "display_name": "ForexTime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForexTime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexTime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "nsfx",
+    "name": "NSFX",
+    "display_name": "NSFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NSFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NSFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "atcbrokers",
+    "name": "ATC Brokers",
+    "display_name": "ATC Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ATCBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ATCBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "clmforex",
+    "name": "CLM Forex",
+    "display_name": "CLM Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CLMForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CLMForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxtswiss",
+    "name": "FXT Swiss",
+    "display_name": "FXT Swiss",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXTSwiss-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXTSwiss-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bcr",
+    "name": "BCR",
+    "display_name": "BCR",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BCR-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BCR-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "trillium",
+    "name": "Trillium",
+    "display_name": "Trillium",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Trillium-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Trillium-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "onetradex",
+    "name": "OneTradeX",
+    "display_name": "OneTradeX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OneTradeX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OneTradeX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gbebrokers",
+    "name": "GBE Brokers",
+    "display_name": "GBE Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GBEBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GBEBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "kvb",
+    "name": "KVB Kunlun",
+    "display_name": "KVB Kunlun",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "KVBKunlun-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KVBKunlun-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "axioryGlobal",
+    "name": "Axiory Global",
+    "display_name": "Axiory Global",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AxioryGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AxioryGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "lmax",
+    "name": "LMAX",
+    "display_name": "LMAX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LMAX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LMAX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "utip",
+    "name": "UTIP",
+    "display_name": "UTIP",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "UTIP-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "UTIP-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alpho",
+    "name": "Alpho",
+    "display_name": "Alpho",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Alpho-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Alpho-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xmcy",
+    "name": "XM CY",
+    "display_name": "XM CY",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XMCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XMCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "rannforex",
+    "name": "Rann Forex",
+    "display_name": "Rann Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RannForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RannForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tixee",
+    "name": "Tixee",
+    "display_name": "Tixee",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Tixee-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Tixee-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "global_gt",
+    "name": "Global GT",
+    "display_name": "Global GT",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GlobalGT-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GlobalGT-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "eas",
+    "name": "EAS",
+    "display_name": "EAS",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "EAS-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EAS-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "stockity",
+    "name": "Stockity",
+    "display_name": "Stockity",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Stockity-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Stockity-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "zulu",
+    "name": "ZuluTrade",
+    "display_name": "ZuluTrade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ZuluTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ZuluTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "arongroups",
+    "name": "Aron Groups",
+    "display_name": "Aron Groups",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AronGroups-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AronGroups-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "wenance",
+    "name": "Wenance",
+    "display_name": "Wenance",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Wenance-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Wenance-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xb_prime",
+    "name": "XB Prime",
+    "display_name": "XB Prime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XBPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XBPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sage",
+    "name": "SageFX",
+    "display_name": "SageFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SageFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SageFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fullerton",
+    "name": "Fullerton Markets",
+    "display_name": "Fullerton Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FullertonMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FullertonMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxvnpro",
+    "name": "FXVNPro",
+    "display_name": "FXVNPro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXVNPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXVNPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ssi",
+    "name": "SSI",
+    "display_name": "SSI",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SSI-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SSI-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vpbank",
+    "name": "VPBank Securities",
+    "display_name": "VPBank Securities",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "VPBankSec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "VPBankSec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vndirect",
+    "name": "VNDirect",
+    "display_name": "VNDirect",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "VNDirect-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "VNDirect-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bos",
+    "name": "BOS",
+    "display_name": "BOS",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BOS-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BOS-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "techberry",
+    "name": "TechBerry",
+    "display_name": "TechBerry",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TechBerry-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TechBerry-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "lqdfx",
+    "name": "LQDFX",
+    "display_name": "LQDFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LQDFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LQDFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finam",
+    "name": "Finam",
+    "display_name": "Finam",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Finam-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Finam-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finacom",
+    "name": "FinaCom",
+    "display_name": "FinaCom",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FinaCom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FinaCom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "rcpro",
+    "name": "RCPro",
+    "display_name": "RCPro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RCPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RCPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxclients",
+    "name": "FXClients",
+    "display_name": "FXClients",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXClients-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXClients-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gannforex",
+    "name": "GannForex",
+    "display_name": "GannForex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GannForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GannForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradesocio",
+    "name": "TradeSocio",
+    "display_name": "TradeSocio",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeSocio-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeSocio-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dooprime",
+    "name": "DooPrime",
+    "display_name": "DooPrime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DooPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DooPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tigerbrokers",
+    "name": "Tiger Brokers",
+    "display_name": "Tiger Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TigerBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TigerBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "zacks",
+    "name": "Zacks Trade",
+    "display_name": "Zacks Trade",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ZacksTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ZacksTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "kwakol",
+    "name": "Kwakol Markets",
+    "display_name": "Kwakol Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "KwakolMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KwakolMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hf_sa",
+    "name": "HF Markets SA",
+    "display_name": "HF Markets SA",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HFSA-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HFSA-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "octamarket",
+    "name": "Octa Market",
+    "display_name": "Octa Market",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OctaMarket-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OctaMarket-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "robomarkets",
+    "name": "RoboMarkets",
+    "display_name": "RoboMarkets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RoboMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RoboMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bdswiss_eu",
+    "name": "BDSwiss EU",
+    "display_name": "BDSwiss EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BDSwissEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BDSwissEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "weltrade_asia",
+    "name": "Weltrade Asia",
+    "display_name": "Weltrade Asia",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "WeltradeAsia-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "WeltradeAsia-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxstreet",
+    "name": "FXStreet Live",
+    "display_name": "FXStreet Live",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXStreetLive-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXStreetLive-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tickmill_eu",
+    "name": "Tickmill EU",
+    "display_name": "Tickmill EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TickmillEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TickmillEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "justglobal",
+    "name": "JustGlobal",
+    "display_name": "JustGlobal",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "JustGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "JustGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradeweb",
+    "name": "TradeWeb",
+    "display_name": "TradeWeb",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeWeb-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeWeb-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cmtrading",
+    "name": "CM Trading",
+    "display_name": "CM Trading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CMTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CMTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gcgasia",
+    "name": "GCG Asia",
+    "display_name": "GCG Asia",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GCGAsia-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GCGAsia-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxoro",
+    "name": "FXORO",
+    "display_name": "FXORO",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXORO-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXORO-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "naxotrader",
+    "name": "NaxoTrader",
+    "display_name": "NaxoTrader",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NaxoTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NaxoTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fortradeeu",
+    "name": "Fortrade EU",
+    "display_name": "Fortrade EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FortradeEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FortradeEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "brokereo",
+    "name": "Brokereo",
+    "display_name": "Brokereo",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Brokereo-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Brokereo-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "pepperstoneau",
+    "name": "Pepperstone AU",
+    "display_name": "Pepperstone AU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PepperstoneAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PepperstoneAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxb",
+    "name": "FXB Trading",
+    "display_name": "FXB Trading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXBTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXBTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradersunion",
+    "name": "Traders Union",
+    "display_name": "Traders Union",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradersUnion-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradersUnion-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "wforex",
+    "name": "World Forex",
+    "display_name": "World Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "WorldForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "WorldForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "primexbt",
+    "name": "PrimeXBT",
+    "display_name": "PrimeXBT",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PrimeXBT-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PrimeXBT-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "swissprime",
+    "name": "SwissPrime",
+    "display_name": "SwissPrime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SwissPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SwissPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gmiuk",
+    "name": "GMI UK",
+    "display_name": "GMI UK",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GMIUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GMIUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fondex2",
+    "name": "Fondex Pro",
+    "display_name": "Fondex Pro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FondexPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FondexPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "usgfx",
+    "name": "USGFX",
+    "display_name": "USGFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "USGFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "USGFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxlinked",
+    "name": "FXLinked",
+    "display_name": "FXLinked",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXLinked-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXLinked-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradecm",
+    "name": "TradeCM",
+    "display_name": "TradeCM",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeCM-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeCM-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fpmarkets_eu",
+    "name": "FP Markets EU",
+    "display_name": "FP Markets EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FPMarketsEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FPMarketsEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hirose",
+    "name": "Hirose Financial",
+    "display_name": "Hirose Financial",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HiroseFinancial-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HiroseFinancial-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "exnesscy",
+    "name": "Exness CY",
+    "display_name": "Exness CY",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ExnessCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ExnessCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "marketsio",
+    "name": "MarketsIO",
+    "display_name": "MarketsIO",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MarketsIO-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MarketsIO-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icmtrading",
+    "name": "ICM Trading",
+    "display_name": "ICM Trading",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ICMTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICMTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "stocklane",
+    "name": "Stocklane",
+    "display_name": "Stocklane",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Stocklane-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Stocklane-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tiomarkets",
+    "name": "TIO Markets",
+    "display_name": "TIO Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TIOMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TIOMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xmint",
+    "name": "XM INT",
+    "display_name": "XM INT",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "XMINT-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XMINT-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ggfx",
+    "name": "GGFX",
+    "display_name": "GGFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GGFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GGFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dbgmarkets",
+    "name": "DBG Markets",
+    "display_name": "DBG Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DBGMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DBGMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "conotoxia_eu",
+    "name": "Conotoxia EU",
+    "display_name": "Conotoxia EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ConotoxiaEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ConotoxiaEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fbseu",
+    "name": "FBS EU",
+    "display_name": "FBS EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FBSEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FBSEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hfglobal",
+    "name": "HF Markets Global",
+    "display_name": "HF Markets Global",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HFGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HFGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "activtrades_eu",
+    "name": "ActivTrades EU",
+    "display_name": "ActivTrades EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ActivTradesEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ActivTradesEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "liteforexeu",
+    "name": "LiteForex EU",
+    "display_name": "LiteForex EU",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LiteForexEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LiteForexEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alpariint",
+    "name": "Alpari INT",
+    "display_name": "Alpari INT",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AlpariINT-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AlpariINT-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "orbex",
+    "name": "Orbex",
+    "display_name": "Orbex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Orbex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Orbex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "directfx",
+    "name": "DirectFX",
+    "display_name": "DirectFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DirectFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DirectFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "zeal",
+    "name": "Zeal Capital",
+    "display_name": "Zeal Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ZealCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ZealCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "land_fx",
+    "name": "Land FX",
+    "display_name": "Land FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LandFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LandFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "windsor",
+    "name": "Windsor Brokers",
+    "display_name": "Windsor Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "WindsorBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "WindsorBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ecnpro",
+    "name": "ECN Pro",
+    "display_name": "ECN Pro",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ECNPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ECNPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "pocketoption",
+    "name": "Pocket Option",
+    "display_name": "Pocket Option",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PocketOption-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PocketOption-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mex_group",
+    "name": "MEX Group",
+    "display_name": "MEX Group",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MEXGroup-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MEXGroup-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gfx",
+    "name": "GFX",
+    "display_name": "GFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "investby",
+    "name": "Investby",
+    "display_name": "Investby",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Investby-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Investby-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "lion",
+    "name": "Lion Brokers",
+    "display_name": "Lion Brokers",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LionBrokers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LionBrokers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "renesource",
+    "name": "Renesource Capital",
+    "display_name": "Renesource Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "RenesourceCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RenesourceCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "citymarket",
+    "name": "City Markets",
+    "display_name": "City Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CityMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CityMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vibhs",
+    "name": "Vibhs",
+    "display_name": "Vibhs",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Vibhs-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Vibhs-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sternopt",
+    "name": "SternOptions",
+    "display_name": "SternOptions",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SternOptions-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SternOptions-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fondsborse",
+    "name": "Fondsborse",
+    "display_name": "Fondsborse",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Fondsborse-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Fondsborse-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xstation",
+    "name": "XStation",
+    "display_name": "XStation",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "XStation-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XStation-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cfdglobal",
+    "name": "CFD Global",
+    "display_name": "CFD Global",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "CFDGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CFDGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "europefx",
+    "name": "EuropeFX",
+    "display_name": "EuropeFX",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "EuropeFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EuropeFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "trade360",
+    "name": "Trade360",
+    "display_name": "Trade360",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "Trade360-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Trade360-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gkfxprime",
+    "name": "GKFXPrime",
+    "display_name": "GKFXPrime",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "GKFXPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GKFXPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxpesa",
+    "name": "FXPesa",
+    "display_name": "FXPesa",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FXPesa-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXPesa-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "danishtrade",
+    "name": "Danish Trade",
+    "display_name": "Danish Trade",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "DanishTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DanishTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "swissborg",
+    "name": "SwissBorg",
+    "display_name": "SwissBorg",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "SwissBorg-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SwissBorg-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "whselfinvest",
+    "name": "WH SelfInvest",
+    "display_name": "WH SelfInvest",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "WHSelfInvest-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "WHSelfInvest-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxflat_eu",
+    "name": "FXFlat EU",
+    "display_name": "FXFlat EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FXFlatEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXFlatEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "deltastock",
+    "name": "Deltastock",
+    "display_name": "Deltastock",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "Deltastock-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Deltastock-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xopen",
+    "name": "XOpenHub",
+    "display_name": "XOpenHub",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "XOpenHub-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XOpenHub-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finq",
+    "name": "Finq",
+    "display_name": "Finq",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "Finq-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Finq-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xmuk",
+    "name": "XM UK",
+    "display_name": "XM UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "XMUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XMUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ig_eu",
+    "name": "IG EU",
+    "display_name": "IG EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "IGEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IGEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cmc_uk",
+    "name": "CMC UK",
+    "display_name": "CMC UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "CMCUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CMCUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oanda_eu",
+    "name": "OANDA EU",
+    "display_name": "OANDA EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "OANDAEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OANDAEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "swissquoteuk",
+    "name": "Swissquote UK",
+    "display_name": "Swissquote UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "SwissquoteUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SwissquoteUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fpmarkets_uk",
+    "name": "FP Markets UK",
+    "display_name": "FP Markets UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FPMarketsUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FPMarketsUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vt_markets",
+    "name": "VT Markets",
+    "display_name": "VT Markets",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "VTMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "VTMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "pepperstone_uk",
+    "name": "Pepperstone UK",
+    "display_name": "Pepperstone UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "PepperstoneUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PepperstoneUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "rakuten",
+    "name": "Rakuten Securities",
+    "display_name": "Rakuten Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Rakuten-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Rakuten-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mizuho",
+    "name": "Mizuho",
+    "display_name": "Mizuho",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Mizuho-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Mizuho-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sbifxt",
+    "name": "SBI FXTrade",
+    "display_name": "SBI FXTrade",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SBIFXTrade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SBIFXTrade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "monex",
+    "name": "Monex",
+    "display_name": "Monex",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Monex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Monex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "phillipcapital",
+    "name": "Phillip Capital",
+    "display_name": "Phillip Capital",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "PhillipCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PhillipCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "cityofindo",
+    "name": "City of Indonesia",
+    "display_name": "City of Indonesia",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "CityIndo-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CityIndo-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "valbury",
+    "name": "Valbury Asia",
+    "display_name": "Valbury Asia",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ValburyAsia-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ValburyAsia-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "acetop",
+    "name": "AceTOP",
+    "display_name": "AceTOP",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AceTOP-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AceTOP-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gaitame",
+    "name": "Gaitame Finest",
+    "display_name": "Gaitame Finest",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "GaitameFinest-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GaitameFinest-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "kabu",
+    "name": "Kabu.com",
+    "display_name": "Kabu.com",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Kabucom-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Kabucom-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "dmmfx",
+    "name": "DMM FX",
+    "display_name": "DMM FX",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "DMMFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DMMFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sbisec",
+    "name": "SBI Securities",
+    "display_name": "SBI Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SBISec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SBISec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icici",
+    "name": "ICICI Direct",
+    "display_name": "ICICI Direct",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ICICIDirect-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICICIDirect-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "kotaksec",
+    "name": "Kotak Securities",
+    "display_name": "Kotak Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "KotakSec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KotakSec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "zerodha",
+    "name": "Zerodha",
+    "display_name": "Zerodha",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Zerodha-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Zerodha-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "angelone",
+    "name": "Angel One",
+    "display_name": "Angel One",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AngelOne-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AngelOne-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "motilal",
+    "name": "Motilal Oswal",
+    "display_name": "Motilal Oswal",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "MotilalOswal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MotilalOswal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "upstox",
+    "name": "Upstox",
+    "display_name": "Upstox",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Upstox-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Upstox-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "groww",
+    "name": "Groww",
+    "display_name": "Groww",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Groww-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Groww-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sharekhan",
+    "name": "Sharekhan",
+    "display_name": "Sharekhan",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Sharekhan-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Sharekhan-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "iifl",
+    "name": "IIFL Securities",
+    "display_name": "IIFL Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "IIFLSec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "IIFLSec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "5paisa",
+    "name": "5Paisa",
+    "display_name": "5Paisa",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "5Paisa-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "5Paisa-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "arabberg",
+    "name": "ArabBerg",
+    "display_name": "ArabBerg",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ArabBerg-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ArabBerg-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "binancefutures",
+    "name": "Binance Futures",
+    "display_name": "Binance Futures",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "BinanceFutures-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BinanceFutures-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bybit",
+    "name": "Bybit",
+    "display_name": "Bybit",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Bybit-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Bybit-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "okx",
+    "name": "OKX",
+    "display_name": "OKX",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "OKX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OKX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mexc_global",
+    "name": "MEXC Global",
+    "display_name": "MEXC Global",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "MEXCGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MEXCGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "gmo",
+    "name": "GMO Click",
+    "display_name": "GMO Click",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "GMOClick-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GMOClick-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sbineo",
+    "name": "SBI NeoPrime",
+    "display_name": "SBI NeoPrime",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SBINeoPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SBINeoPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "kabuplus",
+    "name": "Kabu Plus",
+    "display_name": "Kabu Plus",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "KabuPlus-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "KabuPlus-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oandajp",
+    "name": "OANDA Japan",
+    "display_name": "OANDA Japan",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "OANDAJapan-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OANDAJapan-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "forex_jp",
+    "name": "Forex Japan",
+    "display_name": "Forex Japan",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ForexJP-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForexJP-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "daiwa",
+    "name": "Daiwa Securities",
+    "display_name": "Daiwa Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "DaiwaSec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DaiwaSec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "nomura",
+    "name": "Nomura",
+    "display_name": "Nomura",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Nomura-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Nomura-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "malaysian",
+    "name": "Malaysian FX",
+    "display_name": "Malaysian FX",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "MalaysianFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MalaysianFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "citytradersi",
+    "name": "City Traders Imperium",
+    "display_name": "City Traders Imperium",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CityTradersImperium-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CityTradersImperium-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bulenox",
+    "name": "Bulenox",
+    "display_name": "Bulenox",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Bulenox-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Bulenox-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "blufx",
+    "name": "BluFX",
+    "display_name": "BluFX",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BluFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BluFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "larkfunding",
+    "name": "Lark Funding",
+    "display_name": "Lark Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LarkFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LarkFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alphaCapital",
+    "name": "Alpha Capital",
+    "display_name": "Alpha Capital",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AlphaCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AlphaCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "instantfunding",
+    "name": "Instant Funding",
+    "display_name": "Instant Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "InstantFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "InstantFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "toptierfirm",
+    "name": "TopTier Trader",
+    "display_name": "TopTier Trader",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TopTierTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TopTierTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mybrokerfunds",
+    "name": "My Broker Funds",
+    "display_name": "My Broker Funds",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MyBrokerFunds-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MyBrokerFunds-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ment_funding",
+    "name": "Ment Funding",
+    "display_name": "Ment Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MentFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MentFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "maven_trading",
+    "name": "Maven Trading",
+    "display_name": "Maven Trading",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MavenTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MavenTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "apex_trader",
+    "name": "Apex Trader Funding",
+    "display_name": "Apex Trader Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ApexTraderFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ApexTraderFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "aqua_funded",
+    "name": "Aqua Funded",
+    "display_name": "Aqua Funded",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AquaFunded-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AquaFunded-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "breakout_prop",
+    "name": "Breakout Prop",
+    "display_name": "Breakout Prop",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BreakoutProp-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BreakoutProp-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "challenge4trading",
+    "name": "Challenge4Trading",
+    "display_name": "Challenge4Trading",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Challenge4Trading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Challenge4Trading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "coral_traders",
+    "name": "Coral Traders",
+    "display_name": "Coral Traders",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CoralTraders-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CoralTraders-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "elev8_funding",
+    "name": "Elev8 Funding",
+    "display_name": "Elev8 Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Elev8Funding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Elev8Funding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fasttracktrading",
+    "name": "FastTrack Trading",
+    "display_name": "FastTrack Trading",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FastTrackTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FastTrackTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "funding_pips",
+    "name": "Funding Pips",
+    "display_name": "Funding Pips",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FundingPips-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FundingPips-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "funded_engineer",
+    "name": "Funded Engineer",
+    "display_name": "Funded Engineer",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FundedEngineer-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FundedEngineer-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "funded_peaks",
+    "name": "Funded Peaks",
+    "display_name": "Funded Peaks",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FundedPeaks-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FundedPeaks-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "get_funded",
+    "name": "GetFunded",
+    "display_name": "GetFunded",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GetFunded-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GetFunded-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "glow_node",
+    "name": "Glow Node",
+    "display_name": "Glow Node",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "GlowNode-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "GlowNode-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mff",
+    "name": "My Funded FX",
+    "display_name": "My Funded FX",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MyFundedFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MyFundedFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "nova_funding",
+    "name": "Nova Funding",
+    "display_name": "Nova Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NovaFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NovaFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ownedby_prop",
+    "name": "OwnedBy Prop",
+    "display_name": "OwnedBy Prop",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OwnedByProp-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OwnedByProp-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "pacific_funding",
+    "name": "Pacific Funding",
+    "display_name": "Pacific Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PacificFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PacificFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "prop_fx",
+    "name": "PropFX",
+    "display_name": "PropFX",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PropFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PropFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "smart_prop",
+    "name": "Smart Prop Trader",
+    "display_name": "Smart Prop Trader",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SmartPropTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SmartPropTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "the_funded_trader",
+    "name": "The Funded Trader",
+    "display_name": "The Funded Trader",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TheFundedTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TheFundedTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradify",
+    "name": "Tradify",
+    "display_name": "Tradify",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Tradify-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Tradify-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "true_north",
+    "name": "True North Traders",
+    "display_name": "True North Traders",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TrueNorthTraders-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TrueNorthTraders-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bespoke_funding",
+    "name": "Bespoke Funding",
+    "display_name": "Bespoke Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BespokeFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BespokeFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "finotive_funding",
+    "name": "Finotive Funding",
+    "display_name": "Finotive Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FinotiveFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FinotiveFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ftuk",
+    "name": "FTUK",
+    "display_name": "FTUK",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FTUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FTUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "leveled_up",
+    "name": "Leveled Up Society",
+    "display_name": "Leveled Up Society",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "LeveledUpSociety-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "LeveledUpSociety-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oneup_trader",
+    "name": "OneUp Trader",
+    "display_name": "OneUp Trader",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OneUpTrader-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OneUpTrader-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "savius",
+    "name": "Savius",
+    "display_name": "Savius",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Savius-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Savius-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "theproptrading",
+    "name": "The Prop Trading",
+    "display_name": "The Prop Trading",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ThePropTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ThePropTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradethepooluk",
+    "name": "Trade The Pool UK",
+    "display_name": "Trade The Pool UK",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeThePoolUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeThePoolUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "elite_trader",
+    "name": "Elite Trader Funding",
+    "display_name": "Elite Trader Funding",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "EliteTraderFunding-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EliteTraderFunding-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "earn2trade",
+    "name": "Earn2Trade",
+    "display_name": "Earn2Trade",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Earn2Trade-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Earn2Trade-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "blue_guardian",
+    "name": "Blue Guardian",
+    "display_name": "Blue Guardian",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BlueGuardian-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BlueGuardian-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "for_traders",
+    "name": "For Traders",
+    "display_name": "For Traders",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ForTraders-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ForTraders-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "pepperstone_cy",
+    "name": "Pepperstone CY",
+    "display_name": "Pepperstone CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "PepperstoneCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PepperstoneCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icmarkets_eu",
+    "name": "IC Markets EU",
+    "display_name": "IC Markets EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "ICMarketsEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICMarketsEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icmarkets_raw",
+    "name": "IC Markets Raw",
+    "display_name": "IC Markets Raw",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ICMarketsRaw-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICMarketsRaw-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "xtb_cy",
+    "name": "XTB CY",
+    "display_name": "XTB CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "XTBCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "XTBCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "exness_uk",
+    "name": "Exness UK",
+    "display_name": "Exness UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "ExnessUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ExnessUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxpro_uk",
+    "name": "FxPro UK",
+    "display_name": "FxPro UK",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FxProUK-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FxProUK-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "avatrade_eu",
+    "name": "AvaTrade EU",
+    "display_name": "AvaTrade EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "AvaTradeEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AvaTradeEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "avatrade_jp",
+    "name": "AvaTrade JP",
+    "display_name": "AvaTrade JP",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AvaTradeJP-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AvaTradeJP-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fbs_cy",
+    "name": "FBS CY",
+    "display_name": "FBS CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FBSCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FBSCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "roboforex_eu",
+    "name": "RoboForex EU",
+    "display_name": "RoboForex EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "RoboForexEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "RoboForexEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tickmill_sc",
+    "name": "Tickmill SC",
+    "display_name": "Tickmill SC",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TickmillSC-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TickmillSC-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "blackbull_eu",
+    "name": "BlackBull EU",
+    "display_name": "BlackBull EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "BlackBullEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BlackBullEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "eightcap_eu",
+    "name": "Eightcap EU",
+    "display_name": "Eightcap EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "EightcapEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EightcapEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alpari_eu",
+    "name": "Alpari EU",
+    "display_name": "Alpari EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "AlpariEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AlpariEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "octa_cy",
+    "name": "Octa CY",
+    "display_name": "Octa CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "OctaCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OctaCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "justmarkets_cy",
+    "name": "JustMarkets CY",
+    "display_name": "JustMarkets CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "JustMarketsCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "JustMarketsCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "deriv_mt5",
+    "name": "Deriv MT5",
+    "display_name": "Deriv MT5",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "DerivMT5-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "DerivMT5-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxgt_cy",
+    "name": "FXGT CY",
+    "display_name": "FXGT CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FXGTCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXGTCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hfm_sa",
+    "name": "HFM SA",
+    "display_name": "HFM SA",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "HFMSA-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HFMSA-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "admirals_cy",
+    "name": "Admirals CY",
+    "display_name": "Admirals CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "AdmiralsCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AdmiralsCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxopen_eu",
+    "name": "FXOpen EU",
+    "display_name": "FXOpen EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "FXOpenEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXOpenEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "instaforex_eu",
+    "name": "InstaForex EU",
+    "display_name": "InstaForex EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "InstaForexEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "InstaForexEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bdswiss_sc",
+    "name": "BDSwiss SC",
+    "display_name": "BDSwiss SC",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BDSwissSC-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BDSwissSC-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "naga_cy",
+    "name": "NAGA CY",
+    "display_name": "NAGA CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "NAGACY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NAGACY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradeview_eu",
+    "name": "Tradeview EU",
+    "display_name": "Tradeview EU",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "TradeviewEU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeviewEU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "axiory",
+    "name": "Axiory",
+    "display_name": "Axiory",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Axiory-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Axiory-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "centurion",
+    "name": "Centurion FX",
+    "display_name": "Centurion FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CenturionFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CenturionFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "optimus",
+    "name": "Optimus Futures",
+    "display_name": "Optimus Futures",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OptimusFutures-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OptimusFutures-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradezero",
+    "name": "TradeZero",
+    "display_name": "TradeZero",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradeZero-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradeZero-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "capital_bear",
+    "name": "Capital Bear",
+    "display_name": "Capital Bear",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CapitalBear-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CapitalBear-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "nexgen",
+    "name": "NexGen Markets",
+    "display_name": "NexGen Markets",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NexGenMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NexGenMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "quantum_fx",
+    "name": "Quantum FX",
+    "display_name": "Quantum FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "QuantumFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "QuantumFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "primefx",
+    "name": "PrimeFX",
+    "display_name": "PrimeFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PrimeFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PrimeFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "silverbell",
+    "name": "Silverbell Capital",
+    "display_name": "Silverbell Capital",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "SilverbellCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SilverbellCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "vertex_fx",
+    "name": "VertexFX",
+    "display_name": "VertexFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "VertexFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "VertexFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "taurex",
+    "name": "Taurex",
+    "display_name": "Taurex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Taurex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Taurex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "exinity",
+    "name": "Exinity",
+    "display_name": "Exinity",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "Exinity-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Exinity-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxpay",
+    "name": "FXPay",
+    "display_name": "FXPay",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXPay-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXPay-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "nextgen",
+    "name": "NextGen FX",
+    "display_name": "NextGen FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NextGenFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NextGenFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "safecap",
+    "name": "Safecap",
+    "display_name": "Safecap",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "Safecap-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Safecap-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "titanfx",
+    "name": "Titan FX",
+    "display_name": "Titan FX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TitanFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TitanFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "errante_global",
+    "name": "Errante Global",
+    "display_name": "Errante Global",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ErranteGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ErranteGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "octa_global",
+    "name": "Octa Global",
+    "display_name": "Octa Global",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "OctaGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OctaGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxroad",
+    "name": "FXRoad",
+    "display_name": "FXRoad",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXRoad-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXRoad-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "motionforex",
+    "name": "Motion Forex",
+    "display_name": "Motion Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "MotionForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MotionForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "windsor_cy",
+    "name": "Windsor CY",
+    "display_name": "Windsor CY",
+    "type": "broker",
+    "region": "eu",
+    "servers": [
+      {
+        "name": "WindsorCY-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "WindsorCY-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "traderspoint",
+    "name": "Traders Point",
+    "display_name": "Traders Point",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradersPoint-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradersPoint-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "clm_global",
+    "name": "CLM Global",
+    "display_name": "CLM Global",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "CLMGlobal-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CLMGlobal-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fxgains",
+    "name": "FX Gains",
+    "display_name": "FX Gains",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FXGains-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FXGains-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "panda_ts",
+    "name": "Panda Trading",
+    "display_name": "Panda Trading",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "PandaTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PandaTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sato",
+    "name": "Sato FX",
+    "display_name": "Sato FX",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SatoFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SatoFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "asia_forex",
+    "name": "Asia Forex",
+    "display_name": "Asia Forex",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AsiaForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AsiaForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hongkong_fx",
+    "name": "HK FX Pro",
+    "display_name": "HK FX Pro",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "HKFXPro-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HKFXPro-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "singapore_fx",
+    "name": "SG Forex",
+    "display_name": "SG Forex",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SGForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SGForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ctrader_au",
+    "name": "cTrader AU",
+    "display_name": "cTrader AU",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "cTraderAU-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "cTraderAU-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "ausforex",
+    "name": "AUS Forex",
+    "display_name": "AUS Forex",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "AUSForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AUSForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sydneyfx",
+    "name": "Sydney FX",
+    "display_name": "Sydney FX",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "SydneyFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SydneyFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "canberra_cap",
+    "name": "Canberra Capital",
+    "display_name": "Canberra Capital",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "CanberraCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "CanberraCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "oz_markets",
+    "name": "OZ Markets",
+    "display_name": "OZ Markets",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "OZMarkets-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "OZMarkets-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "melbourne_fx",
+    "name": "Melbourne FX",
+    "display_name": "Melbourne FX",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "MelbourneFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MelbourneFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "brisbane_broker",
+    "name": "Brisbane Broker",
+    "display_name": "Brisbane Broker",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "BrisbaneBroker-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BrisbaneBroker-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "perth_capital",
+    "name": "Perth Capital",
+    "display_name": "Perth Capital",
+    "type": "broker",
+    "region": "au",
+    "servers": [
+      {
+        "name": "PerthCapital-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PerthCapital-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "adfx",
+    "name": "ADFX",
+    "display_name": "ADFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "ADFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ADFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "netfx",
+    "name": "NetFX",
+    "display_name": "NetFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "NetFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "NetFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bullfx",
+    "name": "BullFX",
+    "display_name": "BullFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BullFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BullFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "bearprime",
+    "name": "BearPrime",
+    "display_name": "BearPrime",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "BearPrime-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "BearPrime-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "eaglefx",
+    "name": "EagleFX",
+    "display_name": "EagleFX",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "EagleFX-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "EagleFX-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "turbo_forex",
+    "name": "Turbo Forex",
+    "display_name": "Turbo Forex",
+    "type": "broker",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TurboForex-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TurboForex-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "tradingbells",
+    "name": "TradingBells",
+    "display_name": "TradingBells",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "TradingBells-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradingBells-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alice_blue",
+    "name": "Alice Blue",
+    "display_name": "Alice Blue",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AliceBlue-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AliceBlue-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "geojit",
+    "name": "Geojit",
+    "display_name": "Geojit",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Geojit-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Geojit-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "edelweiss",
+    "name": "Edelweiss",
+    "display_name": "Edelweiss",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Edelweiss-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Edelweiss-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "samco",
+    "name": "Samco",
+    "display_name": "Samco",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Samco-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Samco-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "profitmart",
+    "name": "ProfitMart",
+    "display_name": "ProfitMart",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ProfitMart-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ProfitMart-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "fyers",
+    "name": "Fyers",
+    "display_name": "Fyers",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "Fyers-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "Fyers-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "mstock",
+    "name": "MStock",
+    "display_name": "MStock",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "MStock-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "MStock-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "paytm_money",
+    "name": "Paytm Money",
+    "display_name": "Paytm Money",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "PaytmMoney-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PaytmMoney-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "icici_sec",
+    "name": "ICICI Securities",
+    "display_name": "ICICI Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "ICICISec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "ICICISec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "hdfc_sec",
+    "name": "HDFC Securities",
+    "display_name": "HDFC Securities",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "HDFCSec-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "HDFCSec-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "sbicap",
+    "name": "SBI CAP",
+    "display_name": "SBI CAP",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "SBICap-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "SBICap-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "axis_direct",
+    "name": "Axis Direct",
+    "display_name": "Axis Direct",
+    "type": "broker",
+    "region": "asia",
+    "servers": [
+      {
+        "name": "AxisDirect-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AxisDirect-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "alpha_trading",
+    "name": "Alpha Trading",
+    "display_name": "Alpha Trading",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "AlphaTrading-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "AlphaTrading-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "funded_academy",
+    "name": "Funded Academy",
+    "display_name": "Funded Academy",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FundedAcademy-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FundedAcademy-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "funded_bulls",
+    "name": "Funded Bulls",
+    "display_name": "Funded Bulls",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "FundedBulls-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "FundedBulls-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "prop_masters",
+    "name": "Prop Masters",
+    "display_name": "Prop Masters",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "PropMasters-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "PropMasters-Live",
+        "type": "live"
+      }
+    ]
+  },
+  {
+    "id": "trading_cult",
+    "name": "Trading Cult",
+    "display_name": "Trading Cult",
+    "type": "propfirm",
+    "region": "global",
+    "servers": [
+      {
+        "name": "TradingCult-Demo",
+        "type": "demo"
+      },
+      {
+        "name": "TradingCult-Live",
+        "type": "live"
+      }
+    ]
   }
 ]

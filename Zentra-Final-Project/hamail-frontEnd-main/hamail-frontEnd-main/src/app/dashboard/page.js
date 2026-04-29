@@ -47,6 +47,15 @@ import ZentraBreathwork from "@/components/dashboard/widgets/ZentraBreathwork";
 import QuoteOfTheDay from "@/components/dashboard/widgets/QuoteOfTheDay";
 import PerformanceWindow from "@/components/dashboard/widgets/PerformanceWindow";
 import PsychologicalStateDistribution from "@/components/dashboard/widgets/PsychologicalStateDistribution";
+import MT5AccountCard from "@/components/dashboard/widgets/MT5AccountCard";
+import PerformanceMetricsCard from "@/components/dashboard/widgets/PerformanceMetricsCard";
+import MT5PositionsCard from "@/components/dashboard/widgets/MT5PositionsCard";
+import OrderHistoryCard from "@/components/dashboard/widgets/OrderHistoryCard";
+import MarketInfoCard from "@/components/dashboard/widgets/MarketInfoCard";
+import RevengeTradingCard from "@/components/dashboard/widgets/RevengeTradingCard";
+import EarlyExitCard from "@/components/dashboard/widgets/EarlyExitCard";
+import OvertradingCard from "@/components/dashboard/widgets/OvertradingCard";
+import { useRevengeTrading, useEarlyExits, useOvertrading, useFullBehaviorAnalysis } from "@/app/hooks/useBehavior";
 
 const fullConfig = resolveConfig(tailwindConfig);
 const colors = fullConfig.theme.colors;
@@ -158,6 +167,12 @@ export default function Dashboard() {
     refetch: refetchConsistencyTrend,
   } = useConsistencyTrend("7", selectedDate);
   const { data: dailyQuoteData, loading: dailyQuoteLoading } = useDailyQuote(selectedDate);
+
+  // Behavioral Analysis hooks (Phase 2)
+  const { data: revengeData, loading: revengeLoading } = useRevengeTrading(selectedDate);
+  const { data: earlyExitData, loading: earlyExitLoading } = useEarlyExits(selectedDate);
+  const { data: overtradingData, loading: overtradingLoading } = useOvertrading(selectedDate);
+  const { data: fullBehaviorData } = useFullBehaviorAnalysis(selectedDate);
 
   // Transform v2 data for widgets
   // Transform consistency trend data to preserve date and score for PsychologicalStabilityTrend
@@ -705,6 +720,7 @@ export default function Dashboard() {
                   drainFactors={mentalBatteryData?.drainFactors}
                   rechargeFactors={mentalBatteryData?.rechargeFactors}
                   hasNoTrades={hasMentalBatteryNoData}
+                  selectedDate={selectedDate}
                 />
               </div>
             </div>
@@ -735,6 +751,7 @@ export default function Dashboard() {
                     selectedDate={selectedDate}
                     trades={tradesData?.results || []}
                     tradingPlan={tradingPlan}
+                    behaviorData={fullBehaviorData}
                   />
                 </div>
               </div>
@@ -763,7 +780,35 @@ export default function Dashboard() {
                 selectedDate={selectedDate}
                 trades={tradesData?.results || []}
                 tradingPlan={tradingPlan}
+                behaviorData={fullBehaviorData}
               />
+            </div>
+          </div>
+
+          {/* MT5 Data Expansion: Account + Performance */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+            <MT5AccountCard />
+            <PerformanceMetricsCard />
+          </div>
+
+          {/* MT5 Live Positions + Pending Orders */}
+          <div className="mt-4">
+            <MT5PositionsCard />
+          </div>
+
+          {/* Order History + Market Watch */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+            <OrderHistoryCard />
+            <MarketInfoCard />
+          </div>
+
+          {/* Behavioral Analysis Section (Phase 2) */}
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-3">Behavioral Analysis</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <RevengeTradingCard data={revengeData} loading={revengeLoading} />
+              <EarlyExitCard data={earlyExitData} loading={earlyExitLoading} />
+              <OvertradingCard data={overtradingData} loading={overtradingLoading} />
             </div>
           </div>
 

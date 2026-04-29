@@ -1,6 +1,5 @@
 // API client for backend connection
-const API_BASE_URL = "https://api.hellozentra.com/v1" 
-// const API_BASE_URL = "http://localhost:2000/v1" 
+const API_BASE_URL = "https://api.hellozentra.com/v1"
 
 // Normalise any date value to "YYYY-MM-DD" string expected by the backend.
 const toDateStr = (date) => {
@@ -43,6 +42,7 @@ class ApiClient {
     const token = this.getToken();
     const headers = {
       "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
       ...options.headers,
     };
 
@@ -401,6 +401,60 @@ class ApiClient {
     });
   }
 
+  // ─── MT5 Data Expansion API Methods ─────────────────────────────
+
+  async getAccountFull() {
+    return this.fetch("/mt5/account/full");
+  }
+
+  async getSymbols(group = null) {
+    const query = group ? `?group=${encodeURIComponent(group)}` : "";
+    return this.fetch(`/mt5/symbols${query}`);
+  }
+
+  async getSymbolDetail(symbolName) {
+    return this.fetch(`/mt5/symbols/${encodeURIComponent(symbolName)}`);
+  }
+
+  async getPendingOrders() {
+    return this.fetch("/mt5/orders/pending");
+  }
+
+  async getOrderHistory(from = null, to = null) {
+    const params = [];
+    if (from) params.push(`from=${encodeURIComponent(from)}`);
+    if (to) params.push(`to=${encodeURIComponent(to)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/mt5/orders/history${query}`);
+  }
+
+  async getPriceHistory(symbol, timeframe = "H1", count = 500) {
+    const params = [`symbol=${encodeURIComponent(symbol)}`, `timeframe=${timeframe}`, `count=${count}`];
+    return this.fetch(`/mt5/price-history?${params.join("&")}`);
+  }
+
+  async getTickData(symbol, count = 1000) {
+    return this.fetch(`/mt5/ticks?symbol=${encodeURIComponent(symbol)}&count=${count}`);
+  }
+
+  async getTerminalInfo() {
+    return this.fetch("/mt5/terminal");
+  }
+
+  async getPerformance(from = null) {
+    const query = from ? `?from=${encodeURIComponent(from)}` : "";
+    return this.fetch(`/mt5/performance${query}`);
+  }
+
+  async fullSyncV2(fromDate = null) {
+    const body = fromDate ? { fromDate } : {};
+    return this.fetch("/mt5/full-sync-v2", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  }
+
+
   // User endpoints
   async getUser(userId) {
     return this.fetch(`/users/${userId}`);
@@ -539,6 +593,62 @@ class ApiClient {
   async getDailyQuote(date = null) {
     const query = date ? `?date=${toDateStr(date)}` : "";
     return this.fetchV2(`/zentra/daily-quote${query}`);
+  }
+
+  // ─── Behavioral Analysis API (Phase 2) ─────────────────────────
+  async getRevengeTrading(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/revenge-trading${query}`);
+  }
+
+  async getEarlyExits(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/early-exits${query}`);
+  }
+
+  async getOvertrading(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/overtrading${query}`);
+  }
+
+  async getImpulsiveEntries(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/impulsive-entries${query}`);
+  }
+
+  async getBehaviorMentalBattery(date = null) {
+    const query = date ? `?date=${toDateStr(date)}` : "";
+    return this.fetch(`/behavior/mental-battery${query}`);
+  }
+
+  async getFullBehaviorAnalysis(date = null, startDate = null, endDate = null) {
+    const params = [];
+    if (date) params.push(`date=${toDateStr(date)}`);
+    if (startDate) params.push(`startDate=${toDateStr(startDate)}`);
+    if (endDate) params.push(`endDate=${toDateStr(endDate)}`);
+    const query = params.length > 0 ? `?${params.join("&")}` : "";
+    return this.fetch(`/behavior/full-analysis${query}`);
+  }
+
+  async getCoachAdvice(date = null) {
+    const query = date ? `?date=${toDateStr(date)}` : "";
+    return this.fetch(`/behavior/coach-advice${query}`);
   }
 }
 

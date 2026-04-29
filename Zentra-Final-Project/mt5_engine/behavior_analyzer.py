@@ -497,10 +497,13 @@ def get_coach_advice(trades):
     """
     Generate Coach Advice based on the most recent 10 trades.
     Priority: Revenge > Overtrading (Impulsive) > Lot Size Increase > Early Exit > Clean
+
+    Returns: { error_type: str, lines: str[], severity: str }
     """
     if not trades:
         return {
             "error_type": "clean",
+            "severity": "none",
             "lines": [
                 "No recent trading data available.",
                 "Sync your MT5 account to get personalized advice."
@@ -511,11 +514,12 @@ def get_coach_advice(trades):
     sorted_trades = sorted(trades, key=lambda t: _get_close_time(t) or datetime.min)
     recent_trades = sorted_trades[-10:]
     
-    # 1. Revenge Trading
+    # 1. Revenge Trading (highest priority)
     revenge = detect_revenge_trading(recent_trades)
     if revenge.get('count', 0) > 0:
         return {
             "error_type": "revenge_trading",
+            "severity": "high",
             "lines": [
                 "Rapid re-entry detected immediately after a stop-loss.",
                 "You are exhibiting revenge trading behavior.",
@@ -529,6 +533,7 @@ def get_coach_advice(trades):
         x_trades = impulsive.get('total_impulsive_trades', 0)
         return {
             "error_type": "overtrading",
+            "severity": "high",
             "lines": [
                 f"{x_trades} rapid re-entries detected within a short window.",
                 "You're entering trades too quickly.",
@@ -544,6 +549,7 @@ def get_coach_advice(trades):
         if vol3 > vol2 and vol2 > vol1:
             return {
                 "error_type": "lot_size_increase",
+                "severity": "medium",
                 "lines": [
                     "Lot sizes have steadily increased in recent trades.",
                     "You are risking more than your standard trading plan."
@@ -555,6 +561,7 @@ def get_coach_advice(trades):
     if early_exits.get('count', 0) > 0:
         return {
             "error_type": "early_exit",
+            "severity": "low",
             "lines": [
                 "Recent winning trades were closed significantly early.",
                 "You are leaving potential profits on the table."
@@ -564,6 +571,7 @@ def get_coach_advice(trades):
     # Default (Clean)
     return {
         "error_type": "clean",
+        "severity": "none",
         "lines": [
             "Recent trading data shows steady and controlled behavior.",
             "Keep sticking strictly to your trading plan."
