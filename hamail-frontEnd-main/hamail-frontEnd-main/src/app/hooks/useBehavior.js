@@ -114,3 +114,14 @@ export function useFullBehaviorAnalysis(date = null) {
     [date]
   );
 }
+
+/**
+ * Hook: Coach Advice
+ * Response: { lines[], error_type, severity }
+ */
+export function useCoachAdvice(date = null) {
+  return useBehaviorEndpoint(
+    () => apiClient.getCoachAdvice(date),
+    [date]
+  );
+}

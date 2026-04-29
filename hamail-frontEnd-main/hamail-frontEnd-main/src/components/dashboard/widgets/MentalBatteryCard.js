@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useMemo } from "react";
 import CardIconTooltip from "./CardIconTooltip";
+import { useCoachAdvice } from "@/app/hooks/useBehavior";
 
 // ─── SVG Arc Gauge ───────────────────────────────────────────────
 function ArcGauge({ percentage, level }) {
@@ -125,8 +126,10 @@ export default function MentalBatteryCard({
   level = "Stable",
   message,
   hasNoTrades = false,
+  selectedDate = null,
 }) {
   const batteryLevel = Math.min(100, Math.max(0, percentage));
+  const { data: coachAdvice, loading: adviceLoading } = useCoachAdvice(selectedDate);
 
   const getNormalizedLevel = (l, p) => {
     const lower = l?.toLowerCase();
@@ -287,6 +290,45 @@ export default function MentalBatteryCard({
           </div>
         ))}
       </div>
+
+      {/* Coach Advice Block */}
+      {!hasNoTrades && (
+        <div className="mt-5 pt-4 border-t border-gray-100/60">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-700 tracking-wide">Coach's Note</span>
+          </div>
+          <div className="bg-[#F8FAFC] border border-blue-50/50 rounded-xl p-3.5 min-h-[70px] flex items-center">
+            {adviceLoading ? (
+              <div className="animate-pulse flex flex-col gap-2 w-full">
+                <div className="h-2.5 bg-blue-100/50 rounded w-3/4"></div>
+                <div className="h-2.5 bg-blue-100/50 rounded w-1/2"></div>
+              </div>
+            ) : coachAdvice?.lines?.length > 0 ? (
+              <ul className="flex flex-col gap-2 w-full">
+                {coachAdvice.lines.map((line, idx) => (
+                  <motion.li 
+                    key={idx}
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * idx, duration: 0.4 }}
+                    className="text-[13px] text-gray-600 leading-snug flex items-start gap-2.5"
+                  >
+                    <span className="text-blue-400 mt-[3px] text-[10px]">●</span>
+                    <span className="flex-1">{line}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[13px] text-gray-400 italic w-full text-center">No recent advice available.</p>
+            )}
+          </div>
+        </div>
+      )}
     </CardWrapper>
   );
 }

@@ -645,6 +645,11 @@ class ApiClient {
     const query = params.length > 0 ? `?${params.join("&")}` : "";
     return this.fetch(`/behavior/full-analysis${query}`);
   }
+
+  async getCoachAdvice(date = null) {
+    const query = date ? `?date=${toDateStr(date)}` : "";
+    return this.fetch(`/behavior/coach-advice${query}`);
+  }
 }
 
 // Export singleton instance

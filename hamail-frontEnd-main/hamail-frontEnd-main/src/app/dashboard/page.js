@@ -720,6 +720,7 @@ export default function Dashboard() {
                   drainFactors={mentalBatteryData?.drainFactors}
                   rechargeFactors={mentalBatteryData?.rechargeFactors}
                   hasNoTrades={hasMentalBatteryNoData}
+                  selectedDate={selectedDate}
                 />
               </div>
             </div>
