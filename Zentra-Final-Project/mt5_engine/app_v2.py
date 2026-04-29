@@ -717,11 +717,50 @@ from behavior_analyzer import (
 )
 
 
+def _get_behavior_trades(data):
+    """
+    Get trades for behavioral analysis.
+    If trades are provided in POST body, use those.
+    Otherwise, auto-fetch from active MT5 session.
+    Supports optional date filtering via 'date', 'startDate', 'endDate'.
+    """
+    trades = data.get('trades', []) if data else []
+    if trades:
+        return trades
+
+    # Auto-fetch from active MT5 session
+    if not connector.connected:
+        logger.warning('[BEHAVIOR] No trades provided and no active MT5 session')
+        return []
+
+    logger.info('[BEHAVIOR] Auto-fetching trades from active MT5 session')
+    from_date = None
+    to_date = None
+
+    if data:
+        date_str = data.get('date')
+        if date_str:
+            from_date = datetime.fromisoformat(date_str.replace('Z', '+00:00')).replace(tzinfo=None)
+            from_date = from_date.replace(hour=0, minute=0, second=0)
+            to_date = from_date.replace(hour=23, minute=59, second=59)
+        else:
+            start_str = data.get('startDate')
+            end_str = data.get('endDate')
+            if start_str:
+                from_date = datetime.fromisoformat(start_str.replace('Z', '+00:00')).replace(tzinfo=None)
+            if end_str:
+                to_date = datetime.fromisoformat(end_str.replace('Z', '+00:00')).replace(tzinfo=None)
+
+    raw_trades = connector.get_trade_history(from_date, to_date)
+    logger.info(f'[BEHAVIOR] Auto-fetched {len(raw_trades)} trades from MT5')
+    return raw_trades
+
+
 @app.route('/behavior/revenge-trading', methods=['POST'])
 def behavior_revenge():
     """Detect revenge trading patterns from trade data."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/revenge-trading — {len(trades)} trades")
     result = detect_revenge_trading(trades)
     return jsonify(result), 200
@@ -730,8 +769,8 @@ def behavior_revenge():
 @app.route('/behavior/early-exits', methods=['POST'])
 def behavior_early_exits():
     """Detect early exit patterns from trade data."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/early-exits — {len(trades)} trades")
     result = detect_early_exits(trades)
     return jsonify(result), 200
@@ -740,8 +779,8 @@ def behavior_early_exits():
 @app.route('/behavior/overtrading', methods=['POST'])
 def behavior_overtrading():
     """Detect overtrading patterns from trade data."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/overtrading — {len(trades)} trades")
     result = detect_overtrading(trades)
     return jsonify(result), 200
@@ -750,8 +789,8 @@ def behavior_overtrading():
 @app.route('/behavior/impulsive-entries', methods=['POST'])
 def behavior_impulsive():
     """Detect impulsive entry patterns from trade data."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/impulsive-entries — {len(trades)} trades")
     result = detect_impulsive_entries(trades)
     return jsonify(result), 200
@@ -760,8 +799,8 @@ def behavior_impulsive():
 @app.route('/behavior/mental-battery', methods=['POST'])
 def behavior_mental_battery():
     """Calculate composite mental battery score."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/mental-battery — {len(trades)} trades")
     result = calculate_mental_battery(trades)
     return jsonify(result), 200
@@ -770,8 +809,8 @@ def behavior_mental_battery():
 @app.route('/behavior/full-analysis', methods=['POST'])
 def behavior_full():
     """Run all behavioral analyses at once."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/full-analysis — {len(trades)} trades")
     result = run_full_analysis(trades)
     return jsonify(result), 200
@@ -780,8 +819,8 @@ def behavior_full():
 @app.route('/behavior/coach-advice', methods=['POST'])
 def behavior_coach_advice():
     """Get coach advice based on recent trades."""
-    data = request.get_json()
-    trades = data.get('trades', [])
+    data = request.get_json() or {}
+    trades = _get_behavior_trades(data)
     logger.info(f"[API] /behavior/coach-advice — {len(trades)} trades")
     result = get_coach_advice(trades)
     return jsonify(result), 200
