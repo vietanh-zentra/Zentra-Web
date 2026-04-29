@@ -13,4 +13,6 @@ module.exports.accountService = require('./account.service');
 module.exports.syncService = require('./sync.service');
 module.exports.openPositionService = require('./openPosition.service');
 module.exports.dailySummaryService = require('./dailySummary.service');
+module.exports.behaviorService = require('./behavior.service');
+module.exports.brokerService = require('./broker.service');
 

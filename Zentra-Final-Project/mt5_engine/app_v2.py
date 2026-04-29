@@ -704,6 +704,78 @@ def _parse_timeframe(tf_str: str) -> int:
     return mapping.get(tf_str, mt5.TIMEFRAME_H1)
 
 
+# ─── BEHAVIORAL ANALYSIS ENDPOINTS (Phase 2) ─────────────────────────
+
+from behavior_analyzer import (
+    detect_revenge_trading,
+    detect_early_exits,
+    detect_overtrading,
+    detect_impulsive_entries,
+    calculate_mental_battery,
+    run_full_analysis,
+)
+
+
+@app.route('/behavior/revenge-trading', methods=['POST'])
+def behavior_revenge():
+    """Detect revenge trading patterns from trade data."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/revenge-trading — {len(trades)} trades")
+    result = detect_revenge_trading(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/early-exits', methods=['POST'])
+def behavior_early_exits():
+    """Detect early exit patterns from trade data."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/early-exits — {len(trades)} trades")
+    result = detect_early_exits(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/overtrading', methods=['POST'])
+def behavior_overtrading():
+    """Detect overtrading patterns from trade data."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/overtrading — {len(trades)} trades")
+    result = detect_overtrading(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/impulsive-entries', methods=['POST'])
+def behavior_impulsive():
+    """Detect impulsive entry patterns from trade data."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/impulsive-entries — {len(trades)} trades")
+    result = detect_impulsive_entries(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/mental-battery', methods=['POST'])
+def behavior_mental_battery():
+    """Calculate composite mental battery score."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/mental-battery — {len(trades)} trades")
+    result = calculate_mental_battery(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/full-analysis', methods=['POST'])
+def behavior_full():
+    """Run all behavioral analyses at once."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/full-analysis — {len(trades)} trades")
+    result = run_full_analysis(trades)
+    return jsonify(result), 200
+
+
 # ─── Main ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     port = int(os.getenv('MT5_SERVICE_PORT', 5000))

@@ -9,6 +9,8 @@ const healthRoute = require('./health.route');
 const docsRoute = require('./docs.route');
 const mt5Route = require('./mt5.route');
 const accountRoute = require('./account.route');
+const behaviorRoute = require('./behavior.route');
+const brokerRoute = require('./broker.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -49,6 +51,14 @@ const defaultRoutes = [
   {
     path: '/accounts',
     route: accountRoute,
+  },
+  {
+    path: '/behavior',
+    route: behaviorRoute,
+  },
+  {
+    path: '/brokers',
+    route: brokerRoute,
   },
 ];
 

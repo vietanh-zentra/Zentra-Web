@@ -5,4 +5,5 @@ module.exports.tradeController = require('./trade.controller');
 module.exports.mt5Controller = require('./mt5.controller');
 module.exports.zentraController = require('./zentra.controller');
 module.exports.accountController = require('./account.controller');
+module.exports.behaviorController = require('./behavior.controller');
 
