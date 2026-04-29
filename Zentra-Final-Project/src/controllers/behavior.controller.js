@@ -63,6 +63,16 @@ const getFullAnalysis = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(result);
 });
 
+/**
+ * GET /v1/behavior/coach-advice
+ * Get coach advice based on recent trades
+ */
+const getCoachAdvice = catchAsync(async (req, res) => {
+  logger.info('Getting coach advice for user: %s', req.user.id);
+  const result = await behaviorService.getCoachAdvice(req.user.id, req.query);
+  res.status(httpStatus.OK).send(result);
+});
+
 module.exports = {
   getRevengeTrading,
   getEarlyExits,
@@ -70,4 +80,5 @@ module.exports = {
   getImpulsiveEntries,
   getMentalBattery,
   getFullAnalysis,
+  getCoachAdvice,
 };

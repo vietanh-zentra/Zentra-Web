@@ -49,4 +49,11 @@ router.get('/mental-battery', auth(), behaviorController.getMentalBattery);
  */
 router.get('/full-analysis', auth(), behaviorController.getFullAnalysis);
 
+/**
+ * @route GET /v1/behavior/coach-advice
+ * @desc Get coach advice based on recent trades
+ * @access Private
+ */
+router.get('/coach-advice', auth(), behaviorController.getCoachAdvice);
+
 module.exports = router;

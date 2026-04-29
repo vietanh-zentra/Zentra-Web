@@ -141,6 +141,24 @@ const runFullAnalysis = async (userId, query = {}) => {
   return callPythonAnalyzer('full-analysis', trades);
 };
 
+/**
+ * Get coach advice for a user
+ */
+const getCoachAdvice = async (userId, query = {}) => {
+  const trades = await getUserTrades(userId, query);
+  if (trades.length === 0) {
+    return {
+      error_type: 'clean',
+      lines: [
+        'No recent trading data available.',
+        'Sync your MT5 account to get personalized advice.'
+      ],
+      insufficient_data: true
+    };
+  }
+  return callPythonAnalyzer('coach-advice', trades);
+};
+
 module.exports = {
   analyzeRevenge,
   analyzeEarlyExits,
@@ -148,4 +166,5 @@ module.exports = {
   analyzeImpulsiveEntries,
   calculateMentalBattery,
   runFullAnalysis,
+  getCoachAdvice,
 };

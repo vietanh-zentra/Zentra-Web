@@ -713,6 +713,7 @@ from behavior_analyzer import (
     detect_impulsive_entries,
     calculate_mental_battery,
     run_full_analysis,
+    get_coach_advice,
 )
 
 
@@ -773,6 +774,16 @@ def behavior_full():
     trades = data.get('trades', [])
     logger.info(f"[API] /behavior/full-analysis — {len(trades)} trades")
     result = run_full_analysis(trades)
+    return jsonify(result), 200
+
+
+@app.route('/behavior/coach-advice', methods=['POST'])
+def behavior_coach_advice():
+    """Get coach advice based on recent trades."""
+    data = request.get_json()
+    trades = data.get('trades', [])
+    logger.info(f"[API] /behavior/coach-advice — {len(trades)} trades")
+    result = get_coach_advice(trades)
     return jsonify(result), 200
 
 

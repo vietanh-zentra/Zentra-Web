@@ -491,6 +491,86 @@ def calculate_mental_battery(trades, weights=None):
     }
 
 
+# ─── COACH ADVICE ─────────────────────────────────────────────────────────────
+
+def get_coach_advice(trades):
+    """
+    Generate Coach Advice based on the most recent 10 trades.
+    Priority: Revenge > Overtrading (Impulsive) > Lot Size Increase > Early Exit > Clean
+    """
+    if not trades:
+        return {
+            "error_type": "clean",
+            "lines": [
+                "No recent trading data available.",
+                "Sync your MT5 account to get personalized advice."
+            ]
+        }
+
+    # Get last 10 trades sorted by close time
+    sorted_trades = sorted(trades, key=lambda t: _get_close_time(t) or datetime.min)
+    recent_trades = sorted_trades[-10:]
+    
+    # 1. Revenge Trading
+    revenge = detect_revenge_trading(recent_trades)
+    if revenge.get('count', 0) > 0:
+        return {
+            "error_type": "revenge_trading",
+            "lines": [
+                "Rapid re-entry detected immediately after a stop-loss.",
+                "You are exhibiting revenge trading behavior.",
+                "Step away from the chart for 15 minutes."
+            ]
+        }
+        
+    # 2. Overtrading (Nhồi lệnh nhanh - mapped to impulsive entries logic)
+    impulsive = detect_impulsive_entries(recent_trades, cluster_min=2)
+    if impulsive.get('cluster_count', 0) > 0:
+        x_trades = impulsive.get('total_impulsive_trades', 0)
+        return {
+            "error_type": "overtrading",
+            "lines": [
+                f"{x_trades} rapid re-entries detected within a short window.",
+                "You're entering trades too quickly.",
+                "Pause until a fresh setup forms before entering again."
+            ]
+        }
+        
+    # 3. Lot Size Increase
+    if len(recent_trades) >= 3:
+        vol1 = _get_volume(recent_trades[-3])
+        vol2 = _get_volume(recent_trades[-2])
+        vol3 = _get_volume(recent_trades[-1])
+        if vol3 > vol2 and vol2 > vol1:
+            return {
+                "error_type": "lot_size_increase",
+                "lines": [
+                    "Lot sizes have steadily increased in recent trades.",
+                    "You are risking more than your standard trading plan."
+                ]
+            }
+            
+    # 4. Early Exit
+    early_exits = detect_early_exits(recent_trades, min_trades=1)
+    if early_exits.get('count', 0) > 0:
+        return {
+            "error_type": "early_exit",
+            "lines": [
+                "Recent winning trades were closed significantly early.",
+                "You are leaving potential profits on the table."
+            ]
+        }
+        
+    # Default (Clean)
+    return {
+        "error_type": "clean",
+        "lines": [
+            "Recent trading data shows steady and controlled behavior.",
+            "Keep sticking strictly to your trading plan."
+        ]
+    }
+
+
 # ─── FULL ANALYSIS (convenience wrapper) ──────────────────────────────────────
 
 def run_full_analysis(trades):
