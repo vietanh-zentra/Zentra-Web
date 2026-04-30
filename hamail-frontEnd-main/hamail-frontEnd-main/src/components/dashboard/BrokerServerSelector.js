@@ -53,17 +53,21 @@ export default function BrokerServerSelector({ value = "", onChange }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Filter brokers by search
+  // Filter brokers by search (bidirectional: "Exness-MT5Real25" matches "Exness")
   const filtered = useMemo(() => {
-    if (!search.trim()) return brokers.slice(0, 50); // Show first 50 when not searching
+    if (!search.trim()) return brokers.slice(0, 50);
     const q = search.toLowerCase();
     return brokers
-      .filter(
-        (b) =>
-          b.name?.toLowerCase().includes(q) ||
-          b.display_name?.toLowerCase().includes(q) ||
-          b.id?.toLowerCase().includes(q)
-      )
+      .filter((b) => {
+        const name = b.name?.toLowerCase() || "";
+        const displayName = b.display_name?.toLowerCase() || "";
+        const id = b.id?.toLowerCase() || "";
+        return (
+          name.includes(q) || q.includes(name) ||
+          displayName.includes(q) || q.includes(displayName) ||
+          id.includes(q) || q.includes(id)
+        );
+      })
       .slice(0, 30);
   }, [brokers, search]);
 
