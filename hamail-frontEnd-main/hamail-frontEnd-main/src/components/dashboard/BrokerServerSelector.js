@@ -62,20 +62,28 @@ export default function BrokerServerSelector({ value = "", onChange }) {
         (b) =>
           b.name?.toLowerCase().includes(q) ||
           b.display_name?.toLowerCase().includes(q) ||
-          b.id?.toLowerCase().includes(q) ||
-          b.servers?.some((s) => s.name?.toLowerCase().includes(q))
+          b.id?.toLowerCase().includes(q)
       )
       .slice(0, 30);
   }, [brokers, search]);
 
-  // Handle broker selection
-  const handleSelectBroker = (broker) => {
-    setSelectedBroker(broker);
+  // Handle broker selection — fetch full broker details with servers
+  const handleSelectBroker = async (broker) => {
     setSearch("");
-    // If broker has only one server, auto-select it
-    if (broker.servers?.length === 1) {
-      onChange(broker.servers[0].name);
-      setIsOpen(false);
+    try {
+      // Fetch full broker details including servers array
+      const data = await apiClient.fetch(`/brokers/${broker.id}`);
+      const fullBroker = data?.broker || data;
+      setSelectedBroker(fullBroker);
+      // If broker has only one server, auto-select it
+      if (fullBroker.servers?.length === 1) {
+        onChange(fullBroker.servers[0].name);
+        setIsOpen(false);
+      }
+    } catch (err) {
+      console.error("Failed to load broker servers:", err);
+      // Fallback: use the lightweight broker object
+      setSelectedBroker(broker);
     }
   };
 
@@ -217,7 +225,7 @@ export default function BrokerServerSelector({ value = "", onChange }) {
                           {broker.name || broker.display_name}
                         </span>
                         <span className="text-[10px] text-gray-400">
-                          {broker.servers?.length || 0} server{broker.servers?.length !== 1 ? "s" : ""} • {broker.type || "broker"}
+                          {broker.server_count ?? broker.servers?.length ?? 0} server{(broker.server_count ?? broker.servers?.length ?? 0) !== 1 ? "s" : ""} • {broker.type || "broker"}
                         </span>
                       </div>
                       <ChevronDownIcon className="w-3 h-3 text-gray-300 -rotate-90 group-hover:text-teal-500" />
