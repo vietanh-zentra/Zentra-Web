@@ -6,26 +6,33 @@
     "type": "broker",
     "region": "global",
     "servers": [
-      {
-        "name": "ICMarketsSC-Demo",
-        "type": "demo"
-      },
-      {
-        "name": "ICMarketsSC-Live01",
-        "type": "live"
-      },
-      {
-        "name": "ICMarketsSC-Live02",
-        "type": "live"
-      },
-      {
-        "name": "ICMarketsSC-Live03",
-        "type": "live"
-      },
-      {
-        "name": "ICMarketsSC-Live04",
-        "type": "live"
-      }
+      { "name": "ICMarketsSC-Demo", "type": "demo" },
+      { "name": "ICMarketsSC-Demo02", "type": "demo" },
+      { "name": "ICMarketsSC-Demo03", "type": "demo" },
+      { "name": "ICMarketsSC-Live01", "type": "live" },
+      { "name": "ICMarketsSC-Live02", "type": "live" },
+      { "name": "ICMarketsSC-Live03", "type": "live" },
+      { "name": "ICMarketsSC-Live04", "type": "live" },
+      { "name": "ICMarketsSC-Live05", "type": "live" },
+      { "name": "ICMarketsSC-Live06", "type": "live" },
+      { "name": "ICMarketsSC-Live07", "type": "live" },
+      { "name": "ICMarketsSC-Live08", "type": "live" },
+      { "name": "ICMarketsSC-Live09", "type": "live" },
+      { "name": "ICMarketsSC-Live10", "type": "live" },
+      { "name": "ICMarketsSC-Live11", "type": "live" },
+      { "name": "ICMarketsSC-Live12", "type": "live" },
+      { "name": "ICMarketsSC-Live13", "type": "live" },
+      { "name": "ICMarketsSC-Live14", "type": "live" },
+      { "name": "ICMarketsSC-Live15", "type": "live" },
+      { "name": "ICMarketsSC-Live16", "type": "live" },
+      { "name": "ICMarketsSC-Live17", "type": "live" },
+      { "name": "ICMarketsSC-Live18", "type": "live" },
+      { "name": "ICMarketsSC-Live19", "type": "live" },
+      { "name": "ICMarketsSC-Live20", "type": "live" },
+      { "name": "ICMarketsEU-Demo", "type": "demo" },
+      { "name": "ICMarketsEU-Live01", "type": "live" },
+      { "name": "ICMarketsEU-Live02", "type": "live" },
+      { "name": "ICMarketsEU-Live03", "type": "live" }
     ]
   },
   {
@@ -35,18 +42,20 @@
     "type": "broker",
     "region": "global",
     "servers": [
-      {
-        "name": "Pepperstone-Demo",
-        "type": "demo"
-      },
-      {
-        "name": "Pepperstone-Live",
-        "type": "live"
-      },
-      {
-        "name": "Pepperstone-Live02",
-        "type": "live"
-      }
+      { "name": "Pepperstone-Demo", "type": "demo" },
+      { "name": "Pepperstone-Demo02", "type": "demo" },
+      { "name": "Pepperstone-Live", "type": "live" },
+      { "name": "Pepperstone-Live02", "type": "live" },
+      { "name": "Pepperstone-Live03", "type": "live" },
+      { "name": "Pepperstone-Live04", "type": "live" },
+      { "name": "Pepperstone-Live05", "type": "live" },
+      { "name": "Pepperstone-Live06", "type": "live" },
+      { "name": "Pepperstone-Live07", "type": "live" },
+      { "name": "Pepperstone-Live08", "type": "live" },
+      { "name": "Pepperstone-Live09", "type": "live" },
+      { "name": "Pepperstone-Live10", "type": "live" },
+      { "name": "Pepperstone-Live11", "type": "live" },
+      { "name": "Pepperstone-Live12", "type": "live" }
     ]
   },
   {
@@ -56,22 +65,31 @@
     "type": "broker",
     "region": "global",
     "servers": [
-      {
-        "name": "XMGlobal-Demo 3",
-        "type": "demo"
-      },
-      {
-        "name": "XMGlobal-Real 1",
-        "type": "live"
-      },
-      {
-        "name": "XMGlobal-Real 2",
-        "type": "live"
-      },
-      {
-        "name": "XMGlobal-Real 8",
-        "type": "live"
-      }
+      { "name": "XMGlobal-Demo 3", "type": "demo" },
+      { "name": "XMGlobal-Demo 2", "type": "demo" },
+      { "name": "XMGlobal-Real 1", "type": "live" },
+      { "name": "XMGlobal-Real 2", "type": "live" },
+      { "name": "XMGlobal-Real 3", "type": "live" },
+      { "name": "XMGlobal-Real 4", "type": "live" },
+      { "name": "XMGlobal-Real 5", "type": "live" },
+      { "name": "XMGlobal-Real 6", "type": "live" },
+      { "name": "XMGlobal-Real 7", "type": "live" },
+      { "name": "XMGlobal-Real 8", "type": "live" },
+      { "name": "XMGlobal-Real 9", "type": "live" },
+      { "name": "XMGlobal-Real 10", "type": "live" },
+      { "name": "XMGlobal-Real 11", "type": "live" },
+      { "name": "XMGlobal-Real 12", "type": "live" },
+      { "name": "XMGlobal-Real 13", "type": "live" },
+      { "name": "XMGlobal-Real 14", "type": "live" },
+      { "name": "XMGlobal-Real 15", "type": "live" },
+      { "name": "XMGlobal-Real 16", "type": "live" },
+      { "name": "XMGlobal-Real 17", "type": "live" },
+      { "name": "XMGlobal-Real 18", "type": "live" },
+      { "name": "XMGlobal-Real 19", "type": "live" },
+      { "name": "XMGlobal-Real 20", "type": "live" },
+      { "name": "XMGlobal-MT5", "type": "live" },
+      { "name": "XMGlobal-MT5 2", "type": "live" },
+      { "name": "XMGlobal-MT5 3", "type": "live" }
     ]
   },
   {
@@ -81,22 +99,51 @@
     "type": "broker",
     "region": "global",
     "servers": [
-      {
-        "name": "Exness-Trial",
-        "type": "demo"
-      },
-      {
-        "name": "Exness-Real",
-        "type": "live"
-      },
-      {
-        "name": "Exness-Real2",
-        "type": "live"
-      },
-      {
-        "name": "Exness-Real4",
-        "type": "live"
-      }
+      { "name": "Exness-Trial", "type": "demo" },
+      { "name": "Exness-Trial2", "type": "demo" },
+      { "name": "Exness-Trial3", "type": "demo" },
+      { "name": "Exness-Trial4", "type": "demo" },
+      { "name": "Exness-Trial7", "type": "demo" },
+      { "name": "Exness-Real", "type": "live" },
+      { "name": "Exness-Real2", "type": "live" },
+      { "name": "Exness-Real3", "type": "live" },
+      { "name": "Exness-Real4", "type": "live" },
+      { "name": "Exness-Real5", "type": "live" },
+      { "name": "Exness-Real6", "type": "live" },
+      { "name": "Exness-Real7", "type": "live" },
+      { "name": "Exness-Real8", "type": "live" },
+      { "name": "Exness-Real9", "type": "live" },
+      { "name": "Exness-Real10", "type": "live" },
+      { "name": "Exness-Real11", "type": "live" },
+      { "name": "Exness-Real12", "type": "live" },
+      { "name": "Exness-Real13", "type": "live" },
+      { "name": "Exness-Real14", "type": "live" },
+      { "name": "Exness-Real15", "type": "live" },
+      { "name": "Exness-MT5Real", "type": "live" },
+      { "name": "Exness-MT5Real2", "type": "live" },
+      { "name": "Exness-MT5Real3", "type": "live" },
+      { "name": "Exness-MT5Real4", "type": "live" },
+      { "name": "Exness-MT5Real5", "type": "live" },
+      { "name": "Exness-MT5Real6", "type": "live" },
+      { "name": "Exness-MT5Real7", "type": "live" },
+      { "name": "Exness-MT5Real8", "type": "live" },
+      { "name": "Exness-MT5Real9", "type": "live" },
+      { "name": "Exness-MT5Real10", "type": "live" },
+      { "name": "Exness-MT5Real11", "type": "live" },
+      { "name": "Exness-MT5Real12", "type": "live" },
+      { "name": "Exness-MT5Real13", "type": "live" },
+      { "name": "Exness-MT5Real14", "type": "live" },
+      { "name": "Exness-MT5Real15", "type": "live" },
+      { "name": "Exness-MT5Real16", "type": "live" },
+      { "name": "Exness-MT5Real17", "type": "live" },
+      { "name": "Exness-MT5Real18", "type": "live" },
+      { "name": "Exness-MT5Real19", "type": "live" },
+      { "name": "Exness-MT5Real20", "type": "live" },
+      { "name": "Exness-MT5Real21", "type": "live" },
+      { "name": "Exness-MT5Real22", "type": "live" },
+      { "name": "Exness-MT5Real23", "type": "live" },
+      { "name": "Exness-MT5Real24", "type": "live" },
+      { "name": "Exness-MT5Real25", "type": "live" }
     ]
   },
   {
